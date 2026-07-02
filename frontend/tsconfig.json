@@ -12,7 +12,8 @@
     "jsx": "react-jsx",
     "strict": false,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src"]
 }
