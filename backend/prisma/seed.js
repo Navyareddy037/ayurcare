@@ -79,6 +79,30 @@ async function main() {
       bio: 'Focuses on anxiety, stress, insomnia, and psychosomatic disorders using Ayurvedic herbs, Shirodhara, and Yogic meditation techniques.',
       availabilities: [1, 2, 4, 5], // Mon, Tue, Thu, Fri
     },
+    {
+      email: 'gynecology@kayakalp.com',
+      name: 'Dr. Anjali Deshmukh',
+      qualification: 'BAMS, MS (Prasuti Tantra & Stri Roga)',
+      experience: 10,
+      specialization: 'Gynecology Ayurveda',
+      languages: 'English, Hindi, Marathi',
+      fee: 550,
+      clinicName: 'Kaya Kalp Stri Roga Clinic, New Palasia, Indore',
+      bio: 'Specialist in Ayurvedic gynecology, maternal health, Stri Roga disorders, and hormonal imbalances using traditional herbal therapies.',
+      availabilities: [1, 3, 5], // Mon, Wed, Fri
+    },
+    {
+      email: 'endocrine@kayakalp.com',
+      name: 'Dr. Ramesh Joshi',
+      qualification: 'BAMS, MD (Ayurveda - Kayachikitsa)',
+      experience: 14,
+      specialization: 'Endocrine Ayurveda',
+      languages: 'English, Hindi, Gujarati',
+      fee: 600,
+      clinicName: 'Kaya Kalp Metabolic & Thyroid Clinic, New Palasia, Indore',
+      bio: 'Expert in managing metabolic disorders, thyroid balance, diabetes control (Madhumeha), and hormonal health through Ayurvedic diet and therapies.',
+      availabilities: [2, 4, 6], // Tue, Thu, Sat
+    },
   ];
 
   const doctorsCreated = [];

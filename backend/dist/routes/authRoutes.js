@@ -66,13 +66,13 @@ router.post('/signup', async (req, res) => {
                     phone: patientDetails?.phone || null,
                     bloodType: patientDetails?.bloodType || null,
                     medicalHistory: patientDetails?.medicalHistory || '',
-                    weight: 70.0,
-                    bloodPressure: '120/80',
-                    bloodSugar: 95.0,
-                    sleepHours: 7.5,
+                    weight: patientDetails?.weight ? parseFloat(patientDetails.weight) : 70.0,
+                    bloodPressure: patientDetails?.bloodPressure || '120/80',
+                    bloodSugar: patientDetails?.bloodSugar ? parseFloat(patientDetails.bloodSugar) : 95.0,
+                    sleepHours: patientDetails?.sleepHours ? parseFloat(patientDetails.sleepHours) : 7.5,
                     waterIntake: 2.5,
                     exerciseMinutes: 15,
-                    mood: 'Good',
+                    mood: 'Calm',
                 },
             });
         }

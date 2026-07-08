@@ -34,7 +34,7 @@ app.use('/api/knowledge', knowledgeRoutes_1.default);
 app.use('/api/ai-assessment', aiRoutes_1.default);
 // Base route for server health verification
 app.get('/', (req, res) => {
-    res.json({ message: 'AyurCare Express REST API Server is running successfully.' });
+    res.json({ message: 'Kaya Kalp Express REST API Server is running successfully.' });
 });
 // Error handling middleware
 app.use((err, req, res, next) => {
