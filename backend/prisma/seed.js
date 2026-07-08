@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding AyurCare database (PostgreSQL)...');
+  console.log('Seeding Kaya Kalp database (PostgreSQL)...');
 
   // Clean existing tables (Prisma will handle constraints in correct sequence)
   await prisma.knowledgeHubItem.deleteMany({});

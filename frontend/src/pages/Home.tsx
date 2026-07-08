@@ -136,7 +136,7 @@ export default function Home() {
                       <Heart className="w-4 h-4" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-sm text-stone-900">AyurCare Quick Portal</h3>
+                      <h3 className="font-bold text-sm text-stone-900">Kaya Kalp Quick Portal</h3>
                       <p className="text-[10px] text-stone-500">Live Services Available</p>
                     </div>
                   </div>

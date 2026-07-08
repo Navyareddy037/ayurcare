@@ -139,7 +139,7 @@ export default function PatientDashboard() {
     const medicines = JSON.parse(app.medicinesJSON || '[]');
     const text = `
 ------------------------------------------
-         AYURCARE MEDICAL RECEIPT
+       KAYA KALP MEDICAL RECEIPT
 ------------------------------------------
 Receipt ID: ${app.receiptId}
 Date: ${app.date} | Time: ${app.timeSlot}
@@ -156,7 +156,7 @@ ${medicines.length === 0 ? 'No medicines prescribed.' :
   medicines.map((m: any, i: number) => `${i+1}. ${m.name} - ${m.dosage} | ${m.timing} | Duration: ${m.duration}`).join('\n')}
 
 ------------------------------------------
-Thank you for choosing AyurCare.
+Thank you for choosing Kaya Kalp.
 Disclaimer: Please consult your Vaidya before changes.
 ------------------------------------------
 `;
@@ -164,7 +164,7 @@ Disclaimer: Please consult your Vaidya before changes.
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `AyurCare_Prescription_${app.receiptId}.txt`;
+    a.download = `KayaKalp_Prescription_${app.receiptId}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

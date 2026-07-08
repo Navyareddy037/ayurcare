@@ -26,7 +26,7 @@ export default function Header() {
               <Leaf className="w-5 h-5 text-emerald-100" />
             </div>
             <span className="text-xl font-bold tracking-tight text-stone-900 font-sans">
-              Ayur<span className="text-ayur-primary font-extrabold">Care</span>
+              Kaya <span className="text-ayur-primary font-extrabold">Kalp</span>
             </span>
           </Link>
 

@@ -24,7 +24,7 @@ export async function sendEmail({ to, subject, html, text }: { to: string; subje
   if (process.env.SMTP_USER && process.env.SMTP_PASS) {
     try {
       await transporter.sendMail({
-        from: '"AyurCare Wellness" <notifications@ayurcare.com>',
+        from: '"Kaya Kalp Wellness" <notifications@kayakalp.com>',
         to,
         subject,
         text,
@@ -44,7 +44,7 @@ export async function sendBookingEmail(email: string, patientName: string, docto
   const text = `Dear ${patientName}, your consultation with ${doctorName} is confirmed for ${date} at ${time}. Receipt ID: ${receiptId}.`;
   const html = `
     <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #F4F7F4; border-radius: 12px; max-width: 600px; color: #2D3748;">
-      <h2 style="color: #2E5B3E;">AyurCare Appointment Confirmation</h2>
+      <h2 style="color: #2E5B3E;">Kaya Kalp Appointment Confirmation</h2>
       <p>Dear <strong>${patientName}</strong>,</p>
       <p>Your consultation booking with <strong>${doctorName}</strong> is successful.</p>
       <div style="background-color: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin: 15px 0;">

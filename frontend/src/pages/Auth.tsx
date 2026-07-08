@@ -148,7 +148,7 @@ export default function AuthPage() {
           <div className="w-10 h-10 rounded-2xl bg-ayur-primary flex items-center justify-center text-white mx-auto shadow-md">
             <Leaf className="w-6 h-6 text-emerald-100" />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-stone-900">Welcome to AyurCare</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-stone-900">Welcome to Kaya Kalp</h2>
           <p className="text-xs text-stone-500">Secure Ayurvedic Consultation Portal</p>
         </div>
 

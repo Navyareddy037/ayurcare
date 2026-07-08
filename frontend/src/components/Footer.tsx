@@ -14,7 +14,7 @@ export default function Footer() {
                 <Leaf className="w-4 h-4 text-emerald-100" />
               </div>
               <span className="text-lg font-bold text-stone-900">
-                Ayur<span className="text-ayur-primary">Care</span>
+                Kaya <span className="text-ayur-primary">Kalp</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed font-sans">
@@ -79,13 +79,13 @@ export default function Footer() {
               <span>Medical Disclaimer</span>
             </div>
             <p className="text-xs text-red-800 leading-relaxed">
-              AyurCare's AI diagnostics are for informational guidance only and do not replace a medical practitioner's evaluation. In case of acute conditions, please seek immediate emergency care.
+              Kaya Kalp's AI diagnostics are for informational guidance only and do not replace a medical practitioner's evaluation. In case of acute conditions, please seek immediate emergency care.
             </p>
           </div>
         </div>
 
         <div className="border-t border-stone-200 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-sans">
-          <p>&copy; {new Date().getFullYear()} AyurCare Technologies. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Kaya Kalp Technologies. All rights reserved.</p>
           <div className="flex gap-4">
             <span className="hover:underline cursor-pointer">Terms of Service</span>
             <span className="hover:underline cursor-pointer">Privacy Policy</span>
