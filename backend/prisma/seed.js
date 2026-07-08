@@ -19,7 +19,7 @@ async function main() {
   const adminPassword = bcrypt.hashSync('admin123', 10);
   const admin = await prisma.user.create({
     data: {
-      email: 'admin@ayurcare.com',
+      email: 'admin@kayakalp.com',
       name: 'Dr. Vasudevan (Chief Admin)',
       passwordHash: adminPassword,
       role: 'ADMIN',
@@ -32,50 +32,50 @@ async function main() {
 
   const doctorsData = [
     {
-      email: 'panchakarma@ayurcare.com',
-      name: 'Dr. Aditya Sharma',
+      email: 'panchakarma@kayakalp.com',
+      name: 'Dr. Naveen Jadhav',
       qualification: 'BAMS, MD (Ayurveda - Panchakarma)',
-      experience: 12,
+      experience: 15,
       specialization: 'Panchakarma Specialist',
-      languages: 'English, Hindi, Sanskrit',
+      languages: 'English, Hindi, Marathi',
       fee: 600,
-      clinicName: 'Niramaya Ayurvedic Center',
-      bio: 'Expert in detoxification treatments, chronic pain relief, and seasonal wellness balancing through traditional Panchakarma therapies.',
+      clinicName: 'Kaya Kalp Ayurvedic Wellness Center, New Palasia, Indore',
+      bio: 'Chief Vaidya at Kaya Kalp Indore. Expert in detoxification treatments, chronic pain relief, and seasonal wellness balancing through traditional Panchakarma therapies.',
       availabilities: [1, 2, 3, 4, 5], // Mon, Tue, Wed, Thu, Fri
     },
     {
-      email: 'dermatology@ayurcare.com',
+      email: 'dermatology@kayakalp.com',
       name: 'Dr. Shalini Iyer',
       qualification: 'BAMS, MS (Shalakya Tantra - Skin & Eye)',
       experience: 9,
       specialization: 'Dermatology Ayurveda',
-      languages: 'English, Tamil, Malayalam',
+      languages: 'English, Hindi, Tamil',
       fee: 500,
-      clinicName: 'Sattva Skin & Hair Clinic',
+      clinicName: 'Kaya Kalp Skin & Eye Clinic, New Palasia, Indore',
       bio: 'Specialist in organic Ayurvedic treatments for psoriasis, eczema, acne, hair loss, and chronic inflammatory skin conditions.',
       availabilities: [2, 4, 6], // Tue, Thu, Sat
     },
     {
-      email: 'orthopedic@ayurcare.com',
+      email: 'orthopedic@kayakalp.com',
       name: 'Dr. Madhavan Namboothiri',
       qualification: 'BAMS, MD (Ayurveda - Kayachikitsa)',
       experience: 15,
       specialization: 'Orthopedic Ayurveda',
-      languages: 'English, Malayalam, Kannada',
+      languages: 'English, Hindi, Malayalam',
       fee: 700,
-      clinicName: 'Keraleeya Ayurvedic Hospital',
+      clinicName: 'Kaya Kalp Spine & Joint Clinic, New Palasia, Indore',
       bio: 'Renowned expert in spine disorders, arthritis, joint pains, slip disc, and musculoskeletal rehabilitation using traditional oil therapies.',
       availabilities: [1, 3, 5], // Mon, Wed, Fri
     },
     {
-      email: 'psychiatry@ayurcare.com',
+      email: 'psychiatry@kayakalp.com',
       name: 'Dr. Vivek Anand',
       qualification: 'BAMS, PGD (Ayurveda Psychiatry)',
       experience: 8,
       specialization: 'Ayurvedic Psychiatry',
       languages: 'English, Hindi, Bengali',
       fee: 650,
-      clinicName: 'Prana Mind & Soul Wellness',
+      clinicName: 'Kaya Kalp Mind & Wellness Clinic, New Palasia, Indore',
       bio: 'Focuses on anxiety, stress, insomnia, and psychosomatic disorders using Ayurvedic herbs, Shirodhara, and Yogic meditation techniques.',
       availabilities: [1, 2, 4, 5], // Mon, Tue, Thu, Fri
     },
@@ -126,7 +126,7 @@ async function main() {
   const patientPassword = bcrypt.hashSync('patient123', 10);
   const patientUser = await prisma.user.create({
     data: {
-      email: 'patient@ayurcare.com',
+      email: 'patient@kayakalp.com',
       name: 'Rahul Verma',
       passwordHash: patientPassword,
       role: 'PATIENT',

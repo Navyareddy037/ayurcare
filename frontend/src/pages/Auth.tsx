@@ -239,7 +239,7 @@ export default function AuthPage() {
               </button>
 
               <div className="text-center text-[10px] text-stone-500 border-t border-stone-200/50 pt-3">
-                Evaluation Accounts — Patient: <code className="bg-stone-100 px-1 py-0.5 rounded">patient@ayurcare.com / patient123</code> | Doctor: <code className="bg-stone-100 px-1 py-0.5 rounded">panchakarma@ayurcare.com / doctor123</code> | Admin: <code className="bg-stone-100 px-1 py-0.5 rounded">admin@ayurcare.com / admin123</code>
+                Evaluation Accounts — Patient: <code className="bg-stone-100 px-1 py-0.5 rounded">patient@kayakalp.com / patient123</code> | Doctor: <code className="bg-stone-100 px-1 py-0.5 rounded">panchakarma@kayakalp.com / doctor123</code> | Admin: <code className="bg-stone-100 px-1 py-0.5 rounded">admin@kayakalp.com / admin123</code>
               </div>
             </form>
           ) : (

@@ -1,12 +1,12 @@
-# AyurCare - Ayurvedic Doctor Consultation & Appointment System
+# Kaya Kalp Ayurvedic - Doctor Consultation & Appointment System
 
-**AyurCare** is an enterprise-grade, full-stack web application designed for Ayurvedic healthcare management, booking, and consultation. It has been built under a decoupled client-server architecture using a modern tech stack to provide an optimized, role-based platform for Patients, Doctors, and Administrators.
+**Kaya Kalp Ayurvedic** is an enterprise-grade, full-stack web application designed for Ayurvedic healthcare management, booking, and consultation. It has been built under a decoupled client-server architecture using a modern tech stack to provide an optimized, role-based platform for Patients, Doctors, and Administrators.
 
 ---
 
 ## 🏛️ System Architecture
 
-AyurCare implements a decoupled full-stack architecture:
+Kaya Kalp Ayurvedic implements a decoupled full-stack architecture:
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -41,9 +41,9 @@ The database contains default accounts for evaluation:
 
 | Role | Email Address | Password | Key Actions to Test |
 | :--- | :--- | :--- | :--- |
-| **Patient** | `patient@ayurcare.com` | `patient123` | Log daily vitals, view trends graphs, download prescription receipt PDF, cancel booking. |
-| **Doctor** | `panchakarma@ayurcare.com` | `doctor123` | Toggle availability days, launch Consultation Workspace, submit notes/prescriptions. |
-| **Admin** | `admin@ayurcare.com` | `admin123` | View revenue/booking analytics, toggle doctor approval verification, cancel bookings. |
+| **Patient** | `patient@kayakalp.com` | `patient123` | Log daily vitals, view trends graphs, download prescription receipt PDF, cancel booking. |
+| **Doctor** | `panchakarma@kayakalp.com` | `doctor123` | Toggle availability days, launch Consultation Workspace, submit notes/prescriptions. |
+| **Admin** | `admin@kayakalp.com` | `admin123` | View revenue/booking analytics, toggle doctor approval verification, cancel bookings. |
 
 ---
 
