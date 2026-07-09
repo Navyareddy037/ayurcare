@@ -21,6 +21,10 @@ export default function AuthPage() {
   const [phone, setPhone] = useState('');
   const [bloodType, setBloodType] = useState('O+');
   const [medicalHistory, setMedicalHistory] = useState('');
+  const [weight, setWeight] = useState('');
+  const [bloodPressure, setBloodPressure] = useState('');
+  const [bloodSugar, setBloodSugar] = useState('');
+  const [sleepHours, setSleepHours] = useState('');
 
   // Doctor Fields
   const [qualification, setQualification] = useState('');
@@ -90,7 +94,7 @@ export default function AuthPage() {
     };
 
     if (role === 'PATIENT') {
-      payload.patientDetails = { age, gender, phone, bloodType, medicalHistory };
+      payload.patientDetails = { age, gender, phone, bloodType, medicalHistory, weight, bloodPressure, bloodSugar, sleepHours };
     } else {
       payload.doctorDetails = { qualification, experience, specialization, languages, fee, clinicName, bio };
     }
@@ -376,6 +380,52 @@ export default function AuthPage() {
                       rows={2}
                       className="w-full px-3 py-2 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none"
                     />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-stone-750">Weight (kg)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        placeholder="70"
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
+                        className="w-full px-3 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-stone-750">Blood Pressure</label>
+                      <input
+                        type="text"
+                        placeholder="120/80"
+                        value={bloodPressure}
+                        onChange={(e) => setBloodPressure(e.target.value)}
+                        className="w-full px-3 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-stone-750">Sugar Level (mg/dL)</label>
+                      <input
+                        type="number"
+                        placeholder="95"
+                        value={bloodSugar}
+                        onChange={(e) => setBloodSugar(e.target.value)}
+                        className="w-full px-3 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-stone-750">Sleep Hours (Daily)</label>
+                      <input
+                        type="number"
+                        step="0.5"
+                        placeholder="7.5"
+                        value={sleepHours}
+                        onChange={(e) => setSleepHours(e.target.value)}
+                        className="w-full px-3 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
