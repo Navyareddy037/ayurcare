@@ -18,6 +18,7 @@ export default function DoctorDashboard() {
   // Availability days checkboxes (0 = Sunday, 1 = Monday...)
   const [availDays, setAvailDays] = useState<number[]>([]);
   const [availSuccess, setAvailSuccess] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<'ACTIVE' | 'PENDING' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED'>('ACTIVE');
 
   // Active consultation state
   const [consultingAppId, setConsultingAppId] = useState<number | null>(null);
@@ -169,8 +170,27 @@ export default function DoctorDashboard() {
     );
   }
 
+  const getWeeklyCounts = () => {
+    const counts = [0, 0, 0, 0, 0, 0, 0]; // Sun=0, Mon=1...
+    appointments.forEach(app => {
+      if (app.status === 'CONFIRMED' || app.status === 'PENDING') {
+        const d = new Date(app.date);
+        const day = d.getDay(); // 0 = Sunday, 1 = Monday...
+        if (!isNaN(day)) {
+          counts[day] += 1;
+        }
+      }
+    });
+    return counts;
+  };
+  const weeklyCounts = getWeeklyCounts();
+
+  const getFilteredAppointments = () => {
+    if (statusFilter === 'ACTIVE') return appointments.filter(a => a.status === 'CONFIRMED' || a.status === 'PENDING');
+    return appointments.filter(a => a.status === statusFilter);
+  };
+  const filteredAppointments = getFilteredAppointments();
   const completedVisits = appointments.filter(a => a.status === 'COMPLETED');
-  const activeBookings = appointments.filter(a => a.status === 'CONFIRMED' || a.status === 'PENDING');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
@@ -227,6 +247,30 @@ export default function DoctorDashboard() {
                       <div>Blood Group: <span>{consultingPatient.patientProfile?.bloodType || 'N/A'}</span></div>
                       <div>History: <span className="italic">{consultingPatient.patientProfile?.medicalHistory || 'None entered.'}</span></div>
                     </div>
+                    <div className="space-y-2 mt-4 pt-3 border-t border-stone-200/50">
+                      <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block">Patient Document Vault</span>
+                      {consultingPatient.medicalRecords && consultingPatient.medicalRecords.length > 0 ? (
+                        <div className="space-y-1.5 max-h-24 overflow-y-auto">
+                          {consultingPatient.medicalRecords.map((rec: any) => (
+                            <div key={rec.id} className="flex justify-between items-center p-2 rounded bg-white border border-stone-200">
+                              <span className="truncate max-w-[150px] font-medium text-[11px] text-stone-700">{rec.fileName}</span>
+                              <a
+                                href="#"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  alert(`Downloading simulated file: ${rec.fileName}`);
+                                }}
+                                className="text-[10px] text-ayur-primary font-bold hover:underline"
+                              >
+                                View File
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-[10px] text-stone-400 italic font-medium">No medical reports uploaded.</div>
+                      )}
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block">Logged Health Vitals</span>
@@ -267,6 +311,33 @@ export default function DoctorDashboard() {
 
                 <div className="space-y-3 border-t border-stone-100 pt-4">
                   <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">Add Prescribed Medicines</span>
+
+                  <div className="space-y-2 bg-stone-50 p-3 rounded-xl border border-stone-200/50">
+                    <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block">Quick Prescriptions Presets</span>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { name: 'Ashwagandha Churna', dosage: '1/2 tsp', timing: 'With warm milk before bed', duration: '30 days' },
+                        { name: 'Triphala Churna', dosage: '1/2 tsp', timing: 'After food', duration: '15 days' },
+                        { name: 'Chyawanprash', dosage: '1 tsp', timing: 'Before food', duration: '60 days' },
+                        { name: 'Dashmula Arishta', dosage: '15 ml', timing: 'After food', duration: '30 days' },
+                        { name: 'Maharasnadi Kwath', dosage: '20 ml', timing: 'Before food', duration: '15 days' }
+                      ].map((preset, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => {
+                            setNewMedName(preset.name);
+                            setNewMedDosage(preset.dosage);
+                            setNewMedTiming(preset.timing);
+                            setNewMedDuration(preset.duration);
+                          }}
+                          className="px-2.5 py-1 rounded-lg border border-emerald-250 bg-emerald-50/10 text-emerald-800 text-[10px] font-bold hover:bg-emerald-50 transition-colors"
+                        >
+                          + {preset.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-end">
                     <div className="space-y-1">
@@ -340,39 +411,110 @@ export default function DoctorDashboard() {
             </div>
           )}
 
+          {/* Visual Weekly Schedule Overview */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200 shadow-sm space-y-4">
+            <h3 className="font-bold text-sm text-stone-900 flex items-center gap-1.5">
+              <Calendar className="w-4 h-4 text-ayur-primary" />
+              Weekly Consultation Schedule Overview
+            </h3>
+            <div className="grid grid-cols-7 gap-2">
+              {[
+                { label: 'Mon', val: 1 },
+                { label: 'Tue', val: 2 },
+                { label: 'Wed', val: 3 },
+                { label: 'Thu', val: 4 },
+                { label: 'Fri', val: 5 },
+                { label: 'Sat', val: 6 },
+                { label: 'Sun', val: 0 }
+              ].map((day) => {
+                const isAvailable = availDays.includes(day.val);
+                const count = weeklyCounts[day.val];
+                return (
+                  <div
+                    key={day.val}
+                    className={`p-2.5 rounded-xl border text-center space-y-1 ${
+                      isAvailable
+                        ? 'bg-emerald-50/20 border-emerald-100'
+                        : 'bg-stone-50/50 border-stone-200/50 opacity-60'
+                    }`}
+                  >
+                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{day.label}</div>
+                    <div className={`text-xs font-extrabold ${count > 0 ? 'text-ayur-primary' : 'text-stone-500'}`}>
+                      {count} Booked
+                    </div>
+                    <div className="flex justify-center">
+                      <span className={`w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-ayur-primary' : 'bg-stone-300'}`}></span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Booking Queue */}
           <div className="space-y-4">
-            <h2 className="text-lg font-bold text-stone-900 flex items-center gap-2">
-              <Users className="w-5 h-5 text-ayur-primary" />
-              Patient Bookings Queue
-            </h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <h2 className="text-lg font-bold text-stone-900 flex items-center gap-2">
+                <Users className="w-5 h-5 text-ayur-primary" />
+                Patient Bookings Queue
+              </h2>
 
-            {activeBookings.length === 0 ? (
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  { label: 'Active Queue', val: 'ACTIVE' },
+                  { label: 'Pending', val: 'PENDING' },
+                  { label: 'Confirmed', val: 'CONFIRMED' },
+                  { label: 'Completed', val: 'COMPLETED' },
+                  { label: 'Cancelled', val: 'CANCELLED' }
+                ].map((tab) => {
+                  const isActive = statusFilter === tab.val;
+                  return (
+                    <button
+                      key={tab.val}
+                      type="button"
+                      onClick={() => setStatusFilter(tab.val as any)}
+                      className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all ${
+                        isActive 
+                          ? 'bg-ayur-primary border-transparent text-white shadow-sm' 
+                          : 'border-stone-200 bg-white text-stone-605 hover:bg-stone-50'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {filteredAppointments.length === 0 ? (
               <div className="p-6 text-center bg-white rounded-2xl border border-stone-200 border-dashed text-xs text-stone-500">
-                No active bookings in queue.
+                No appointments found matching this status.
               </div>
             ) : (
               <div className="space-y-4">
-                {activeBookings.map((app) => (
+                {filteredAppointments.map((app) => (
                   <div key={app.id} className="p-5 rounded-2xl border border-stone-200/50 bg-white space-y-4 shadow-sm">
                     <div className="flex justify-between items-start gap-4">
                       <div>
                         <h4 className="font-bold text-stone-900">{app.patient?.name}</h4>
                         <span className="text-[10px] text-stone-400">{app.patient?.email}</span>
-                        <div className="text-xs text-stone-605 mt-1.5 flex gap-4">
+                        <div className="text-xs text-stone-600 mt-1.5 flex gap-4">
                           <span>Date: <strong>{app.date}</strong></span>
                           <span>Time Slot: <strong>{app.timeSlot}</strong></span>
                         </div>
                       </div>
 
                       <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                        app.status === 'CONFIRMED' ? 'bg-emerald-50 text-ayur-primary' : 'bg-amber-50 text-amber-700'
+                        app.status === 'CONFIRMED' ? 'bg-emerald-50 text-ayur-primary' :
+                        app.status === 'COMPLETED' ? 'bg-emerald-50 text-emerald-800' :
+                        app.status === 'PENDING' ? 'bg-amber-50 text-amber-700' :
+                        'bg-red-50 text-red-700'
                       }`}>
                         {app.status}
                       </span>
                     </div>
 
-                    {app.status === 'PENDING' ? (
+                    {app.status === 'PENDING' && (
                       <div className="flex gap-3">
                         <button
                           onClick={() => handleApproveAppointment(app.id)}
@@ -387,7 +529,9 @@ export default function DoctorDashboard() {
                           Decline Request
                         </button>
                       </div>
-                    ) : (
+                    )}
+                    
+                    {app.status === 'CONFIRMED' && (
                       <button
                         onClick={() => startConsultation(app)}
                         className="w-full py-2 rounded-xl bg-ayur-primary text-white text-xs font-bold hover:bg-ayur-secondary shadow flex items-center justify-center gap-1.5"
@@ -395,6 +539,17 @@ export default function DoctorDashboard() {
                         <FileText className="w-4 h-4" />
                         <span>Launch Consultation Workspace</span>
                       </button>
+                    )}
+
+                    {app.status === 'COMPLETED' && (
+                      <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 text-xs leading-relaxed space-y-1">
+                        <strong className="text-[10px] text-stone-450 uppercase tracking-wider block">Doctor consultation notes:</strong>
+                        <p className="text-stone-600 italic">"{app.notes || 'No notes logged.'}"</p>
+                      </div>
+                    )}
+
+                    {app.status === 'CANCELLED' && (
+                      <div className="text-xs text-red-650 italic font-medium">This booking request was declined or cancelled.</div>
                     )}
                   </div>
                 ))}

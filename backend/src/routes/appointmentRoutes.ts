@@ -42,6 +42,7 @@ router.get('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
               name: true,
               email: true,
               patientProfile: true,
+              medicalRecords: true,
             },
           },
         },
