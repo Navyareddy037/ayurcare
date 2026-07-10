@@ -78,6 +78,9 @@ model Appointment {
   prescription  String?       @db.Text // Free-text prescription details
   medicinesJSON String?       @db.Text // JSON list of prescribed medicines
   receiptId     String?       // Receipt ID for download
+  visitType     String?       @default("clinic") // "clinic", "online", "follow-up"
+  nextFollowup  String?       // "YYYY-MM-DD"
+  followupDone  Boolean       @default(false)
   doctor        DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   patient       User          @relation(fields: [patientId], references: [id], onDelete: Cascade)
 }
@@ -111,3 +114,21 @@ model KnowledgeHubItem {
   tags    String? // Comma-separated tags
   image   String? // Mock image URL or placeholder
 }
+
+model DoctorTask {
+  id        Int      @id @default(autoincrement())
+  doctorId  Int
+  title     String
+  isDone    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  type      String   // "BOOKING_REQUEST", "CANCELLED", "RESCHEDULED", "LAB_REPORT"
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+

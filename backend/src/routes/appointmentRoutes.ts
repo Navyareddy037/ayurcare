@@ -33,8 +33,15 @@ router.get('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
         return res.status(404).json({ error: 'Doctor profile not found' });
       }
 
+      const { date } = req.query;
+      const whereCondition: any = { doctorId: doctorProfile.id };
+      if (date === 'today') {
+        const todayStr = new Date().toISOString().split('T')[0];
+        whereCondition.date = todayStr;
+      }
+
       appointments = await prisma.appointment.findMany({
-        where: { doctorId: doctorProfile.id },
+        where: whereCondition,
         include: {
           patient: {
             select: {
@@ -138,7 +145,7 @@ router.post('/', authMiddleware, async (req: AuthenticatedRequest, res: Response
 router.put('/', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { id: userId, role } = req.user!;
-    const { appointmentId, status, date, timeSlot, notes, prescription, medicinesJSON } = req.body;
+    const { appointmentId, status, date, timeSlot, notes, prescription, medicinesJSON, visitType, nextFollowup, followupDone } = req.body;
 
     if (!appointmentId) {
       return res.status(400).json({ error: 'Appointment ID required' });
@@ -207,6 +214,9 @@ router.put('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
     if (notes !== undefined) updateData.notes = notes;
     if (prescription !== undefined) updateData.prescription = prescription;
     if (medicinesJSON !== undefined) updateData.medicinesJSON = medicinesJSON;
+    if (visitType !== undefined) updateData.visitType = visitType;
+    if (nextFollowup !== undefined) updateData.nextFollowup = nextFollowup;
+    if (followupDone !== undefined) updateData.followupDone = followupDone;
 
     const updated = await prisma.appointment.update({
       where: { id: appId },
@@ -228,6 +238,105 @@ router.put('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
   } catch (error: any) {
     console.error('Update appointment error:', error);
     return res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+});
+
+// GET /api/appointments/notifications: list alerts for user
+router.get('/notifications', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId } = req.user!;
+    const notifications = await prisma.notification.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
+    return res.json({ success: true, notifications });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /api/appointments/notifications/:id/read: mark alert as read
+router.put('/notifications/:id/read', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId } = req.user!;
+    const notifId = parseInt(req.params.id);
+    const notif = await prisma.notification.findUnique({
+      where: { id: notifId }
+    });
+    if (!notif || notif.userId !== userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+    const updated = await prisma.notification.update({
+      where: { id: notifId },
+      data: { isRead: true }
+    });
+    return res.json({ success: true, notification: updated });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/appointments/tasks: list doctor tasks
+router.get('/tasks', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId, role } = req.user!;
+    if (role !== 'DOCTOR') return res.status(403).json({ error: 'Unauthorized' });
+
+    const doctorProfile = await prisma.doctorProfile.findUnique({ where: { userId } });
+    if (!doctorProfile) return res.status(404).json({ error: 'Doctor not found' });
+
+    const tasks = await prisma.doctorTask.findMany({
+      where: { doctorId: doctorProfile.id },
+      orderBy: { createdAt: 'desc' }
+    });
+    return res.json({ success: true, tasks });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /api/appointments/tasks: create doctor task
+router.post('/tasks', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId, role } = req.user!;
+    const { title } = req.body;
+    if (role !== 'DOCTOR') return res.status(403).json({ error: 'Unauthorized' });
+
+    const doctorProfile = await prisma.doctorProfile.findUnique({ where: { userId } });
+    if (!doctorProfile) return res.status(404).json({ error: 'Doctor not found' });
+
+    const newTask = await prisma.doctorTask.create({
+      data: { doctorId: doctorProfile.id, title, isDone: false }
+    });
+    return res.json({ success: true, task: newTask });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /api/appointments/tasks/:id: toggle task completion
+router.put('/tasks/:id', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId, role } = req.user!;
+    const taskId = parseInt(req.params.id);
+    const { isDone } = req.body;
+    if (role !== 'DOCTOR') return res.status(403).json({ error: 'Unauthorized' });
+
+    const doctorProfile = await prisma.doctorProfile.findUnique({ where: { userId } });
+    if (!doctorProfile) return res.status(404).json({ error: 'Doctor not found' });
+
+    const task = await prisma.doctorTask.findUnique({ where: { id: taskId } });
+    if (!task || task.doctorId !== doctorProfile.id) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    const updated = await prisma.doctorTask.update({
+      where: { id: taskId },
+      data: { isDone }
+    });
+    return res.json({ success: true, task: updated });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
   }
 });
 

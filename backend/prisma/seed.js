@@ -7,6 +7,8 @@ async function main() {
   console.log('Seeding Kaya Kalp database (PostgreSQL)...');
 
   // Clean existing tables (Prisma will handle constraints in correct sequence)
+  await prisma.doctorTask.deleteMany({});
+  await prisma.notification.deleteMany({});
   await prisma.knowledgeHubItem.deleteMany({});
   await prisma.review.deleteMany({});
   await prisma.appointment.deleteMany({});
@@ -251,18 +253,64 @@ async function main() {
 
   // 6. Create sample appointments
   if (doctorsCreated.length > 0) {
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    // Today's Confirmed Online Appt
     await prisma.appointment.create({
       data: {
         patientId: patientUser.id,
-        doctorId: doctorsCreated[0].id, // Dr. Aditya Sharma
+        doctorId: doctorsCreated[0].id,
+        date: todayStr,
+        timeSlot: '09:30',
+        status: 'CONFIRMED',
+        visitType: 'online',
+        notes: 'Follow-up on digestive patterns and Vata soothing herbs.',
+        receiptId: 'REC-XYZ-0001',
+      },
+    });
+
+    // Today's Confirmed Clinic Appt
+    await prisma.appointment.create({
+      data: {
+        patientId: patientUser.id,
+        doctorId: doctorsCreated[0].id,
+        date: todayStr,
+        timeSlot: '11:00',
+        status: 'CONFIRMED',
+        visitType: 'clinic',
+        notes: 'Nadi diagnosis and first Panchakarma Basti assessment.',
+        receiptId: 'REC-XYZ-0002',
+      },
+    });
+
+    // Today's Pending Follow-up request
+    await prisma.appointment.create({
+      data: {
+        patientId: patientUser.id,
+        doctorId: doctorsCreated[0].id,
+        date: todayStr,
+        timeSlot: '14:00',
+        status: 'PENDING',
+        visitType: 'follow-up',
+        notes: 'Weekly follow-up on back stiffness.',
+      },
+    });
+
+    // Future appointment
+    await prisma.appointment.create({
+      data: {
+        patientId: patientUser.id,
+        doctorId: doctorsCreated[0].id,
         date: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0], // 2 days from now
         timeSlot: '10:00',
         status: 'CONFIRMED',
+        visitType: 'clinic',
         notes: 'Initial checkup for digestive issues and scheduling Panchakarma.',
         receiptId: 'REC-XYZ-1234',
       },
     });
 
+    // Past completed appointment
     await prisma.appointment.create({
       data: {
         patientId: patientUser.id,
@@ -270,6 +318,7 @@ async function main() {
         date: new Date(Date.now() - 86400000 * 3).toISOString().split('T')[0], // 3 days ago
         timeSlot: '14:30',
         status: 'COMPLETED',
+        visitType: 'clinic',
         notes: 'Lower back stiffness evaluation.',
         prescription: 'Apply Dhanwantharam Thailam on lower back before bath daily.',
         medicinesJSON: JSON.stringify([
@@ -279,6 +328,26 @@ async function main() {
         receiptId: 'REC-XYZ-0987',
       },
     });
+
+    // 7. Seed Doctor Tasks (Dr. Naveen Jadhav)
+    await prisma.doctorTask.createMany({
+      data: [
+        { doctorId: doctorsCreated[0].id, title: 'Review lab reports for Rahul Verma', isDone: false },
+        { doctorId: doctorsCreated[0].id, title: 'Verify Panchakarma room readiness', isDone: true },
+        { doctorId: doctorsCreated[0].id, title: 'Update follow-up logs from yesterday', isDone: false }
+      ]
+    });
+
+    // 8. Seed Notifications for Dr. Naveen Jadhav (the doctor user id)
+    const docUser = await prisma.user.findFirst({ where: { email: 'panchakarma@kayakalp.com' } });
+    if (docUser) {
+      await prisma.notification.createMany({
+        data: [
+          { userId: docUser.id, type: 'BOOKING_REQUEST', message: 'New booking request from Rahul Verma for today at 14:00', isRead: false },
+          { userId: docUser.id, type: 'LAB_REPORT', message: 'Medical file/lab report uploaded by Rahul Verma', isRead: false }
+        ]
+      });
+    }
   }
 
   console.log('PostgreSQL database seeding completed successfully!');
