@@ -67,9 +67,9 @@ export default function Home() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   const emergencyHospitals = [
-    { name: 'Demo Hospital A', distance: 'To Be Updated', contact: 'Coming Soon', address: 'To Be Updated (Demo Information)' },
-    { name: 'Demo Hospital B', distance: 'To Be Updated', contact: 'Coming Soon', address: 'To Be Updated (Demo Information)' },
-    { name: 'Demo Hospital C', distance: 'To Be Updated', contact: 'Coming Soon', address: 'To Be Updated (Demo Information)' }
+    { name: 'Kaya Kalp Ayurvedic Wellness Center', distance: '0 km (Current Location)', contact: '+91 98277-XXXXX (Demo Info)', address: '102, Royal Avenue, New Palasia, Indore (M.P.)' },
+    { name: 'Choithram Hospital & Research Centre', distance: '4.8 km', contact: '+91 731-404XXXX (Demo Info)', address: 'Manik Bagh Road, Indore (M.P.)' },
+    { name: 'Bombay Hospital Indore', distance: '5.2 km', contact: '+91 731-257XXXX (Demo Info)', address: 'Eastern Ring Road, Vijay Nagar, Indore (M.P.)' }
   ];
 
   return (
@@ -186,8 +186,8 @@ export default function Home() {
                   <p className="text-[10px] text-stone-400 leading-normal">
                     Real-world hotlines and emergency contact features are disabled in this prototype.
                   </p>
-                  <span className="inline-block font-extrabold text-white bg-stone-700 px-3 py-1 rounded-lg text-[10px]">
-                    To Be Updated
+                  <span className="inline-block font-extrabold text-white bg-emerald-700 px-3 py-1 rounded-lg text-[10px]">
+                    Active (Demo Simulation)
                   </span>
                 </div>
               </div>
@@ -338,8 +338,8 @@ export default function Home() {
                 Emergency hotlines, helpline registries, and real-world ambulance dispatch services are disabled in this prototype. Contact and business details will be updated upon final deployment.
               </p>
               <div className="flex gap-4">
-                <span className="px-5 py-2.5 rounded-xl bg-stone-500 text-white font-extrabold text-xs">
-                  Coming Soon (To Be Updated)
+                <span className="px-5 py-2.5 rounded-xl bg-emerald-700 text-white font-extrabold text-xs">
+                  Active Demo Environment
                 </span>
               </div>
             </div>
