@@ -36,6 +36,27 @@ model PatientProfile {
   waterIntake      Float?   // in Liters
   exerciseMinutes  Int?     // in minutes
   mood             String?  // Vibe/mood state
+  profilePhoto     String?  @db.Text // Base64 or local URL
+  dob              String?  // YYYY-MM-DD
+  height           Float?   // in cm
+  maritalStatus    String?  // Single, Married, Divorced, Widowed
+  occupation       String?
+  address          String?  @db.Text
+  city             String?
+  state            String?
+  country          String?
+  pincode          String?
+  emergencyName    String?
+  emergencyPhone   String?
+  allergies        String?  @db.Text
+  surgeries        String?  @db.Text
+  medications      String?  @db.Text
+  familyHistory    String?  @db.Text
+  dietType         String?  // Vegetarian, Vegan, Eggetarian, Non-Vegetarian
+  stressLevel      String?  // Low, Medium, High
+  heartRate        Int?
+  symptoms         String?  @db.Text
+  insuranceDetails String?  @db.Text
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -52,6 +73,10 @@ model DoctorProfile {
   bio            String         @db.Text
   status         String         @default("APPROVED") // "PENDING", "APPROVED", "SUSPENDED"
   isOnline       Boolean        @default(true)
+  certificates   String?        @db.Text // Comma-separated certifications
+  consultModes   String?        @default("Clinic, Online") // Mode details
+  breakTime      String?        @default("13:00 - 14:00")
+  holidays       String?        // Comma-separated holidays "YYYY-MM-DD"
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   availabilities Availability[]
   appointments   Appointment[]
@@ -130,5 +155,15 @@ model Notification {
   message   String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+model SupportTicket {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  subject     String
+  description String   @db.Text
+  status      String   @default("OPEN") // "OPEN", "RESOLVED", "CLOSED"
+  response    String?  @db.Text // Admin reply
+  createdAt   DateTime @default(now())
 }
 

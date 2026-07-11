@@ -340,4 +340,65 @@ router.put('/tasks/:id', authMiddleware, async (req: AuthenticatedRequest, res: 
   }
 });
 
+// POST /api/appointments/tickets: Create a new support ticket
+router.post('/tickets', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId } = req.user!;
+    const { subject, description } = req.body;
+    const ticket = await prisma.supportTicket.create({
+      data: { userId, subject, description, status: 'OPEN' }
+    });
+    return res.json({ success: true, ticket });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/appointments/tickets: List user support tickets
+router.get('/tickets', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: userId } = req.user!;
+    const tickets = await prisma.supportTicket.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' }
+    });
+    return res.json({ success: true, tickets });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/appointments/tickets/admin: List all support tickets for administrator
+router.get('/tickets/admin', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { role } = req.user!;
+    if (role !== 'ADMIN') return res.status(403).json({ error: 'Unauthorized' });
+
+    const tickets = await prisma.supportTicket.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    return res.json({ success: true, tickets });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /api/appointments/tickets/admin/:id: Answer support ticket
+router.put('/tickets/admin/:id', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { role } = req.user!;
+    if (role !== 'ADMIN') return res.status(403).json({ error: 'Unauthorized' });
+
+    const ticketId = parseInt(req.params.id);
+    const { response, status } = req.body;
+    const updated = await prisma.supportTicket.update({
+      where: { id: ticketId },
+      data: { response, status }
+    });
+    return res.json({ success: true, ticket: updated });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

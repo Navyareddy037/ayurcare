@@ -84,7 +84,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/profile', authMiddleware, requireRole(['DOCTOR']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user!.id;
-    const { qualification, experience, specialization, languages, fee, clinicName, bio } = req.body;
+    const { qualification, experience, specialization, languages, fee, clinicName, bio, certificates, consultModes, breakTime, holidays } = req.body;
 
     const doctorProfile = await prisma.doctorProfile.findUnique({
       where: { userId },
@@ -104,6 +104,10 @@ router.post('/profile', authMiddleware, requireRole(['DOCTOR']), async (req: Aut
         fee: fee ? parseFloat(fee) : doctorProfile.fee,
         clinicName: clinicName ?? doctorProfile.clinicName,
         bio: bio ?? doctorProfile.bio,
+        certificates: certificates !== undefined ? certificates : doctorProfile.certificates,
+        consultModes: consultModes ?? doctorProfile.consultModes,
+        breakTime: breakTime ?? doctorProfile.breakTime,
+        holidays: holidays !== undefined ? holidays : doctorProfile.holidays,
       },
     });
 

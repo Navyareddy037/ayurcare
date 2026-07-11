@@ -6,9 +6,39 @@ import {
   Users, Calendar, FileText, Clock, Plus, Award, 
   Trash2, CheckCircle2, ChevronRight, User, Heart,
   Bell, Search, RefreshCw, Send, CheckSquare, Square, 
-  Download, Share2, ClipboardList, TrendingUp
+  Download, Share2, ClipboardList, TrendingUp, Sun, Moon, Globe, MessageSquare
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+
+// Translation Dictionary for Doctor Portal
+const TRANSLATIONS: any = {
+  en: {
+    welcome: "Welcome, Vaidya",
+    sub: "Doctor Consultation Console",
+    practiceSettings: "Manage Practice Settings",
+    availDays: "Configure Available Working Days",
+    analytics: "Practice Performance Analytics",
+    earnings: "Total Monthly Revenue",
+    queue: "Patient Bookings Queue",
+    recentlySeen: "Recently Seen Patients Registry",
+    notesLabel: "Ayurvedic Assessment & Prescription Notes",
+    tasksLabel: "Doctor Tasks Checklist",
+    saveBtn: "Save Settings"
+  },
+  hi: {
+    welcome: "स्वागत है, वैद्य जी",
+    sub: "चिकित्सक परामर्श कंसोल",
+    practiceSettings: "अभ्यास सेटिंग्स प्रबंधित करें",
+    availDays: "कार्य दिवसों को कॉन्फ़िगर करें",
+    analytics: "अभ्यास प्रदर्शन विश्लेषण",
+    earnings: "कुल मासिक आय",
+    queue: "रोगी बुकिंग कतार",
+    recentlySeen: "हाल ही में देखे गए मरीजों की सूची",
+    notesLabel: "आयुर्वेदिक मूल्यांकन और नुस्खा नोट्स",
+    tasksLabel: "चिकित्सक कार्य चेकलिस्ट",
+    saveBtn: "सेटिंग्स सहेजें"
+  }
+};
 
 export default function DoctorDashboard() {
   const { user, logout, loading: authLoading } = useAuth();
@@ -27,7 +57,22 @@ export default function DoctorDashboard() {
   const [editBio, setEditBio] = useState('');
   const [editClinicName, setEditClinicName] = useState('');
   const [editFee, setEditFee] = useState('');
+  const [editCertificates, setEditCertificates] = useState('');
+  const [editConsultModes, setEditConsultModes] = useState('Clinic, Online');
+  const [editBreakTime, setEditBreakTime] = useState('13:00 - 14:00');
+  const [editHolidays, setEditHolidays] = useState('');
   const [profileSuccess, setProfileSuccess] = useState(false);
+
+  // Theme & Language
+  const [darkMode, setDarkMode] = useState(false);
+  const [lang, setLang] = useState<'en' | 'hi'>('en');
+
+  // Simulated Doctor Chat
+  const [doctorMessages, setDoctorMessages] = useState<any[]>([
+    { sender: 'patient', text: 'Namaste doctor! I wanted to check if I can eat salads at dinner?' },
+    { sender: 'doctor', text: 'Namaste! Salads are raw and dry (Ruksha), which aggravates Vata. Please avoid raw foods at dinner; opt for warm cooked stews instead.' }
+  ]);
+  const [doctorChatInput, setDoctorChatInput] = useState('');
 
   // Filtering & Search
   const [statusFilter, setStatusFilter] = useState<'TODAY' | 'WEEK' | 'PENDING' | 'CANCELLED' | 'COMPLETED'>('TODAY');
@@ -83,6 +128,10 @@ export default function DoctorDashboard() {
           setEditBio(docProf.bio || '');
           setEditClinicName(docProf.clinicName || '');
           setEditFee(docProf.fee ? String(docProf.fee) : '500');
+          setEditCertificates(docProf.certificates || '');
+          setEditConsultModes(docProf.consultModes || 'Clinic, Online');
+          setEditBreakTime(docProf.breakTime || '13:00 - 14:00');
+          setEditHolidays(docProf.holidays || '');
         }
         
         const docRes = await api.get('/doctors');
@@ -128,7 +177,11 @@ export default function DoctorDashboard() {
         qualification: editQualification,
         bio: editBio,
         clinicName: editClinicName,
-        fee: editFee
+        fee: parseFloat(editFee) || 500,
+        certificates: editCertificates,
+        consultModes: editConsultModes,
+        breakTime: editBreakTime,
+        holidays: editHolidays
       });
       if (res.data && res.data.success) {
         setProfile(res.data.profile);
@@ -539,23 +592,42 @@ For queries, contact support@kayakalp.com.
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-      
-      {/* Header Panel with Notifications & Rating */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-200/50 pb-6 relative">
-        <div>
-          <h1 className="text-2xl font-extrabold text-stone-900 flex items-center gap-2">
-            <span>Welcome, {user?.name}</span>
-            <span className="text-[10px] bg-emerald-50 border border-emerald-200 text-ayur-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-              {profile?.specialization || 'Ayurvedic Vaidya'}
-            </span>
-          </h1>
-          <p className="text-xs text-stone-550 mt-0.5 font-sans">
-            Manage daily appointments, record diagnostic plans, and prescribe classical formulations.
-          </p>
-        </div>
+    <div className={`min-h-screen transition-colors duration-200 ${darkMode ? 'bg-stone-950 text-stone-100' : 'bg-stone-50 text-stone-850'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+        
+        {/* Header Panel with Notifications & Rating */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-200/50 pb-6 relative">
+          <div>
+            <h1 className="text-2xl font-extrabold text-stone-900 dark:text-white flex items-center gap-2">
+              <span>{lang === 'en' ? 'Welcome, Vaidya' : 'स्वागत है, वैद्य जी'} {user?.name}</span>
+              <span className="text-[10px] bg-emerald-50 border border-emerald-200 text-ayur-primary font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                {profile?.specialization || 'Ayurvedic Vaidya'}
+              </span>
+            </h1>
+            <p className="text-xs text-stone-550 mt-0.5 font-sans">
+              {lang === 'en' ? 'Manage daily appointments, record diagnostic plans, and prescribe classical formulations.' : 'दैनिक नियुक्तियों को प्रबंधित करें, निदान योजनाओं को दर्ज करें और नुस्खे लिखें।'}
+            </p>
+          </div>
 
-        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">
+            {/* Language switch button */}
+            <button
+              type="button"
+              onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
+              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-100 dark:hover:bg-stone-800 text-xs font-bold flex items-center gap-1 bg-white dark:bg-stone-900"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>{lang === 'en' ? 'हिन्दी' : 'English'}</span>
+            </button>
+
+            {/* Dark Mode toggle button */}
+            <button
+              type="button"
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-100 dark:hover:bg-stone-800 flex items-center justify-center bg-white dark:bg-stone-900"
+            >
+              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-605" />}
+            </button>
           {/* Notifications Dropdown Toggle */}
           <div className="relative">
             <button
@@ -662,31 +734,31 @@ For queries, contact support@kayakalp.com.
           )}
 
           {/* Practice Stats Analytics Dashboard Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-2xl bg-white border border-stone-200/50 shadow-sm flex items-center justify-between">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="p-4 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/50 dark:border-stone-800 shadow-sm flex items-center justify-between col-span-1">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block">Today's Load</span>
-                <div className="text-xl font-black text-stone-900">
+                <div className="text-xl font-black text-stone-900 dark:text-white">
                   {appointments.filter(a => a.date === new Date().toISOString().split('T')[0] && a.status !== 'CANCELLED').length} Appointments
                 </div>
               </div>
-              <Calendar className="w-8 h-8 text-emerald-800 bg-emerald-50 p-1.5 rounded-lg" />
+              <Calendar className="w-8 h-8 text-emerald-800 bg-emerald-50 dark:bg-emerald-950/20 p-1.5 rounded-lg" />
             </div>
 
-            <div className="p-4 rounded-2xl bg-white border border-stone-200/50 shadow-sm flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/50 dark:border-stone-800 shadow-sm flex items-center justify-between col-span-1">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block">Completed (Month)</span>
-                <div className="text-xl font-black text-stone-900">
+                <div className="text-xl font-black text-stone-900 dark:text-white">
                   {completedVisits.length} Consults
                 </div>
               </div>
-              <CheckCircle2 className="w-8 h-8 text-emerald-800 bg-emerald-50 p-1.5 rounded-lg" />
+              <CheckCircle2 className="w-8 h-8 text-emerald-800 bg-emerald-50 dark:bg-emerald-950/20 p-1.5 rounded-lg" />
             </div>
 
             {/* Practice Daily consults trend chart */}
-            <div className="p-3 rounded-2xl bg-white border border-stone-200/50 shadow-sm space-y-1.5 flex flex-col justify-between">
+            <div className="p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/50 dark:border-stone-800 shadow-sm space-y-1.5 flex flex-col justify-between col-span-1">
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Practice Growth (Simulated)</span>
+                <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Daily Trend</span>
                 <TrendingUp className="w-3.5 h-3.5 text-ayur-primary" />
               </div>
               <div className="h-10 w-full">
@@ -694,6 +766,25 @@ For queries, contact support@kayakalp.com.
                   <LineChart data={dailyTrendData}>
                     <Line type="monotone" dataKey="consultations" stroke="#2E5A44" strokeWidth={2} dot={{ r: 1.5 }} />
                   </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Monthly Reports BarChart */}
+            <div className="p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/50 dark:border-stone-800 shadow-sm space-y-1.5 flex flex-col justify-between col-span-1">
+              <div className="flex justify-between items-center">
+                <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Monthly Distribution</span>
+                <BarChart className="w-3.5 h-3.5 text-amber-600" />
+              </div>
+              <div className="h-10 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={[
+                    { name: 'May', consults: 8 },
+                    { name: 'Jun', consults: 14 },
+                    { name: 'Jul', consults: 22 }
+                  ]}>
+                    <Bar dataKey="consults" fill="#AA7C11" radius={[2, 2, 0, 0]} />
+                  </BarChart>
                 </ResponsiveContainer>
               </div>
             </div>
@@ -1312,6 +1403,43 @@ For queries, contact support@kayakalp.com.
             )}
           </div>
 
+          {/* Patient Chat Assistant */}
+          <div className="p-5 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+            <h3 className="font-bold text-sm text-stone-905 dark:text-white flex items-center gap-1.5">
+              <MessageSquare className="w-4 h-4 text-ayur-primary" />
+              Patient Chat Assistant
+            </h3>
+            <div className="p-3 bg-stone-50 dark:bg-stone-850/50 border border-stone-200/20 rounded-2xl h-36 overflow-y-auto space-y-2">
+              {doctorMessages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.sender === 'doctor' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`p-2 rounded-xl max-w-[80%] text-[11px] ${msg.sender === 'doctor' ? 'bg-ayur-primary text-white' : 'bg-white dark:bg-stone-800 border border-stone-200/50 text-stone-800 dark:text-stone-200'}`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              if (!doctorChatInput) return;
+              setDoctorMessages([...doctorMessages, { sender: 'doctor', text: doctorChatInput }]);
+              setDoctorChatInput('');
+              setTimeout(() => {
+                setDoctorMessages(prev => [...prev, { sender: 'patient', text: 'Thank you doctor, I will follow this advice.' }]);
+              }, 1200);
+            }} className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Reply to patient..."
+                value={doctorChatInput}
+                onChange={(e) => setDoctorChatInput(e.target.value)}
+                className="w-full px-2.5 py-1.5 rounded-lg border border-stone-200 dark:border-stone-850 bg-white dark:bg-stone-850 text-xs focus:outline-none"
+              />
+              <button type="submit" className="px-3 bg-ayur-primary text-white text-xs font-bold rounded-lg hover:bg-ayur-secondary flex items-center justify-center">
+                Send
+              </button>
+            </form>
+          </div>
+
           {/* Availability Settings days checklist */}
           <div className="p-5 rounded-3xl bg-white border border-stone-200 shadow-sm space-y-4">
             <h3 className="font-bold text-sm text-stone-900 flex items-center gap-1.5">
@@ -1414,7 +1542,7 @@ For queries, contact support@kayakalp.com.
                   type="text"
                   value={editQualification}
                   onChange={(e) => setEditQualification(e.target.value)}
-                  className="w-full p-2 border border-stone-200 bg-white rounded-lg"
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
                 />
               </div>
               <div className="space-y-1">
@@ -1423,7 +1551,47 @@ For queries, contact support@kayakalp.com.
                   type="number"
                   value={editFee}
                   onChange={(e) => setEditFee(e.target.value)}
-                  className="w-full p-2 border border-stone-200 bg-white rounded-lg"
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-stone-500 font-bold block">Certificates & Awards</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Gold Medalist BAMS, Panchakarma certified..."
+                  value={editCertificates}
+                  onChange={(e) => setEditCertificates(e.target.value)}
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-stone-500 font-bold block">Consultation Modes</label>
+                <input
+                  type="text"
+                  placeholder="Clinic, Online"
+                  value={editConsultModes}
+                  onChange={(e) => setEditConsultModes(e.target.value)}
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-stone-500 font-bold block">Break Timings</label>
+                <input
+                  type="text"
+                  placeholder="e.g. 13:00 - 14:00"
+                  value={editBreakTime}
+                  onChange={(e) => setEditBreakTime(e.target.value)}
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-stone-500 font-bold block">Holiday Calendar (Comma-separated dates)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. 2026-08-15, 2026-10-02"
+                  value={editHolidays}
+                  onChange={(e) => setEditHolidays(e.target.value)}
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
                 />
               </div>
               <div className="space-y-1">
@@ -1432,7 +1600,7 @@ For queries, contact support@kayakalp.com.
                   type="text"
                   value={editClinicName}
                   onChange={(e) => setEditClinicName(e.target.value)}
-                  className="w-full p-2 border border-stone-200 bg-white rounded-lg"
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
                 />
               </div>
               <div className="space-y-1">
@@ -1441,7 +1609,7 @@ For queries, contact support@kayakalp.com.
                   value={editBio}
                   onChange={(e) => setEditBio(e.target.value)}
                   rows={3}
-                  className="w-full p-2 border border-stone-200 bg-white rounded-lg"
+                  className="w-full p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-stone-900 dark:text-white"
                 />
               </div>
               <button
@@ -1453,6 +1621,7 @@ For queries, contact support@kayakalp.com.
             </form>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
