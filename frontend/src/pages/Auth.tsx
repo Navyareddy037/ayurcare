@@ -275,13 +275,13 @@ export default function AuthPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-stone-750">Full Name</label>
+                  <label className="text-xs font-semibold text-stone-755">Full Name</label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 w-4 h-4 text-stone-400" />
                     <input
                       type="text"
                       required
-                      placeholder="Rahul Verma"
+                      placeholder="Navya reddy"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none focus:ring-2 focus:ring-ayur-primary"
@@ -290,13 +290,13 @@ export default function AuthPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-stone-750">Email Address</label>
+                  <label className="text-xs font-semibold text-stone-755">Email Address</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 w-4 h-4 text-stone-400" />
                     <input
                       type="email"
                       required
-                      placeholder="rahul@example.com"
+                      placeholder="navya@gmail.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none focus:ring-2 focus:ring-ayur-primary"
@@ -324,7 +324,7 @@ export default function AuthPage() {
                 <div className="space-y-4 border-t border-stone-200/50 pt-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-stone-750">Age</label>
+                      <label className="text-xs font-semibold text-stone-755">Age</label>
                       <input
                         type="number"
                         placeholder="Age"
@@ -334,7 +334,7 @@ export default function AuthPage() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-stone-750">Gender</label>
+                      <label className="text-xs font-semibold text-stone-755">Gender</label>
                       <select
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
@@ -351,7 +351,7 @@ export default function AuthPage() {
                       <label className="text-xs font-semibold text-stone-755">Phone</label>
                       <input
                         type="text"
-                        placeholder="+91 98765 43210"
+                        placeholder=""
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         className="w-full px-3 py-2.5 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none"
