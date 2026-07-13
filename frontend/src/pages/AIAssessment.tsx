@@ -79,7 +79,7 @@ export default function AIAssessment() {
     if (!report) return;
     const text = `
 ==================================================
-           AYURCARE AI ASSESSMENT REPORT
+           KAYA KALP AI ASSESSMENT REPORT
 ==================================================
 Age: ${age} | Gender: ${gender}
 Pain Severity: ${painLevel} / 10 | Duration: ${duration}
@@ -121,7 +121,7 @@ ${report.disclaimer}
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `AyurCare_AI_Assessment_${report.recommendedSpecialist.replace(' ', '_')}.txt`;
+    a.download = `Kaya_Kalp_AI_Assessment_${report.recommendedSpecialist.replace(' ', '_')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

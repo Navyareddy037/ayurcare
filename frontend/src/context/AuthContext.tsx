@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   const refreshSession = async () => {
-    const token = localStorage.getItem('ayurcare_token');
+    const token = localStorage.getItem('kayakalp_token');
     if (!token) {
       setUser(null);
       setLoading(false);
@@ -47,12 +47,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (res.data && res.data.authenticated) {
         setUser(res.data.user);
       } else {
-        localStorage.removeItem('ayurcare_token');
+        localStorage.removeItem('kayakalp_token');
         setUser(null);
       }
     } catch (err) {
       console.error('Session validation failed:', err);
-      localStorage.removeItem('ayurcare_token');
+      localStorage.removeItem('kayakalp_token');
       setUser(null);
     } finally {
       setLoading(false);
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const res = await api.post('/auth/login', { email, password });
       if (res.data && res.data.success) {
-        localStorage.setItem('ayurcare_token', res.data.token);
+        localStorage.setItem('kayakalp_token', res.data.token);
         setUser(res.data.user);
         return { success: true };
       }
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const res = await api.post('/auth/signup', payload);
       if (res.data && res.data.success) {
-        localStorage.setItem('ayurcare_token', res.data.token);
+        localStorage.setItem('kayakalp_token', res.data.token);
         setUser(res.data.user);
         await refreshSession();
         return { success: true };
@@ -95,7 +95,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    localStorage.removeItem('ayurcare_token');
+    localStorage.removeItem('kayakalp_token');
     setUser(null);
   };
 

@@ -5,7 +5,7 @@ import prisma from '../lib/db';
 import { authMiddleware, AuthenticatedRequest } from '../middleware/authMiddleware';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'ayurcare-secret-key-for-internship-evaluation-98765';
+const JWT_SECRET = process.env.JWT_SECRET || 'kayakalp-secret-key-for-internship-evaluation-98765';
 
 // GET /api/auth/me: Get current user details from JWT token
 router.get('/me', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
@@ -109,7 +109,7 @@ router.post('/signup', async (req: Request, res: Response) => {
           specialization: doctorDetails?.specialization || 'Panchakarma Specialist',
           languages: doctorDetails?.languages || 'English, Hindi',
           fee: doctorDetails?.fee ? parseFloat(doctorDetails.fee) : 500,
-          clinicName: doctorDetails?.clinicName || 'AyurCare Wellness Clinic',
+          clinicName: doctorDetails?.clinicName || 'Kaya Kalp Wellness Center',
           bio: doctorDetails?.bio || 'Experienced Ayurvedic Vaidya.',
           status: 'APPROVED', // Auto approved for development demo
           certificates: doctorDetails?.certificates || null,

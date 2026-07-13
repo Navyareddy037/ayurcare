@@ -55,7 +55,7 @@ export default function AdminDashboard() {
         const patientList = Array.from(new Set(appRes.data.appointments.map((a: any) => a.patientId)))
           .map(id => {
             const matched = appRes.data.appointments.find((a: any) => a.patientId === id)?.patient;
-            return matched || { id, name: 'Sample Patient', email: 'patient@ayurcare.com' };
+            return matched || { id, name: 'Sample Patient', email: 'patient@kayakalp.com' };
           });
         setPatients(patientList);
       }
