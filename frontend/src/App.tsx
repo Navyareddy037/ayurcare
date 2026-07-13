@@ -11,6 +11,9 @@ import KnowledgeHub from './pages/KnowledgeHub';
 import PatientDashboard from './pages/PatientDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import TreatmentsDetail from './pages/TreatmentsDetail';
+import PanchakarmaDetail from './pages/PanchakarmaDetail';
+import Products from './pages/Products';
 import { Calendar } from 'lucide-react';
 
 // Route protection wrapper checking authenticated session and matching roles
@@ -57,6 +60,9 @@ export default function App() {
               <Route path="/doctors" element={<DoctorDirectory />} />
               <Route path="/ai-assessment" element={<AIAssessment />} />
               <Route path="/knowledge-hub" element={<KnowledgeHub />} />
+              <Route path="/treatments/:id?" element={<TreatmentsDetail />} />
+              <Route path="/panchakarma" element={<PanchakarmaDetail />} />
+              <Route path="/products" element={<Products />} />
 
               {/* Patient Routes */}
               <Route 

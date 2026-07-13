@@ -73,31 +73,31 @@ export default function Header() {
                   <div className="space-y-3">
                     <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Panchakarma Detox</span>
                     <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Vamana (Emesis)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Virechana (Purgation)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Basti (Enema Therapy)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Nasya (Nasal Cleansing)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Raktamokshana (Blood purification)</li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Vamana (Emesis)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Virechana (Purgation)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Basti (Enema Therapy)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Nasya (Nasal Cleansing)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Raktamokshana (Blood purification)</Link></li>
                     </ul>
                   </div>
 
                   <div className="space-y-3">
                     <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Clinical Therapies</span>
                     <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Abhyanga (Warm Massage)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Shirodhara (Oil Flow)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Udvartana (Powder Massage)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Patra Pinda Sweda</li>
+                      <li><Link to="/treatments/joint-pain" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Abhyanga (Warm Massage)</Link></li>
+                      <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Shirodhara (Oil Flow)</Link></li>
+                      <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Udvartana (Powder Massage)</Link></li>
+                      <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Patra Pinda Sweda</Link></li>
                     </ul>
                   </div>
 
                   <div className="space-y-3">
                     <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Special Programs</span>
                     <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Joint Care (Sandhigata)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Stress & Insomnia Care</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Spine & Back Care (Kati Basti)</li>
-                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Weight Management</li>
+                      <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Joint Care (Sandhigata)</Link></li>
+                      <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Stress & Insomnia Care</Link></li>
+                      <li><Link to="/treatments/joint-pain" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Spine & Back Care (Kati Basti)</Link></li>
+                      <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Weight Management</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -126,6 +126,10 @@ export default function Header() {
             >
               Health Packages
             </button>
+
+            <Link to="/products" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide">
+              Ayurvedic Products
+            </Link>
 
             <button 
               onClick={() => handleAnchorScroll('blogs')}
@@ -241,6 +245,27 @@ export default function Header() {
             className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
           >
             Online Consultation (AI check)
+          </Link>
+          <Link
+            to="/panchakarma"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
+          >
+            Panchakarma Detox
+          </Link>
+          <Link
+            to="/treatments"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
+          >
+            Clinical Diseases
+          </Link>
+          <Link
+            to="/products"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
+          >
+            Ayurvedic Products
           </Link>
           <button
             onClick={() => handleAnchorScroll('wellness-programs')}
