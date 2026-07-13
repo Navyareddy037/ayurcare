@@ -14,7 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import TreatmentsDetail from './pages/TreatmentsDetail';
 import PanchakarmaDetail from './pages/PanchakarmaDetail';
 import Products from './pages/Products';
-import { Calendar } from 'lucide-react';
+import { Calendar, MessageSquare } from 'lucide-react';
 
 // Route protection wrapper checking authenticated session and matching roles
 const PrivateRoute: React.FC<{ children: React.ReactNode; allowedRoles?: string[] }> = ({ children, allowedRoles }) => {
@@ -99,6 +99,19 @@ export default function App() {
             </Routes>
           </main>
           <Footer />
+
+          {/* Floating WhatsApp Support Button */}
+          <a
+            href="https://wa.me/919827755555"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-6 left-6 z-50 p-4 rounded-full bg-emerald-500 text-white shadow-xl hover:bg-emerald-600 hover:scale-105 transition-all duration-305 flex items-center justify-center group"
+          >
+            <MessageSquare className="w-5 h-5" />
+            <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap text-xs font-extrabold group-hover:pl-2">
+              WhatsApp Support
+            </span>
+          </a>
 
           {/* Floating Book Appointment CTA Button */}
           <Link
