@@ -14,6 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import TreatmentsDetail from './pages/TreatmentsDetail';
 import PanchakarmaDetail from './pages/PanchakarmaDetail';
 import Products from './pages/Products';
+import Gallery from './pages/Gallery';
 import { Calendar, MessageSquare } from 'lucide-react';
 
 // Route protection wrapper checking authenticated session and matching roles
@@ -63,6 +64,7 @@ export default function App() {
               <Route path="/treatments/:id?" element={<TreatmentsDetail />} />
               <Route path="/panchakarma" element={<PanchakarmaDetail />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/gallery" element={<Gallery />} />
 
               {/* Patient Routes */}
               <Route 

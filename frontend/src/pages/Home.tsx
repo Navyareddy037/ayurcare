@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Heart, Sparkles, Activity, ShieldAlert, Compass, Search, 
@@ -190,8 +190,39 @@ export default function Home() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const [counters, setCounters] = useState({ patients: 0, years: 0, families: 0, doctors: 0, treatments: 0 });
+  useEffect(() => {
+    const duration = 2000;
+    const steps = 50;
+    const interval = duration / steps;
+    let currentStep = 0;
+    
+    const timer = setInterval(() => {
+      currentStep++;
+      setCounters({
+        patients: Math.floor((12500 / steps) * currentStep),
+        years: Math.min(15, Math.floor((15 / steps) * currentStep)),
+        families: Math.floor((8400 / steps) * currentStep),
+        doctors: Math.min(25, Math.floor((25 / steps) * currentStep)),
+        treatments: Math.min(40, Math.floor((40 / steps) * currentStep))
+      });
+      if (currentStep >= steps) {
+        clearInterval(timer);
+        setCounters({ patients: 12500, years: 15, families: 8400, doctors: 25, treatments: 40 });
+      }
+    }, interval);
+    
+    return () => clearInterval(timer);
+  }, []);
+
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
+  const [contactSuccess, setContactSuccess] = useState(false);
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactSuccess(true);
+    setTimeout(() => setContactSuccess(false), 3000);
+  };
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -203,8 +234,7 @@ export default function Home() {
 
   return (
     <div className="space-y-24 pb-20 font-sans selection:bg-emerald-100 selection:text-emerald-950 bg-[#FBFBF9]">
-      
-      {/* 1. HERO BANNER */}
+       {/* 1. HERO BANNER */}
       <section className="relative overflow-hidden pt-12 pb-20 lg:pt-24 bg-gradient-to-b from-emerald-50/40 via-[#FBFBF9] to-transparent">
         <div className="absolute top-10 left-10 -z-10 w-96 h-96 rounded-full bg-emerald-150/30 blur-3xl animate-pulse"></div>
         <div className="absolute bottom-10 right-10 -z-10 w-[500px] h-[500px] rounded-full bg-amber-100/20 blur-3xl"></div>
@@ -215,18 +245,18 @@ export default function Home() {
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-150/50 text-ayur-primary text-xs font-bold tracking-wide">
                 <Sparkles className="w-4 h-4 text-ayur-accent animate-spin" style={{ animationDuration: '6s' }} />
-                <span>Modernizing Ayurvedic Excellence Since 2018</span>
+                <span>Premium Ayurvedic Care & Healing Center</span>
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 leading-[1.1] font-sans">
-                Premium Ayurvedic Healthcare for <span className="text-ayur-primary relative">
-                  Modern Vigor
+                Authentic Ayurveda for <span className="text-ayur-primary relative">
+                  Modern Vitality
                   <span className="absolute bottom-1 left-0 w-full h-1.5 bg-ayur-accent/20 -z-10 rounded"></span>
                 </span>
               </h1>
               
               <p className="text-sm sm:text-base text-stone-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
-                Bringing 5,000 years of traditional medicine to the digital age. Calculate your body Doshas, consult BAMS-certified Vaidyas, and track your daily wellness logs.
+                Established with the vision of carrying forward the lineage of pure Ayurveda. Consult BAMS-certified Vaidyas, receive customized Panchakarma detoxes, and find natural balance.
               </p>
 
               {/* Call-to-action CTAs */}
@@ -235,7 +265,7 @@ export default function Home() {
                   to="/doctors"
                   className="px-7 py-3.5 rounded-2xl bg-ayur-primary text-white font-bold hover:bg-ayur-secondary transition-all shadow-lg hover:shadow-emerald-950/20 hover:scale-[1.02] flex items-center gap-1.5 text-xs tracking-wider uppercase"
                 >
-                  <span>Book Appointment</span>
+                  <span>Book Consultation</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 
@@ -246,13 +276,6 @@ export default function Home() {
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
                   <span>Online AI Consultation</span>
                 </Link>
-
-                <Link
-                  to="/doctors"
-                  className="px-7 py-3.5 rounded-2xl bg-stone-900 text-white font-bold hover:bg-stone-800 transition-all hover:scale-[1.02] text-xs flex items-center gap-1 shadow-sm"
-                >
-                  <span>Find a Doctor</span>
-                </Link>
               </div>
 
               {/* Trusted metrics */}
@@ -262,56 +285,68 @@ export default function Home() {
                   <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-1">Expert Vaidyas</div>
                 </div>
                 <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-ayur-primary">15,000+</div>
-                  <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-1">Healed Patients</div>
+                  <div className="text-2xl sm:text-3xl font-extrabold text-ayur-primary">12,500+</div>
+                  <div className="text-[10px] text-stone-505 font-bold uppercase tracking-wider mt-1">Healed Patients</div>
                 </div>
                 <div>
                   <div className="text-2xl sm:text-3xl font-extrabold text-ayur-primary">99.2%</div>
-                  <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-1">Satisfaction Rate</div>
+                  <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-1">Recovery Rate</div>
                 </div>
               </div>
             </div>
 
-            {/* Quick Access Card */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-md rounded-[32px] bg-white border border-stone-150 p-6 sm:p-8 shadow-xl space-y-6">
-                <div className="flex items-center justify-between border-b border-stone-100 pb-4">
-                  <div className="space-y-1">
-                    <h3 className="font-bold text-sm text-stone-900">Kaya Kalp Wellness Services</h3>
-                    <p className="text-[10px] text-stone-400">Instantly accessible digital workspace</p>
-                  </div>
-                  <span className="text-[9px] bg-emerald-100/70 text-ayur-primary font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    Online
-                  </span>
-                </div>
+            {/* Right Overlapping Images Grid Montage */}
+            <div className="lg:col-span-5 relative w-full h-[450px] hidden lg:block">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl -z-10"></div>
+              
+              {/* Collage Image 1: Doctor consulting with patient */}
+              <div className="absolute top-0 left-0 w-48 h-48 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-20">
+                <img 
+                  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=350&h=350" 
+                  alt="Doctor Consultation" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
 
-                <div className="space-y-3">
-                  {[
-                    { title: 'Symptom Checker', path: '/ai-assessment', desc: 'Identify health imbalances instantly', icon: Activity },
-                    { title: 'Consult Certified Vaidyas', path: '/doctors', desc: 'Video and clinic consultations', icon: Users },
-                    { title: 'Ayurvedic Encyclopedia', path: '/knowledge-hub', desc: 'Explore classical medicinal herbs', icon: BookOpen }
-                  ].map((srv, idx) => {
-                    const Icon = srv.icon;
-                    return (
-                      <Link
-                        key={idx}
-                        to={srv.path}
-                        className="flex justify-between items-center p-4 rounded-2xl border border-stone-100 hover:border-emerald-200 bg-stone-50/30 hover:bg-emerald-50/10 group transition-all text-xs"
-                      >
-                        <div className="flex gap-3 items-center">
-                          <div className="w-9 h-9 rounded-xl bg-emerald-50 group-hover:bg-emerald-100 text-ayur-primary flex items-center justify-center transition-colors">
-                            <Icon className="w-4.5 h-4.5" />
-                          </div>
-                          <div>
-                            <div className="font-bold text-stone-800 group-hover:text-ayur-primary transition-colors">{srv.title}</div>
-                            <div className="text-[10px] text-stone-400 mt-0.5">{srv.desc}</div>
-                          </div>
-                        </div>
-                        <ArrowUpRight className="w-4.5 h-4.5 text-stone-400 group-hover:text-ayur-primary transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </Link>
-                    );
-                  })}
-                </div>
+              {/* Collage Image 2: Happy family wellness */}
+              <div className="absolute top-12 right-0 w-40 h-40 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-10">
+                <img 
+                  src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=300&h=300" 
+                  alt="Happy family wellness" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+
+              {/* Collage Image 3: Herbal preparation */}
+              <div className="absolute bottom-2 left-8 w-44 h-44 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-30">
+                <img 
+                  src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=350&h=350" 
+                  alt="Herbal formulation preparation" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+
+              {/* Collage Image 4: Green medicinal plants */}
+              <div className="absolute bottom-16 right-4 w-32 h-32 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-20">
+                <img 
+                  src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=250&h=250" 
+                  alt="Green medicinal plants" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+
+              {/* Floating Leaf 1 */}
+              <div className="absolute -top-6 left-1/3 text-emerald-600 animate-float opacity-70 z-30" style={{ animationDelay: '0.5s' }}>
+                <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
+                  <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.33,18C13,19 19,16 22,8C20,8 19,9 17,8M12.44,12.5C10.74,13 8.35,14 6.74,15.5C8.35,13.5 10.74,11.5 12.44,12.5Z" />
+                </svg>
+              </div>
+
+              {/* Floating Lotus Flower */}
+              <div className="absolute top-1/2 right-1/4 text-emerald-700 animate-float opacity-40 z-30" style={{ animationDelay: '1.5s', animationDuration: '6s' }}>
+                <svg className="w-9 h-9 fill-current" viewBox="0 0 24 24">
+                  <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4M12,18A2,2 0 0,1 10,16A2,2 0 0,1 12,14A2,2 0 0,1 14,16A2,2 0 0,1 12,18Z" />
+                </svg>
               </div>
             </div>
 
@@ -320,56 +355,106 @@ export default function Home() {
       </section>
 
       {/* 2. ABOUT KAYA KALP */}
-      <section id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+      <section id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24 space-y-16">
+        
+        {/* Upper Grid Layout: Portrait Collage & Mission/Vision */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5 space-y-6">
+          
+          {/* Left Side: Overlapping visual collage */}
+          <div className="lg:col-span-6 relative h-[380px] w-full">
+            {/* Background Sage Green decoration block */}
+            <div className="absolute top-8 left-8 bottom-0 right-0 bg-emerald-50/50 rounded-[32px] -z-10"></div>
+            
+            {/* Doctor Portrait */}
+            <div className="absolute top-0 left-0 w-60 h-64 rounded-3xl overflow-hidden shadow border-4 border-white hover:scale-[1.02] transition-transform duration-300">
+              <img 
+                src="https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=400&h=400" 
+                alt="Ayurvedic Doctor Portrait" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+
+            {/* Ayurvedic Herbs Preparation */}
+            <div className="absolute bottom-4 right-4 w-52 h-48 rounded-3xl overflow-hidden shadow border-4 border-white hover:scale-[1.02] transition-transform duration-300 z-10">
+              <img 
+                src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400&h=300" 
+                alt="Ayurvedic Herbs" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+          </div>
+
+          {/* Right Side: Copywriting details */}
+          <div className="lg:col-span-6 space-y-6">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 text-ayur-primary text-xs font-bold uppercase tracking-wider">
               <Award className="w-4 h-4 text-ayur-accent" />
               <span>Legacy of Authentic Healing</span>
             </div>
+            
             <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 leading-tight">
               Indore's Premier Ayurvedic Specialty Clinic
             </h2>
+            
             <p className="text-stone-605 text-sm leading-relaxed font-medium">
               Established with the vision of carrying forward the lineage of pure Ayurveda, Kaya Kalp Wellness combines time-tested therapies with modern diagnostic verification. We treat root imbalances rather than symptoms to restore physiological harmony.
             </p>
-            <div className="space-y-3.5 text-xs sm:text-sm font-bold text-stone-850">
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-5 h-5 text-ayur-primary shrink-0" />
-                <span>NABL Accredited Diagnostic Partnerships</span>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs font-bold text-stone-850">
+              <div className="p-4 bg-white border border-stone-200/60 rounded-2xl space-y-1">
+                <span className="text-[10px] text-ayur-primary font-black uppercase tracking-wider block">Our Mission</span>
+                <p className="text-stone-500 font-medium leading-relaxed">To cleanse body systems, restore primary metabolic Agni, and coach patients on life dinacharya.</p>
               </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-5 h-5 text-ayur-primary shrink-0" />
-                <span>GMP-Certified Pure Herbal Formulations</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-5 h-5 text-ayur-primary shrink-0" />
-                <span>Clinically Validated Panchakarma Protocols</span>
+              <div className="p-4 bg-white border border-stone-200/60 rounded-2xl space-y-1">
+                <span className="text-[10px] text-ayur-primary font-black uppercase tracking-wider block">Our Vision</span>
+                <p className="text-stone-500 font-medium leading-relaxed">To be India's most trusted, clinically-validated classical Ayurveda healing center.</p>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-7 bg-emerald-950 text-white p-8 sm:p-10 rounded-[32px] space-y-8 relative overflow-hidden shadow-xl">
-            <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-emerald-900/40 rounded-full blur-2xl"></div>
-            <h3 className="font-bold text-sm uppercase tracking-widest text-emerald-300">Why Choose Kaya Kalp?</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {[
-                { title: 'Personalized Prakriti Care', desc: 'No generic formulas. Treatments are tailor-made for your unique physical and mental constitution.' },
-                { title: 'BAMS-Certified Vaidyas', desc: 'Our panel contains highly trained, accredited doctors with clinical expertise in internal medicine.' },
-                { title: 'Holistic Daily Dinacharya', desc: 'We combine clinical therapies with custom daily schedules, diet charts, and therapeutic yoga instructions.' },
-                { title: 'AI-Guided Checkups', desc: 'Instant AI symptom checker tracks clinical concerns and directs you to correct Ayurvedic specialists.' }
-              ].map((w, i) => (
-                <div key={i} className="space-y-2">
-                  <div className="font-bold text-sm text-emerald-100 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ayur-accent"></span>
-                    <span>{w.title}</span>
-                  </div>
-                  <p className="text-xs text-emerald-200/80 leading-relaxed font-medium">{w.desc}</p>
-                </div>
-              ))}
+        </div>
+
+        {/* Lower Banner: Live Animated Counters Row */}
+        <div className="bg-emerald-950 text-white rounded-[32px] p-8 sm:p-10 shadow-xl relative overflow-hidden">
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-emerald-900/40 rounded-full blur-2xl"></div>
+          
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-8 text-center divide-y sm:divide-y-0 sm:divide-x divide-emerald-800/60">
+            <div className="pt-4 sm:pt-0">
+              <strong className="text-3xl sm:text-4xl font-extrabold block text-emerald-300">
+                {counters.patients.toLocaleString()}+
+              </strong>
+              <span className="text-[10px] text-emerald-100 uppercase tracking-widest font-black block mt-2">Patients Treated</span>
+            </div>
+            
+            <div className="pt-4 sm:pt-0">
+              <strong className="text-3xl sm:text-4xl font-extrabold block text-emerald-300">
+                {counters.years}+
+              </strong>
+              <span className="text-[10px] text-emerald-100 uppercase tracking-widest font-black block mt-2">Years Experience</span>
+            </div>
+
+            <div className="pt-4 sm:pt-0">
+              <strong className="text-3xl sm:text-4xl font-extrabold block text-emerald-300">
+                {counters.families.toLocaleString()}+
+              </strong>
+              <span className="text-[10px] text-emerald-100 uppercase tracking-widest font-black block mt-2">Happy Families</span>
+            </div>
+
+            <div className="pt-4 sm:pt-0">
+              <strong className="text-3xl sm:text-4xl font-extrabold block text-emerald-300">
+                {counters.doctors}+
+              </strong>
+              <span className="text-[10px] text-emerald-100 uppercase tracking-widest font-black block mt-2">Specialist Vaidyas</span>
+            </div>
+
+            <div className="pt-4 sm:pt-0">
+              <strong className="text-3xl sm:text-4xl font-extrabold block text-emerald-300">
+                {counters.treatments}+
+              </strong>
+              <span className="text-[10px] text-emerald-100 uppercase tracking-widest font-black block mt-2">Clinical Therapies</span>
             </div>
           </div>
         </div>
+
       </section>
 
       {/* 3. HEALTH CONDITIONS WE TREAT */}
@@ -702,20 +787,23 @@ export default function Home() {
       </section>
 
       {/* 10. CONTACT SECTION & MAPS */}
-      <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+      <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24 space-y-12">
+        
+        <div className="text-center space-y-3">
+          <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Get In Touch</span>
+          <h2 className="text-3xl font-extrabold text-stone-900">Contact Kaya Kalp</h2>
+          <p className="text-stone-550 text-xs sm:text-sm max-w-lg mx-auto font-medium">
+            Reach out for clinical queries, Panchakarma stays, or quick appointment assistance.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* Details */}
+          {/* Column 1: Contact Details & Hours (Span 5) */}
           <div className="lg:col-span-5 p-8 sm:p-10 rounded-[32px] bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between space-y-8">
             <div className="space-y-6">
-              <div>
-                <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block mb-1">Get in Touch</span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">Contact Details</h2>
-              </div>
-              <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-medium">
-                Have inquiries about clinical stays, detox packages, or online bookings? Contact our front desk directly.
-              </p>
-
+              
+              {/* Address details */}
               <div className="space-y-4 text-xs sm:text-sm text-stone-750 font-medium">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-ayur-primary mt-0.5 shrink-0" />
@@ -726,13 +814,42 @@ export default function Home() {
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-ayur-primary shrink-0" />
-                  <span>+91 98277-XXXXX (Consultation Hotline)</span>
+                  <div>
+                    <strong>Helpline Desks</strong>
+                    <div className="text-xs text-stone-500 mt-1">+91 98277-55555 (Consultation Desk)</div>
+                  </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-ayur-primary shrink-0" />
-                  <span>care@kayakalpindore.com</span>
+                  <div>
+                    <strong>Support Email</strong>
+                    <div className="text-xs text-stone-500 mt-1">care@kayakalpindore.com</div>
+                  </div>
                 </div>
               </div>
+
+              {/* Working Hours */}
+              <div className="pt-6 border-t border-stone-100 space-y-3">
+                <h4 className="font-extrabold text-xs text-stone-900 uppercase tracking-wider">Business Hours</h4>
+                <div className="grid grid-cols-2 text-xs font-semibold text-stone-605 gap-2">
+                  <div>Monday - Saturday:</div>
+                  <div className="text-right text-stone-900 font-extrabold">9:00 AM - 6:00 PM</div>
+                  <div>Sunday:</div>
+                  <div className="text-right text-amber-600 font-extrabold">Closed (Prior Bookings Only)</div>
+                </div>
+              </div>
+
+              {/* Emergency Hotline */}
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200/50 flex gap-3 items-center text-xs">
+                <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  !
+                </div>
+                <div>
+                  <strong className="text-amber-805 block">Emergency Patient Desk:</strong>
+                  <span className="text-stone-605 font-bold">+91 98277-55555</span>
+                </div>
+              </div>
+
             </div>
 
             {/* Newsletter Subscription */}
@@ -742,7 +859,7 @@ export default function Home() {
                   <Mail className="w-4 h-4 text-ayur-primary" />
                   <span>Subscribe to our Newsletter</span>
                 </h4>
-                <p className="text-[10px] text-stone-400 mt-1">Get weekly wellness tips, herb guidelines, and clinic offers.</p>
+                <p className="text-[10px] text-stone-400 mt-1 font-medium">Get weekly wellness tips, herb guidelines, and clinic offers.</p>
               </div>
               {newsletterSuccess && (
                 <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-150 text-ayur-primary text-xs font-semibold">
@@ -756,17 +873,69 @@ export default function Home() {
                   placeholder="name@email.com"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="w-2/3 px-4 py-2.5 rounded-xl border border-stone-200 text-xs bg-[#FBFBF9] focus:outline-none"
+                  className="w-2/3 px-4 py-2.5 rounded-xl border border-stone-200 text-xs bg-[#FBFBF9] focus:outline-none font-medium"
                 />
-                <button type="submit" className="w-1/3 py-2.5 bg-ayur-primary text-white text-xs font-bold rounded-xl hover:bg-ayur-secondary shadow-sm transition-all">
+                <button type="submit" className="w-1/3 py-2.5 bg-ayur-primary text-white text-xs font-bold rounded-xl hover:bg-ayur-secondary shadow-sm transition-all font-black">
                   Join List
                 </button>
               </form>
             </div>
           </div>
 
-          {/* Indore Google Map Iframe */}
-          <div className="lg:col-span-7 rounded-[32px] overflow-hidden border border-stone-200/80 shadow-sm min-h-[350px] relative">
+          {/* Column 2: Appointment Request Form (Span 4) */}
+          <div className="lg:col-span-4 p-8 sm:p-10 rounded-[32px] bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <h4 className="font-extrabold text-xs text-stone-900 uppercase tracking-wider block">Quick Inquiry Form</h4>
+              <p className="text-[11px] text-stone-500 font-medium">Submit a request and our doctors will coordinate within 2 hours.</p>
+
+              {contactSuccess && (
+                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-155 text-ayur-primary text-[11px] font-bold leading-normal">
+                  Inquiry submitted! Our clinical assistant will contact you shortly.
+                </div>
+              )}
+
+              <form onSubmit={handleContactSubmit} className="space-y-3.5 text-xs">
+                <input 
+                  type="text" 
+                  required 
+                  placeholder="Your Full Name" 
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-[#FBFBF9] focus:outline-none focus:ring-1 focus:ring-ayur-primary font-medium" 
+                />
+                <input 
+                  type="tel" 
+                  required 
+                  placeholder="Phone Number" 
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-[#FBFBF9] focus:outline-none focus:ring-1 focus:ring-ayur-primary font-medium" 
+                />
+                <select 
+                  required 
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-[#FBFBF9] focus:outline-none font-bold text-stone-605"
+                >
+                  <option value="">Preferred Category</option>
+                  <option value="Hair Care">Hair Care Solutions</option>
+                  <option value="Face Care">Face Care Solutions</option>
+                  <option value="Pain Relief">Pain Relief Treatment</option>
+                  <option value="Weight Management">Obesity Care</option>
+                  <option value="Panchakarma">Panchakarma Detox</option>
+                </select>
+                <textarea 
+                  rows={3} 
+                  required 
+                  placeholder="How can we help you?" 
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-[#FBFBF9] focus:outline-none focus:ring-1 focus:ring-ayur-primary font-medium"
+                ></textarea>
+                <button 
+                  type="submit" 
+                  className="w-full py-3 bg-ayur-primary hover:bg-ayur-secondary text-white font-extrabold rounded-xl transition-all shadow-sm font-black"
+                >
+                  Submit Inquiry
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Column 3: Google Map Frame (Span 3) */}
+          <div className="lg:col-span-3 rounded-[32px] overflow-hidden border border-stone-200/80 shadow-sm min-h-[300px] relative">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12!1m3!1d3680.125712217688!2d75.8778051759493!3d22.72355522744747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd375323cb11%3A0xe54e668c2e648835!2sNew%20Palasia%2C%20Indore%2C%20Madhya%2520Pradesh%2520452001!5e0!3m2!1sen!2sin!4v1719747120401!5m2!1sen!2sin" 
               className="absolute inset-0 w-full h-full border-0" 

@@ -311,15 +311,149 @@ const TREATMENTS_REGISTRY: Record<string, TreatmentData> = {
   }
 };
 
+const TREATMENT_IMAGES: Record<string, string> = {
+  'arthritis': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400&h=300',
+  'diabetes': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400&h=300',
+  'thyroid': 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=400&h=300',
+  'hair-fall': 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=400&h=300',
+  'skin-disorders': 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400&h=300',
+  'psoriasis': 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400&h=300',
+  'weight-loss': 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400&h=300',
+  'digestive-disorders': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400&h=300',
+  'womens-health': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=300',
+  'mens-health': 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400&h=300',
+  'migraine': 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=400&h=300',
+  'joint-pain': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400&h=300',
+  'liver-disorders': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400&h=300',
+  'kidney-disorders': 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=400&h=300',
+  'pcos': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=300',
+  'infertility': 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=400&h=300'
+};
+
+const TREATMENT_INFOS: Record<string, { duration: string; suitableFor: string }> = {
+  'arthritis': { duration: '7 - 21 Days', suitableFor: 'Knee & Joint stiffness patients' },
+  'diabetes': { duration: '14 - 28 Days', suitableFor: 'Type-2 diabetic patients' },
+  'thyroid': { duration: '14 - 21 Days', suitableFor: 'Hypothyroid metabolic sluggishness' },
+  'hair-fall': { duration: '7 - 14 Days', suitableFor: 'Scalp heat & thinning hair' },
+  'skin-disorders': { duration: '14 - 28 Days', suitableFor: 'Blood toxicity & eczema signs' },
+  'psoriasis': { duration: '21 - 35 Days', suitableFor: 'Chronic scaling plaque symptoms' },
+  'weight-loss': { duration: '14 - 21 Days', suitableFor: 'Oversleeping & metabolic blocks' },
+  'digestive-disorders': { duration: '7 - 14 Days', suitableFor: 'Acid reflux, gas & bloating' },
+  'womens-health': { duration: '7 - 14 Days', suitableFor: 'Menstrual cramps & hormone shifts' },
+  'mens-health': { duration: '7 - 14 Days', suitableFor: 'Fatigue, low stamina & stamina loss' },
+  'migraine': { duration: '7 - 14 Days', suitableFor: 'Ardhavavabhidaka head throbs' },
+  'joint-pain': { duration: '14 - 21 Days', suitableFor: 'Autoimmune-like multi joint stiffness' },
+  'liver-disorders': { duration: '7 - 14 Days', suitableFor: 'Jaundice signs & sluggish appetite' },
+  'kidney-disorders': { duration: '7 - 14 Days', suitableFor: 'Burning urination & renal stones' },
+  'pcos': { duration: '14 - 28 Days', suitableFor: 'Delayed periods & ovarian cyst blocks' },
+  'infertility': { duration: '21 - 45 Days', suitableFor: 'Weak uterine lining & egg cell health' }
+};
+
 export default function TreatmentsDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
-  // Default to arthritis if no parameter or invalid
+  const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'lifestyle' | 'faqs'>('overview');
+
+  // If no specific treatment key is requested, show catalog listing
+  if (!id) {
+    return (
+      <div className="min-h-screen bg-[#FBFBF9] pb-24 font-sans selection:bg-emerald-100 selection:text-emerald-950">
+        
+        {/* Banner Header */}
+        <div className="bg-emerald-950 text-white py-16 text-center space-y-4">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-900 text-emerald-350 text-xs font-bold uppercase tracking-wider">
+            <Heart className="w-3.5 h-3.5 text-ayur-accent animate-pulse" />
+            <span>Ayurvedic Clinical Services</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Kaya Kalp Treatments Catalog</h1>
+          <p className="text-xs sm:text-sm text-emerald-250 max-w-xl mx-auto font-medium leading-relaxed">
+            Discover our comprehensive range of specialized clinical programs. We restore metabolic balance, eliminate metabolic toxins, and stimulate biological rejuvenation.
+          </p>
+        </div>
+
+        {/* Catalog Grid */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {Object.entries(TREATMENTS_REGISTRY).map(([key, item]) => {
+              const image = TREATMENT_IMAGES[key] || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=300';
+              const info = TREATMENT_INFOS[key] || { duration: '7 - 14 Days', suitableFor: 'Chronic patient support' };
+
+              return (
+                <div 
+                  key={key} 
+                  className="bg-white border border-stone-200/80 rounded-[20px] overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-stretch"
+                >
+                  {/* Image & Badges */}
+                  <div className="w-full sm:w-48 shrink-0 relative bg-stone-50 h-52 sm:h-auto animate-fade-in">
+                    <img src={image} alt={item.title} className="w-full h-full object-cover" />
+                    
+                    {/* Category overlay */}
+                    <span className="absolute bottom-3 left-3 bg-emerald-950 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-lg uppercase tracking-wider">
+                      {item.category}
+                    </span>
+                  </div>
+
+                  {/* Descriptions details */}
+                  <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
+                    
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="bg-emerald-50 text-ayur-primary border border-emerald-150 text-[8px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                          Duration: {info.duration}
+                        </span>
+                        <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[8px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">
+                          100% Classical
+                        </span>
+                      </div>
+
+                      <h3 className="font-extrabold text-base text-stone-900 leading-tight">
+                        {item.title.split(' (')[0]}
+                      </h3>
+                      <p className="text-xs text-stone-505 font-medium leading-relaxed line-clamp-2">
+                        {item.overview}
+                      </p>
+                    </div>
+
+                    {/* Suitable For */}
+                    <div className="text-[11px] text-stone-605 font-semibold space-y-0.5">
+                      <span className="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Suitable For:</span>
+                      <p className="italic text-emerald-800 font-medium">"{info.suitableFor}"</p>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="grid grid-cols-2 gap-2 pt-3 border-t border-stone-100 text-[11px] font-black">
+                      <Link 
+                        to={`/treatments/${key}`}
+                        className="py-2 border border-stone-200 hover:bg-stone-50 text-stone-700 rounded-xl text-center flex items-center justify-center"
+                      >
+                        Explore Details
+                      </Link>
+                      <Link 
+                        to="/doctors"
+                        className="py-2 bg-ayur-primary hover:bg-ayur-secondary text-white rounded-xl text-center flex items-center justify-center gap-1.5 shadow-sm"
+                      >
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>Book Consult</span>
+                      </Link>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+
+      </div>
+    );
+  }
+
+  // Active treatment mapping
   const activeKey = id && TREATMENTS_REGISTRY[id] ? id : 'arthritis';
   const treatment = TREATMENTS_REGISTRY[activeKey];
-
-  const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'lifestyle' | 'faqs'>('overview');
 
   return (
     <div className="min-h-screen bg-[#FBFBF9] pb-20 font-sans">
