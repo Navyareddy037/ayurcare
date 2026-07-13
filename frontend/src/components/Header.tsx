@@ -114,35 +114,10 @@ export default function Header() {
             </Link>
 
             <button 
-              onClick={() => handleAnchorScroll('wellness-programs')}
-              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
-            >
-              Wellness Programs
-            </button>
-
-            <button 
-              onClick={() => handleAnchorScroll('packages')}
-              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
-            >
-              Health Packages
-            </button>
-
-            <Link to="/products" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide">
-              Ayurvedic Products
-            </Link>
-
-            <button 
               onClick={() => handleAnchorScroll('blogs')}
               className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
             >
               Blogs
-            </button>
-
-            <button 
-              onClick={() => handleAnchorScroll('testimonials')}
-              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
-            >
-              Testimonials
             </button>
 
             <button 
@@ -233,63 +208,31 @@ export default function Header() {
             About Kaya Kalp
           </button>
           <Link
+            to="/treatments"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
+          >
+            Treatments
+          </Link>
+          <Link
             to="/doctors"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
           >
-            Our Doctors
+            Doctors
           </Link>
           <Link
             to="/ai-assessment"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
           >
-            Online Consultation (AI check)
+            Online Consultation
           </Link>
-          <Link
-            to="/panchakarma"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Panchakarma Detox
-          </Link>
-          <Link
-            to="/treatments"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Clinical Diseases
-          </Link>
-          <Link
-            to="/products"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Ayurvedic Products
-          </Link>
-          <button
-            onClick={() => handleAnchorScroll('wellness-programs')}
-            className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Wellness Programs
-          </button>
-          <button
-            onClick={() => handleAnchorScroll('packages')}
-            className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Health Packages
-          </button>
           <button
             onClick={() => handleAnchorScroll('blogs')}
             className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
           >
             Blogs
-          </button>
-          <button
-            onClick={() => handleAnchorScroll('testimonials')}
-            className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Testimonials
           </button>
           <button
             onClick={() => handleAnchorScroll('contact')}
