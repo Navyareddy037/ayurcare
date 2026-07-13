@@ -28,8 +28,27 @@ const PACKAGES = [
 ];
 
 const BLOGS = [
-  { title: 'Dinacharya: The Ayurvedic Daily Self-Care Ritual', date: 'July 10, 2026', readTime: '5 min read', desc: 'Step-by-step guide to integrate tongue scraping, oil pulling, and self-massage into your early morning schedule.' },
-  { title: 'Top 5 Herbs to Naturally Reduce Cortisol & Stress', date: 'June 28, 2026', readTime: '4 min read', desc: 'Exploring the cortisol-lowering and calming properties of Ashwagandha, Brahmi, and Shankhpushpi.' }
+  { 
+    title: 'Benefits of Panchakarma Detoxification', 
+    date: 'July 10, 2026', 
+    readTime: '5 min read', 
+    desc: 'Deep cleansing therapies designed to release fat-soluble metabolic wastes (Ama) and restore perfect humoral balance.',
+    image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&q=80&w=400&h=250'
+  },
+  { 
+    title: 'Ayurvedic Treatment for Joint & Spine Care', 
+    date: 'June 28, 2026', 
+    readTime: '4 min read', 
+    desc: 'How oil pooling (Kati Basti) and herbal poultices relieve disc compression, sciatica, and chronic joint inflammation.',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=250'
+  },
+  {
+    title: 'Natural Care for Chronic Skin Disorders',
+    date: 'June 15, 2026',
+    readTime: '6 min read',
+    desc: 'Understanding psoriasis and eczema flares through blood impurities and purging toxins via herbal formulations.',
+    image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400&h=250'
+  }
 ];
 
 const FEATURED_DOCTORS = [
@@ -426,18 +445,25 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {BLOGS.map((b, i) => (
-            <div key={i} className="p-8 rounded-[32px] bg-white border border-stone-200/80 shadow-sm space-y-4 flex flex-col justify-between">
-              <div className="space-y-2">
-                <span className="text-[10px] text-stone-400 font-bold block">{b.date} &bull; {b.readTime}</span>
-                <h4 className="font-extrabold text-sm sm:text-base text-stone-900 leading-snug">{b.title}</h4>
-                <p className="text-xs sm:text-sm text-stone-550 leading-relaxed font-medium">{b.desc}</p>
+            <div key={i} className="bg-white border border-stone-200/80 rounded-[32px] overflow-hidden shadow-sm hover:border-emerald-350 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="h-48 w-full overflow-hidden relative">
+                  <img src={b.image} alt={b.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="p-6 space-y-3">
+                  <span className="text-[10px] text-stone-400 font-bold block">{b.date} &bull; {b.readTime}</span>
+                  <h4 className="font-extrabold text-sm text-stone-900 leading-snug">{b.title}</h4>
+                  <p className="text-xs text-stone-555 leading-relaxed font-medium line-clamp-3">{b.desc}</p>
+                </div>
               </div>
-              <Link to="/knowledge-hub" className="inline-flex items-center gap-1 text-xs text-ayur-primary font-bold hover:underline pt-2">
-                <span>Read Article</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="p-6 pt-0">
+                <Link to="/knowledge-hub" className="inline-flex items-center gap-1 text-xs text-ayur-primary font-bold hover:underline">
+                  <span>Read Article</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
           ))}
         </div>
