@@ -398,6 +398,67 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 6.5. TOP PRODUCTS SHOWCASE */}
+      <section id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+        <div className="flex justify-between items-end border-b border-stone-200/50 pb-6 mb-12">
+          <div>
+            <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider block mb-1">Kaya Kalp Pharmacy</span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">Featured Organic Products</h2>
+          </div>
+          <Link to="/products" className="text-xs font-bold text-ayur-primary hover:underline flex items-center gap-1">
+            <span>Explore All Products</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              name: 'Bhringraj Scalp Rejuvenation Oil',
+              price: '₹420',
+              category: 'Hair Care',
+              image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=250&h=250',
+              benefit: 'Promotes new hair root growth and prevents premature graying.'
+            },
+            {
+              name: 'Kumkumadi Radiance Face Serum',
+              price: '₹899',
+              category: 'Skin Care',
+              image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=250&h=250',
+              benefit: 'Evens skin tone, clears spots, and restores natural golden glow.'
+            },
+            {
+              name: 'Prana Chyawanprash (Immunity Boost)',
+              price: '₹399',
+              category: 'Immunity',
+              image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=250&h=250',
+              benefit: 'Defends against seasonal colds and builds general metabolic vitality.'
+            }
+          ].map((prod, idx) => (
+            <div key={idx} className="bg-white border border-stone-200/80 rounded-[32px] overflow-hidden shadow-sm hover:border-emerald-350 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="h-48 w-full overflow-hidden relative bg-stone-50">
+                  <img src={prod.image} alt={prod.name} className="w-full h-full object-cover" />
+                  <span className="absolute bottom-3 left-3 bg-emerald-950 text-white text-[9px] font-bold px-2 py-0.5 rounded">
+                    {prod.category}
+                  </span>
+                </div>
+                <div className="p-6 space-y-2">
+                  <h4 className="font-extrabold text-sm text-stone-900 leading-snug">{prod.name}</h4>
+                  <p className="text-xs text-stone-500 font-medium leading-relaxed">{prod.benefit}</p>
+                </div>
+              </div>
+              <div className="p-6 pt-0 flex justify-between items-center">
+                <span className="text-xs font-black text-stone-900">{prod.price}</span>
+                <Link to="/products" className="px-3.5 py-1.5 bg-ayur-primary text-white text-[11px] font-black rounded-lg hover:bg-ayur-secondary transition-all">
+                  Order Form
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 7. PATIENT TESTIMONIALS & SUCCESS STORIES */}
       <section id="testimonials" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
         <div className="text-center space-y-3">
