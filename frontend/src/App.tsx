@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,6 +11,7 @@ import KnowledgeHub from './pages/KnowledgeHub';
 import PatientDashboard from './pages/PatientDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import { Calendar } from 'lucide-react';
 
 // Route protection wrapper checking authenticated session and matching roles
 const PrivateRoute: React.FC<{ children: React.ReactNode; allowedRoles?: string[] }> = ({ children, allowedRoles }) => {
@@ -92,6 +93,17 @@ export default function App() {
             </Routes>
           </main>
           <Footer />
+
+          {/* Floating Book Appointment CTA Button */}
+          <Link
+            to="/doctors"
+            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-ayur-primary text-white shadow-xl hover:bg-ayur-secondary hover:scale-105 transition-all duration-305 flex items-center justify-center group"
+          >
+            <Calendar className="w-5 h-5" />
+            <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap text-xs font-extrabold group-hover:pl-2">
+              Book Appointment
+            </span>
+          </Link>
         </div>
       </AuthProvider>
     </Router>
