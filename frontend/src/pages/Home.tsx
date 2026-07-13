@@ -52,192 +52,142 @@ const BLOGS = [
   }
 ];
 
-const FEATURED_DOCTORS = [
-  { name: 'Vaidya Dr. Rajesh Sharma', qualification: 'BAMS, MD (Ayurveda)', specialization: 'Panchakarma & Joint Care Specialist', experience: 15, rating: 4.9, reviews: 240, fee: '₹500', image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300' },
-  { name: 'Vaidya Dr. Anjali Nair', qualification: 'BAMS, MS (Ayurveda)', specialization: 'Ayurvedic Dermatology & Skin Care', experience: 10, rating: 4.8, reviews: 185, fee: '₹500', image: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=300&h=300' },
-  { name: 'Vaidya Dr. Sunil Gupta', qualification: 'BAMS', specialization: 'Digestive Disorders & Wellness expert', experience: 8, rating: 4.9, reviews: 140, fee: '₹400', image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300&h=300' }
-];
-
-interface Product {
+interface SolutionCard {
   name: string;
-  category: string;
-  price: number;
-  rating: number;
-  reviews: number;
-  badge: string;
-  stock: string;
-  image: string;
+  category: 'Hair Care' | 'Face Care' | 'Pain Relief' | 'Obesity Care';
+  badge1: string; // "100% Herbal"
+  badge2: string; // "Doctor Recommended"
   desc: string;
-  ingredients: string[];
+  image: string;
   benefits: string[];
-  usage: string;
-  size: string;
-  isHerbal: boolean;
-  discount?: number;
 }
 
-const PRODUCT_REGISTRY: Product[] = [
+const SOLUTIONS_DATA: SolutionCard[] = [
   {
-    name: 'Kaya Kalp Bhringraj Taila',
+    name: 'Hair Oil',
     category: 'Hair Care',
-    price: 420,
-    rating: 5.0,
-    reviews: 124,
-    badge: 'Bestseller',
-    stock: 'In Stock',
-    image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Traditional hair oil prepared with fresh herbs to rebuild follicle strength, check hair fall, and soothe stress.',
-    ingredients: ['Bhringraj extract', 'Amla', 'Sesame oil base', 'Jatamansi'],
-    benefits: ['Controls chronic hair fall', 'Combats premature hair graying', 'Eliminates dandruff and cools scalp'],
-    usage: 'Massage warm oil into hair roots; wash off with mild shampoo after 2 hours.',
-    size: '200 ml',
-    isHerbal: true,
-    discount: 10
+    badge1: '100% Herbal',
+    badge2: 'Doctor Recommended',
+    desc: 'Helps control hair fall, stimulates growth, nourishes scalp, and helps relieve tension headaches.',
+    image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Helps reduce hair fall',
+      'Controls dandruff',
+      'Strengthens thin hair',
+      'Helps relieve headaches',
+      'Nourishes scalp naturally'
+    ]
   },
   {
-    name: 'Kumkumadi Radiance Glow Serum',
-    category: 'Skin Care',
-    price: 899,
-    rating: 4.9,
-    reviews: 98,
-    badge: 'Organic',
-    stock: 'Only 4 Left',
-    image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Luxurious face serum infused with pure Kashmiri Saffron to even skin tone, clear dark circles, and restore natural glow.',
-    ingredients: ['Kashmiri Saffron (Kesar)', 'Sandalwood', 'Manjistha', 'Licorice extract'],
-    benefits: ['Clarifies dark spots & blemishes', 'Evens out skin pigmentation', 'Imparts natural golden radiance'],
-    usage: 'Apply 3-4 drops on clean face before bed. Massage in soft upward circular strokes.',
-    size: '30 ml',
-    isHerbal: true,
-    discount: 15
+    name: 'Herbal Heena',
+    category: 'Hair Care',
+    badge1: '100% Herbal',
+    badge2: 'Natural Shine',
+    desc: 'Pure organic henna powder designed to deeply condition hair roots, rendering smooth, silky, and glowing texture.',
+    image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Makes hair smooth',
+      'Gives silky texture',
+      'Improves natural shine',
+      'Conditions hair naturally'
+    ]
   },
   {
-    name: 'Prana Chyawanprash Gold',
-    category: 'Immunity',
-    price: 399,
-    rating: 4.8,
-    reviews: 160,
-    badge: 'Doctor Recommended',
-    stock: 'In Stock',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Classic immunity support paste prepared with wild Amla pulp, organic forest honey, and Saffron.',
-    ingredients: ['Amla pulp', 'Dashmula roots', 'Forest honey', 'Kesar', 'Pippali'],
-    benefits: ['Defends against seasonal flu and colds', 'Boosts respiratory health & lung capacity', 'Ignites metabolic fire & vitality'],
-    usage: 'Consume 1 tablespoon daily in the morning, followed by warm milk or water.',
-    size: '500 g',
-    isHerbal: true
+    name: 'Herbal Hair Spa Pack',
+    category: 'Hair Care',
+    badge1: '100% Herbal',
+    badge2: 'Doctor Recommended',
+    desc: 'Intense spa pack designed to target structural hair dryness, clear dandruff build-up, and deep-condition follicles.',
+    image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Controls hair fall',
+      'Reduces dandruff',
+      'Deep nourishes hair',
+      'Makes hair smooth, silky, and healthy'
+    ]
   },
   {
-    name: 'Triphala Digestive Care Tablets',
-    category: 'Digestive Care',
-    price: 280,
-    rating: 4.7,
-    reviews: 75,
-    badge: 'New',
-    stock: 'In Stock',
-    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Gently cleanses and detoxifies the colon, regulating daily bowel habits and promoting healthy digestion.',
-    ingredients: ['Amalaki', 'Bibhitaki', 'Haritaki'],
-    benefits: ['Cleanses digestive wastes (Ama)', 'Relieves chronic bloating and gas', 'Maintains colon regular health'],
-    usage: 'Take 1-2 tablets before sleep with warm water.',
-    size: '60 Tablets',
-    isHerbal: true
+    name: 'Fairness Face Pack',
+    category: 'Face Care',
+    badge1: '100% Herbal',
+    badge2: 'Glow booster',
+    desc: 'Traditional sandalwood mask to reverse facial sun tan, reduce skin dullness, and illuminate blood circulation.',
+    image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Removes tanning',
+      'Reduces skin dullness',
+      'Brightens complexion',
+      'Gives natural glow'
+    ]
   },
   {
-    name: 'Shatavari Vitality Capsules',
-    category: "Women's Health",
-    price: 350,
-    rating: 4.9,
-    reviews: 112,
-    badge: 'Bestseller',
-    stock: 'Only 8 Left',
-    image: 'https://images.unsplash.com/photo-1611070973770-b1a60c2661f8?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Shatavari root formulation designed to balance female hormones, alleviate menstrual cramps, and boost strength.',
-    ingredients: ['Shatavari root extract'],
-    benefits: ['Regulates irregular menstrual cycles', 'Reduces menopausal hot flashes', 'Supports natural lactation & vitality'],
-    usage: 'Take 1 capsule twice daily with milk after meals.',
-    size: '60 Capsules',
-    isHerbal: true
+    name: 'Neem Face Pack',
+    category: 'Face Care',
+    badge1: '100% Herbal',
+    badge2: 'Doctor Recommended',
+    desc: 'Anti-bacterial neem blend that targets active acne nodes, purifies clogged pores, and cleanses oily skin.',
+    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Removes pimples',
+      'Reduces acne',
+      'Cleanses skin',
+      'Nourishes skin naturally'
+    ]
   },
   {
-    name: 'Sandhi Joint Resilient Oil',
-    category: 'Joint Care',
-    price: 360,
-    rating: 4.8,
-    reviews: 142,
-    badge: 'Doctor Recommended',
-    stock: 'In Stock',
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Highly penetrative medicated massage oil formulated to reduce joint swelling and rebuild cartilage fluid.',
-    ingredients: ['Mahanarayan Taila', 'Eucalyptus oil', 'Shallaki', 'Guggulu'],
-    benefits: ['Relieves stiffness in knees and lower back', 'Soothes arthritic swelling & joint aches', 'Improves active range of motion'],
-    usage: 'Massage warm oil gently over affected joints. Apply hot compress afterward.',
-    size: '100 ml',
-    isHerbal: true,
-    discount: 5
+    name: 'KayaKalp Face Pack',
+    category: 'Face Care',
+    badge1: '100% Herbal',
+    badge2: 'Doctor Recommended',
+    desc: 'Anti-aging skin tightening mask that improves facial elasticity and gives a glowing, youthful appearance.',
+    image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Skin tightening',
+      'Anti-aging care',
+      'Improves skin elasticity',
+      'Gives youthful appearance'
+    ]
   },
   {
-    name: 'Ashwagandha Stress Relief Capsules',
-    category: "Men's Health",
-    price: 320,
-    rating: 4.9,
-    reviews: 190,
-    badge: 'Organic',
-    stock: 'In Stock',
-    image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Standardized root extract capsules containing high withanolides to alleviate stress, anxiety, and increase stamina.',
-    ingredients: ['Pure Ashwagandha root extract'],
-    benefits: ['Lowers cortisol stress hormones', 'Increases energy, stamina & vigor', 'Improves deep sleep patterns'],
-    usage: 'Take 1 capsule twice daily with warm milk or water.',
-    size: '60 Capsules',
-    isHerbal: true
+    name: 'Pain Relief Oil',
+    category: 'Pain Relief',
+    badge1: '100% Herbal Formula',
+    badge2: 'Doctor Recommended',
+    desc: 'High absorption massage formulation to alleviate chronic joint arthritis, gout swelling, back, and neck pain.',
+    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Joint Pain Support',
+      'Arthritis Relief',
+      'Gout Management',
+      'Muscle Pain Relief',
+      'Sports Injury Pain Healing',
+      'Back Pain Reduction',
+      'Neck Pain Alleviation'
+    ]
   },
   {
-    name: 'Madhumeha Diabetes Support',
-    category: 'Diabetes Care',
-    price: 450,
-    rating: 4.8,
-    reviews: 64,
-    badge: 'New',
-    stock: 'In Stock',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=250&h=250',
-    desc: 'Synergistic herbal blend designed to support healthy pancreatic secretion and minimize blood sugar spikes.',
-    ingredients: ['Jamun seed extract', 'Karela extract', 'Gurmar (Gymnema)', 'Vijaysar'],
-    benefits: ['Controls postprandial blood sugar spikes', 'Supports insulin production pathways', 'Decreases sweet cravings naturally'],
-    usage: 'Take 1 tablet twice daily, 30 minutes before meals.',
-    size: '90 Tablets',
-    isHerbal: true
+    name: 'Traditional Herbal Weight Management Pills',
+    category: 'Obesity Care',
+    badge1: '100% Herbal',
+    badge2: 'Doctor Recommended',
+    desc: 'Classical Jadi-Buti capsules designed to assist healthy fat reduction, relieve bowel constipation, and boost digestion.',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=350&h=250',
+    benefits: [
+      'Supports healthy weight loss',
+      'Relieves constipation',
+      'Improves digestion',
+      'Made using traditional Ayurvedic herbs (Jadi-Butis)',
+      'Supports metabolism naturally'
+    ]
   }
 ];
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
-  // E-commerce Products Showcase States
-  const [productSearch, setProductSearch] = useState('');
-  const [productCat, setProductCat] = useState('All');
-  const [productSort, setProductSort] = useState('Popular');
-  const [quickViewProd, setQuickViewProd] = useState<Product | null>(null);
-  const [wishlist, setWishlist] = useState<string[]>([]);
-  const [visibleProductsCount, setVisibleProductsCount] = useState(3);
-  const [addedToCartToast, setAddedToCartToast] = useState<string | null>(null);
-
-  const toggleWishlist = (name: string) => {
-    if (wishlist.includes(name)) {
-      setWishlist(wishlist.filter(item => item !== name));
-    } else {
-      setWishlist([...wishlist, name]);
-    }
-  };
-
-  const handleAddToCart = (name: string) => {
-    setAddedToCartToast(`"${name}" added to cart!`);
-    setTimeout(() => setAddedToCartToast(null), 3000);
-  };
-
-  const handleBuyNow = (name: string) => {
-    setAddedToCartToast(`Redirecting to checkout with "${name}"...`);
-    setTimeout(() => setAddedToCartToast(null), 3000);
+  const handleAnchorScroll = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -523,404 +473,132 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. FEATURED DOCTORS */}
-      <section id="featured-doctors" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-3 mb-12">
-          <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Our Specialists</span>
-          <h2 className="text-3xl font-extrabold text-stone-900">Featured Ayurvedic Doctors</h2>
-          <p className="text-stone-500 text-xs sm:text-sm max-w-lg mx-auto font-medium">
-            Consult BAMS-certified practitioners with years of experience in clinical disease management.
+      {/* 6. OUR AYURVEDIC SOLUTIONS */}
+      <section id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24 space-y-16">
+        
+        {/* Section Header */}
+        <div className="text-center space-y-3">
+          <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Kaya Kalp Pharmacy</span>
+          <h2 className="text-3xl font-extrabold text-stone-900">Our Ayurvedic Solutions</h2>
+          <p className="text-stone-550 text-xs sm:text-sm max-w-lg mx-auto font-medium">
+            Traditional Ayurvedic formulations designed to naturally improve your health and wellness.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {FEATURED_DOCTORS.map((doc, idx) => (
-            <div key={idx} className="bg-white border border-stone-200/80 rounded-[32px] overflow-hidden shadow-sm hover:border-emerald-350 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="h-56 w-full bg-stone-100 overflow-hidden relative">
-                  <img src={doc.image} alt={doc.name} className="w-full h-full object-cover object-top hover:scale-105 transition-all duration-500" />
-                  <span className="absolute bottom-4 left-4 bg-emerald-950 text-white text-[10px] font-bold px-3 py-1 rounded-lg">
-                    {doc.qualification}
-                  </span>
-                </div>
-                
-                <div className="p-6 space-y-4">
-                  <div>
-                    <h4 className="font-extrabold text-sm text-stone-900">{doc.name}</h4>
-                    <span className="text-[11px] text-ayur-primary font-bold block mt-0.5">{doc.specialization}</span>
-                  </div>
-
-                  <p className="text-xs text-stone-500 font-medium">
-                    Specialized clinical care with {doc.experience} years of experience.
-                  </p>
-
-                  <div className="flex justify-between items-center text-xs border-t border-stone-100 pt-4">
-                    <div className="flex items-center gap-1 text-amber-500">
-                      <Star className="w-4 h-4 fill-amber-500" />
-                      <span className="font-bold">{doc.rating}</span>
-                      <span className="text-stone-400 text-[10px]">({doc.reviews} reviews)</span>
-                    </div>
-                    <div>
-                      <span className="text-stone-400">Fee:</span> <strong className="text-stone-800">{doc.fee}</strong>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 pt-0">
-                <Link to="/doctors" className="w-full py-2.5 bg-ayur-primary hover:bg-ayur-secondary text-white font-bold text-center text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all">
-                  <Calendar className="w-4 h-4" />
-                  <span>Book Consult</span>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 6.5. TOP PRODUCTS SHOWCASE */}
-      <section id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24 space-y-8">
-        
-        {/* Header Block */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-stone-200/50 pb-6 gap-4">
-          <div className="space-y-1">
-            <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider block">Kaya Kalp Pharmacy</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">Featured Organic Products</h2>
-            <p className="text-xs text-stone-500 font-medium max-w-xl">
-              Authentic Ayurvedic formulations prepared using traditional methods and premium natural ingredients.
-            </p>
-          </div>
-          <Link to="/products" className="text-xs font-black text-ayur-primary hover:underline flex items-center gap-1 shrink-0 bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-150">
-            <span>View All Products</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {/* Filters and Search Bar Row */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-4 bg-white border border-stone-200 p-4.5 rounded-[24px] shadow-sm text-xs font-bold">
-          
-          {/* Categories list */}
-          <div className="flex flex-wrap gap-2 w-full lg:w-auto">
-            {['All', 'Hair Care', 'Skin Care', 'Immunity', 'Digestive Care', "Women's Health", "Men's Health", 'Diabetes Care', 'Joint Care'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setProductCat(cat);
-                  setVisibleProductsCount(3);
-                }}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
-                  productCat === cat
-                    ? 'bg-ayur-primary text-white'
-                    : 'bg-stone-50 text-stone-600 hover:bg-stone-100 border border-stone-200/60'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Search & Sort inputs */}
-          <div className="flex gap-3 w-full lg:w-auto shrink-0">
-            <div className="relative flex-grow lg:w-48">
-              <Search className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-stone-400" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={productSearch}
-                onChange={(e) => setProductSearch(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 border border-stone-200 rounded-xl bg-stone-50/50 focus:outline-none focus:ring-1 focus:ring-ayur-primary font-medium"
-              />
-            </div>
-            
-            <div className="relative">
-              <select
-                value={productSort}
-                onChange={(e) => setProductSort(e.target.value)}
-                className="pl-3 pr-8 py-2 border border-stone-200 rounded-xl bg-stone-50/50 focus:outline-none font-bold"
-              >
-                <option value="Popular">Popularity</option>
-                <option value="LowToHigh">Price: Low to High</option>
-                <option value="HighToLow">Price: High to Low</option>
-                <option value="NewArrivals">New Arrivals</option>
-              </select>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Adding To Cart Toast Notification */}
-        {addedToCartToast && (
-          <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-5 py-3 bg-emerald-950 text-white rounded-xl border border-emerald-800 shadow-xl text-xs font-bold animate-float flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            <span>{addedToCartToast}</span>
-          </div>
-        )}
-
-        {/* Product Cards Grid */}
-        {(() => {
-          let filtered = PRODUCT_REGISTRY.filter(prod => {
-            const matchesCat = productCat === 'All' || prod.category === productCat;
-            const matchesSearch = prod.name.toLowerCase().includes(productSearch.toLowerCase()) || 
-                                  prod.desc.toLowerCase().includes(productSearch.toLowerCase());
-            return matchesCat && matchesSearch;
-          });
-
-          if (productSort === 'LowToHigh') {
-            filtered = [...filtered].sort((a, b) => a.price - b.price);
-          } else if (productSort === 'HighToLow') {
-            filtered = [...filtered].sort((a, b) => b.price - a.price);
-          } else if (productSort === 'NewArrivals') {
-            filtered = filtered.filter(p => p.badge === 'New');
-          }
-
-          const visibleList = filtered.slice(0, visibleProductsCount);
-
-          if (filtered.length === 0) {
-            return (
-              <div className="text-center py-12 bg-white rounded-[32px] border border-stone-200 border-dashed text-xs text-stone-500 font-bold">
-                No organic products found matching the criteria.
-              </div>
-            );
-          }
+        {/* Categories Block */}
+        {([
+          { title: 'Hair Care Solutions', key: 'Hair Care' },
+          { title: 'Face Care Solutions', key: 'Face Care' },
+          { title: 'Pain Relief Solutions', key: 'Pain Relief' },
+          { title: 'Obesity Care Solutions', key: 'Obesity Care' }
+        ] as const).map((cat) => {
+          const catSolutions = SOLUTIONS_DATA.filter(sol => sol.category === cat.key);
+          if (catSolutions.length === 0) return null;
 
           return (
-            <div className="space-y-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {visibleList.map((prod, idx) => {
-                  const finalPrice = prod.discount ? Math.round(prod.price * (1 - prod.discount/100)) : prod.price;
-                  const isWishlisted = wishlist.includes(prod.name);
+            <div key={cat.key} className="space-y-6">
+              <h3 className="text-lg font-black text-stone-900 border-b border-stone-200/60 pb-3 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-ayur-primary"></span>
+                <span>{cat.title}</span>
+              </h3>
 
-                  return (
-                    <div 
-                      key={idx} 
-                      className="bg-white border border-stone-200/80 rounded-[20px] overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group relative"
-                    >
-                      {/* Product Image and Badges */}
-                      <div className="h-52 w-full overflow-hidden relative bg-stone-50">
-                        <img 
-                          src={prod.image} 
-                          alt={prod.name} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                        />
-                        
-                        {/* 100% Herbal badge */}
-                        {prod.isHerbal && (
-                          <span className="absolute top-3 left-3 bg-emerald-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">
-                            100% Herbal
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {catSolutions.map((prod, idx) => (
+                  <div 
+                    key={idx} 
+                    className="bg-white border border-stone-200/80 rounded-[20px] overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-stretch"
+                  >
+                    {/* Left: Image & Badges */}
+                    <div className="w-full sm:w-48 shrink-0 relative bg-stone-50 h-52 sm:h-auto">
+                      <img src={prod.image} alt={prod.name} className="w-full h-full object-cover" />
+                      
+                      {/* Category Badge */}
+                      <span className="absolute bottom-3 left-3 bg-emerald-950 text-white text-[9px] font-bold px-2 py-0.5 rounded">
+                        {prod.category}
+                      </span>
+                    </div>
+
+                    {/* Right: Info details */}
+                    <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
+                      
+                      {/* Name & Badges Row */}
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap gap-1.5">
+                          <span className="bg-emerald-805 text-white text-[8px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            {prod.badge1}
                           </span>
-                        )}
-
-                        {/* Top corner badge */}
-                        {prod.badge && (
-                          <span className="absolute top-3 right-3 bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">
-                            {prod.badge}
+                          <span className="bg-amber-500 text-white text-[8px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">
+                            {prod.badge2}
                           </span>
-                        )}
+                        </div>
 
-                        {/* Category badge */}
-                        <span className="absolute bottom-3 left-3 bg-emerald-950 text-white text-[9px] font-bold px-2 py-0.5 rounded">
-                          {prod.category}
-                        </span>
-
-                        {/* Quick View trigger */}
-                        <button
-                          onClick={() => setQuickViewProd(prod)}
-                          className="absolute inset-0 bg-stone-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        >
-                          <span className="px-3.5 py-1.5 bg-white text-stone-900 rounded-lg text-[10px] font-bold shadow flex items-center gap-1">
-                            <Eye className="w-3.5 h-3.5" />
-                            <span>Quick View</span>
-                          </span>
-                        </button>
+                        <h4 className="font-extrabold text-base text-stone-900 leading-tight">{prod.name}</h4>
+                        <p className="text-xs text-stone-500 font-medium leading-relaxed">{prod.desc}</p>
                       </div>
 
-                      {/* Info Panel */}
-                      <div className="p-5 space-y-3 flex-grow flex flex-col justify-between">
-                        <div className="space-y-1.5">
-                          {/* Name and Rating */}
-                          <div className="flex justify-between items-start gap-2">
-                            <h4 className="font-extrabold text-sm text-stone-900 leading-snug group-hover:text-ayur-primary transition-colors">{prod.name}</h4>
-                            <button 
-                              onClick={() => toggleWishlist(prod.name)}
-                              className={`p-1 rounded-full shrink-0 ${isWishlisted ? 'text-rose-500' : 'text-stone-300 hover:text-rose-500'}`}
-                            >
-                              <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-rose-500' : ''}`} />
-                            </button>
-                          </div>
-
-                          <div className="flex items-center gap-1.5">
-                            <div className="flex text-amber-500">
-                              {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-amber-500" />)}
-                            </div>
-                            <span className="text-[10px] text-stone-400 font-bold">({prod.reviews} reviews)</span>
-                          </div>
-
-                          <p className="text-xs text-stone-500 font-medium leading-relaxed line-clamp-2">{prod.desc}</p>
-                        </div>
-
-                        {/* Stock & Price Row */}
-                        <div className="pt-3 border-t border-stone-100 flex justify-between items-center text-xs">
-                          <div>
-                            <span className="text-[10px] text-stone-400 block">Stock Status</span>
-                            <span className={`font-bold ${prod.stock.includes('Only') ? 'text-amber-600' : 'text-emerald-700'}`}>
-                              {prod.stock}
-                            </span>
-                          </div>
-
-                          <div className="text-right">
-                            {prod.discount ? (
-                              <div className="space-y-0.5">
-                                <span className="text-[10px] text-stone-400 line-through mr-1">₹{prod.price}</span>
-                                <strong className="text-stone-900">₹{finalPrice}</strong>
-                              </div>
-                            ) : (
-                              <strong className="text-stone-900">₹{prod.price}</strong>
-                            )}
-                          </div>
-                        </div>
+                      {/* Benefits Checklist */}
+                      <div className="space-y-1.5">
+                        <span className="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Benefits:</span>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-stone-605 font-semibold">
+                          {prod.benefits.map((b, i) => (
+                            <li key={i} className="flex items-start gap-1.5">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-650 shrink-0 mt-0.5" />
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
 
                       {/* Action buttons */}
-                      <div className="p-5 pt-0 grid grid-cols-2 gap-2 text-xs font-bold">
-                        <button
-                          onClick={() => handleAddToCart(prod.name)}
-                          className="py-2 border border-stone-200 rounded-xl text-stone-770 hover:bg-stone-50 flex items-center justify-center gap-1"
+                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-stone-100 text-[11px] font-black">
+                        <Link 
+                          to="/products"
+                          className="py-2 border border-stone-200 hover:bg-stone-50 text-stone-700 rounded-xl text-center flex items-center justify-center"
                         >
-                          <ShoppingCart className="w-3.5 h-3.5" />
-                          <span>Add to Cart</span>
-                        </button>
-                        <button
-                          onClick={() => handleBuyNow(prod.name)}
-                          className="py-2 bg-ayur-primary text-white rounded-xl hover:bg-ayur-secondary text-center"
+                          Learn More
+                        </Link>
+                        <Link 
+                          to="/doctors"
+                          className="py-2 bg-ayur-primary hover:bg-ayur-secondary text-white rounded-xl text-center flex items-center justify-center"
                         >
-                          Buy Now
-                        </button>
+                          Book Consult
+                        </Link>
                       </div>
 
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
-
-              {/* Load More Button */}
-              {filtered.length > visibleProductsCount && (
-                <div className="text-center">
-                  <button
-                    onClick={() => setVisibleProductsCount(visibleProductsCount + 3)}
-                    className="px-6 py-2.5 border border-stone-250 hover:border-ayur-primary text-stone-650 hover:text-ayur-primary text-xs font-black rounded-xl transition-all"
-                  >
-                    Load More Products
-                  </button>
-                </div>
-              )}
             </div>
           );
-        })()}
+        })}
 
-      </section>
-
-      {/* QUICK VIEW MODAL COMPONENT */}
-      {quickViewProd && (
-        <div className="fixed inset-0 bg-stone-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white border border-stone-200 w-full max-w-2xl rounded-[32px] overflow-hidden shadow-2xl p-6 sm:p-8 space-y-6 relative animate-float">
-            
-            {/* Close Button */}
-            <button 
-              onClick={() => setQuickViewProd(null)} 
-              className="absolute top-4 right-4 p-1.5 rounded-full bg-stone-55/60 text-stone-500 hover:text-stone-800"
+        {/* CTA Banner Section */}
+        <div className="p-8 sm:p-10 rounded-[32px] bg-emerald-955 text-white relative overflow-hidden shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-emerald-900/40 rounded-full blur-2xl"></div>
+          <div className="space-y-2 max-w-xl z-10">
+            <h3 className="text-lg sm:text-xl font-extrabold">Need Expert Ayurvedic Guidance?</h3>
+            <p className="text-xs text-emerald-200 leading-relaxed font-medium">
+              Consult our experienced Ayurvedic doctors to receive personalized treatment recommendations based on your health concerns.
+            </p>
+          </div>
+          <div className="flex gap-3 z-10 shrink-0 text-xs font-black">
+            <Link 
+              to="/doctors"
+              className="px-5 py-3 bg-white text-emerald-950 hover:bg-emerald-50 rounded-xl transition-all"
             >
-              <X className="w-4 h-4" />
+              Book Consultation
+            </Link>
+            <button 
+              onClick={() => handleAnchorScroll('contact')}
+              className="px-5 py-3 bg-emerald-900/60 hover:bg-emerald-900 text-white rounded-xl border border-emerald-800 transition-all"
+            >
+              Contact Us
             </button>
-
-            {/* Top Info Header Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-start">
-              <div className="sm:col-span-5 h-48 w-full rounded-2xl overflow-hidden bg-stone-50">
-                <img src={quickViewProd.image} alt={quickViewProd.name} className="w-full h-full object-cover" />
-              </div>
-
-              <div className="sm:col-span-7 space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="text-[10px] bg-emerald-50 text-ayur-primary font-bold px-2.5 py-0.5 rounded-full border border-emerald-150">
-                      {quickViewProd.category}
-                    </span>
-                    <h3 className="font-extrabold text-base sm:text-lg text-stone-900 mt-1.5 leading-snug">{quickViewProd.name}</h3>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1.5">
-                  <div className="flex text-amber-500">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-amber-500" />)}
-                  </div>
-                  <span className="text-xs text-stone-400 font-bold">({quickViewProd.reviews} reviews) &bull; Size: {quickViewProd.size}</span>
-                </div>
-
-                <div className="text-sm font-black text-stone-900">
-                  {quickViewProd.discount ? (
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-xs text-stone-400 line-through">₹{quickViewProd.price}</span>
-                      <span>₹{Math.round(quickViewProd.price * (1 - quickViewProd.discount/100))}</span>
-                      <span className="text-[10px] text-emerald-700">({quickViewProd.discount}% OFF)</span>
-                    </div>
-                  ) : (
-                    <span>₹{quickViewProd.price}</span>
-                  )}
-                </div>
-
-                <p className="text-xs text-stone-600 leading-relaxed font-medium">{quickViewProd.desc}</p>
-              </div>
-            </div>
-
-            {/* Mid Tabbed Information columns */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-stone-100 pt-4 text-xs leading-relaxed">
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <strong className="text-[10px] text-stone-450 font-bold uppercase tracking-wider block">Key Ingredients:</strong>
-                  <p className="text-stone-550 font-medium">{quickViewProd.ingredients.join(', ')}</p>
-                </div>
-
-                <div className="space-y-1">
-                  <strong className="text-[10px] text-stone-450 font-bold uppercase tracking-wider block">Usage Guidelines:</strong>
-                  <p className="text-stone-550 font-medium">{quickViewProd.usage}</p>
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <strong className="text-[10px] text-stone-450 font-bold uppercase tracking-wider block">Formulation Benefits:</strong>
-                <ul className="space-y-1 pl-3 text-stone-550 font-medium list-disc">
-                  {quickViewProd.benefits.map((b: string, i: number) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Bottom Actions */}
-            <div className="pt-4 border-t border-stone-100 grid grid-cols-2 gap-3 text-xs font-bold">
-              <button
-                onClick={() => {
-                  handleAddToCart(quickViewProd.name);
-                  setQuickViewProd(null);
-                }}
-                className="py-2.5 border border-stone-250 rounded-xl text-stone-750 hover:bg-stone-50 flex items-center justify-center gap-1.5"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                <span>Add to Shopping Cart</span>
-              </button>
-              <button
-                onClick={() => {
-                  handleBuyNow(quickViewProd.name);
-                  setQuickViewProd(null);
-                }}
-                className="py-2.5 bg-ayur-primary text-white rounded-xl hover:bg-ayur-secondary text-center"
-              >
-                Buy Formulation Now
-              </button>
-            </div>
-
           </div>
         </div>
-      )}
+
+      </section>
 
       {/* 7. PATIENT TESTIMONIALS & SUCCESS STORIES */}
       <section id="testimonials" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
