@@ -33,9 +33,9 @@ const BLOGS = [
 ];
 
 const FEATURED_DOCTORS = [
-  { name: 'Dr. Rahul Verma', qualification: 'BAMS, MD (Ayurveda)', specialization: 'Co-founder & Chief Vaidya (Spine & Joint)', experience: 16, rating: 4.9, reviews: 240, fee: '₹800', image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300' },
-  { name: 'Dr. Navya Reddy', qualification: 'BAMS, MS (Ayurveda)', specialization: 'Co-founder & Senior Vaidya (Gynecology)', experience: 12, rating: 4.9, reviews: 185, fee: '₹750', image: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=300&h=300' },
-  { name: 'Dr. Naveen Jadhav', qualification: 'BAMS, MD (Ayurveda)', specialization: 'Panchakarma & Detox Specialist', experience: 15, rating: 4.8, reviews: 140, fee: '₹600', image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300&h=300' }
+  { name: 'Vaidya Dr. Rajesh Sharma', qualification: 'BAMS, MD (Ayurveda)', specialization: 'Panchakarma & Joint Care Specialist', experience: 15, rating: 4.9, reviews: 240, fee: '₹500', image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300' },
+  { name: 'Vaidya Dr. Anjali Nair', qualification: 'BAMS, MS (Ayurveda)', specialization: 'Ayurvedic Dermatology & Skin Care', experience: 10, rating: 4.8, reviews: 185, fee: '₹500', image: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=300&h=300' },
+  { name: 'Vaidya Dr. Sunil Gupta', qualification: 'BAMS', specialization: 'Digestive Disorders & Wellness expert', experience: 8, rating: 4.9, reviews: 140, fee: '₹400', image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300&h=300' }
 ];
 
 export default function Home() {

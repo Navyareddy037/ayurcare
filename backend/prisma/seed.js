@@ -34,30 +34,6 @@ async function main() {
 
   const doctorsData = [
     {
-      email: 'rahul.verma@kayakalp.com',
-      name: 'Dr. Rahul Verma',
-      qualification: 'BAMS, MD (Ayurveda - Kayachikitsa)',
-      experience: 16,
-      specialization: 'Orthopedic Ayurveda',
-      languages: 'English, Hindi',
-      fee: 800,
-      clinicName: 'Kaya Kalp Spine & Joint Clinic, New Palasia, Indore',
-      bio: 'Co-founder and Chief Vaidya at Kaya Kalp Indore. Highly specialized in spine disorders, arthritis, joint management, and pain relief through Panchakarma.',
-      availabilities: [1, 2, 3, 4, 5],
-    },
-    {
-      email: 'navya.reddy@kayakalp.com',
-      name: 'Dr. Navya Reddy',
-      qualification: 'BAMS, MS (Prasuti Tantra & Stri Roga)',
-      experience: 12,
-      specialization: 'Gynecology Ayurveda',
-      languages: 'English, Hindi, Telugu',
-      fee: 750,
-      clinicName: 'Kaya Kalp Stri Roga Clinic, New Palasia, Indore',
-      bio: 'Co-founder and Senior Consultant. Dedicated to womens health, endocrine imbalances, infertility treatments, and prenatal care using classical Ayurvedic sciences.',
-      availabilities: [1, 2, 3, 4, 5],
-    },
-    {
       email: 'panchakarma@kayakalp.com',
       name: 'Dr. Naveen Jadhav',
       qualification: 'BAMS, MD (Ayurveda - Panchakarma)',
