@@ -82,7 +82,7 @@ router.get('/', async (req, res) => {
 router.post('/profile', authMiddleware_1.authMiddleware, (0, authMiddleware_1.requireRole)(['DOCTOR']), async (req, res) => {
     try {
         const userId = req.user.id;
-        const { qualification, experience, specialization, languages, fee, clinicName, bio } = req.body;
+        const { qualification, experience, specialization, languages, fee, clinicName, bio, certificates, consultModes, breakTime, holidays } = req.body;
         const doctorProfile = await db_1.default.doctorProfile.findUnique({
             where: { userId },
         });
@@ -99,6 +99,10 @@ router.post('/profile', authMiddleware_1.authMiddleware, (0, authMiddleware_1.re
                 fee: fee ? parseFloat(fee) : doctorProfile.fee,
                 clinicName: clinicName ?? doctorProfile.clinicName,
                 bio: bio ?? doctorProfile.bio,
+                certificates: certificates !== undefined ? certificates : doctorProfile.certificates,
+                consultModes: consultModes ?? doctorProfile.consultModes,
+                breakTime: breakTime ?? doctorProfile.breakTime,
+                holidays: holidays !== undefined ? holidays : doctorProfile.holidays,
             },
         });
         return res.json({ success: true, profile: updated });

@@ -35,8 +35,14 @@ router.get('/', authMiddleware_1.authMiddleware, async (req, res) => {
             if (!doctorProfile) {
                 return res.status(404).json({ error: 'Doctor profile not found' });
             }
+            const { date } = req.query;
+            const whereCondition = { doctorId: doctorProfile.id };
+            if (date === 'today') {
+                const todayStr = new Date().toISOString().split('T')[0];
+                whereCondition.date = todayStr;
+            }
             appointments = await db_1.default.appointment.findMany({
-                where: { doctorId: doctorProfile.id },
+                where: whereCondition,
                 include: {
                     patient: {
                         select: {
@@ -44,6 +50,7 @@ router.get('/', authMiddleware_1.authMiddleware, async (req, res) => {
                             name: true,
                             email: true,
                             patientProfile: true,
+                            medicalRecords: true,
                         },
                     },
                 },
@@ -130,7 +137,7 @@ router.post('/', authMiddleware_1.authMiddleware, async (req, res) => {
 router.put('/', authMiddleware_1.authMiddleware, async (req, res) => {
     try {
         const { id: userId, role } = req.user;
-        const { appointmentId, status, date, timeSlot, notes, prescription, medicinesJSON } = req.body;
+        const { appointmentId, status, date, timeSlot, notes, prescription, medicinesJSON, visitType, nextFollowup, followupDone } = req.body;
         if (!appointmentId) {
             return res.status(400).json({ error: 'Appointment ID required' });
         }
@@ -190,6 +197,12 @@ router.put('/', authMiddleware_1.authMiddleware, async (req, res) => {
             updateData.prescription = prescription;
         if (medicinesJSON !== undefined)
             updateData.medicinesJSON = medicinesJSON;
+        if (visitType !== undefined)
+            updateData.visitType = visitType;
+        if (nextFollowup !== undefined)
+            updateData.nextFollowup = nextFollowup;
+        if (followupDone !== undefined)
+            updateData.followupDone = followupDone;
         const updated = await db_1.default.appointment.update({
             where: { id: appId },
             data: updateData,
@@ -209,6 +222,165 @@ router.put('/', authMiddleware_1.authMiddleware, async (req, res) => {
     catch (error) {
         console.error('Update appointment error:', error);
         return res.status(500).json({ error: error.message || 'Internal server error' });
+    }
+});
+// GET /api/appointments/notifications: list alerts for user
+router.get('/notifications', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId } = req.user;
+        const notifications = await db_1.default.notification.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' },
+        });
+        return res.json({ success: true, notifications });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// PUT /api/appointments/notifications/:id/read: mark alert as read
+router.put('/notifications/:id/read', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId } = req.user;
+        const notifId = parseInt(req.params.id);
+        const notif = await db_1.default.notification.findUnique({
+            where: { id: notifId }
+        });
+        if (!notif || notif.userId !== userId) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+        const updated = await db_1.default.notification.update({
+            where: { id: notifId },
+            data: { isRead: true }
+        });
+        return res.json({ success: true, notification: updated });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// GET /api/appointments/tasks: list doctor tasks
+router.get('/tasks', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId, role } = req.user;
+        if (role !== 'DOCTOR')
+            return res.status(403).json({ error: 'Unauthorized' });
+        const doctorProfile = await db_1.default.doctorProfile.findUnique({ where: { userId } });
+        if (!doctorProfile)
+            return res.status(404).json({ error: 'Doctor not found' });
+        const tasks = await db_1.default.doctorTask.findMany({
+            where: { doctorId: doctorProfile.id },
+            orderBy: { createdAt: 'desc' }
+        });
+        return res.json({ success: true, tasks });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// POST /api/appointments/tasks: create doctor task
+router.post('/tasks', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId, role } = req.user;
+        const { title } = req.body;
+        if (role !== 'DOCTOR')
+            return res.status(403).json({ error: 'Unauthorized' });
+        const doctorProfile = await db_1.default.doctorProfile.findUnique({ where: { userId } });
+        if (!doctorProfile)
+            return res.status(404).json({ error: 'Doctor not found' });
+        const newTask = await db_1.default.doctorTask.create({
+            data: { doctorId: doctorProfile.id, title, isDone: false }
+        });
+        return res.json({ success: true, task: newTask });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// PUT /api/appointments/tasks/:id: toggle task completion
+router.put('/tasks/:id', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId, role } = req.user;
+        const taskId = parseInt(req.params.id);
+        const { isDone } = req.body;
+        if (role !== 'DOCTOR')
+            return res.status(403).json({ error: 'Unauthorized' });
+        const doctorProfile = await db_1.default.doctorProfile.findUnique({ where: { userId } });
+        if (!doctorProfile)
+            return res.status(404).json({ error: 'Doctor not found' });
+        const task = await db_1.default.doctorTask.findUnique({ where: { id: taskId } });
+        if (!task || task.doctorId !== doctorProfile.id) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+        const updated = await db_1.default.doctorTask.update({
+            where: { id: taskId },
+            data: { isDone }
+        });
+        return res.json({ success: true, task: updated });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// POST /api/appointments/tickets: Create a new support ticket
+router.post('/tickets', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId } = req.user;
+        const { subject, description } = req.body;
+        const ticket = await db_1.default.supportTicket.create({
+            data: { userId, subject, description, status: 'OPEN' }
+        });
+        return res.json({ success: true, ticket });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// GET /api/appointments/tickets: List user support tickets
+router.get('/tickets', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId } = req.user;
+        const tickets = await db_1.default.supportTicket.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' }
+        });
+        return res.json({ success: true, tickets });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// GET /api/appointments/tickets/admin: List all support tickets for administrator
+router.get('/tickets/admin', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { role } = req.user;
+        if (role !== 'ADMIN')
+            return res.status(403).json({ error: 'Unauthorized' });
+        const tickets = await db_1.default.supportTicket.findMany({
+            orderBy: { createdAt: 'desc' }
+        });
+        return res.json({ success: true, tickets });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// PUT /api/appointments/tickets/admin/:id: Answer support ticket
+router.put('/tickets/admin/:id', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { role } = req.user;
+        if (role !== 'ADMIN')
+            return res.status(403).json({ error: 'Unauthorized' });
+        const ticketId = parseInt(req.params.id);
+        const { response, status } = req.body;
+        const updated = await db_1.default.supportTicket.update({
+            where: { id: ticketId },
+            data: { response, status }
+        });
+        return res.json({ success: true, ticket: updated });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
     }
 });
 exports.default = router;

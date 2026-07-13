@@ -45,14 +45,14 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation links */}
-          <nav className="hidden xl:flex items-center gap-5">
-            <Link to="/" className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors">
+          <nav className="hidden xl:flex items-center gap-6">
+            <Link to="/" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide">
               Home
             </Link>
             
             <button 
               onClick={() => handleAnchorScroll('about')}
-              className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors"
+              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
             >
               About Kaya Kalp
             </button>
@@ -63,102 +63,87 @@ export default function Header() {
               onMouseEnter={() => setMegaMenuOpen(true)}
               onMouseLeave={() => setMegaMenuOpen(false)}
             >
-              <button className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1 py-2">
+              <button className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1 py-2 tracking-wide">
                 <span>Treatments</span>
-                <ChevronDown className="w-3.5 h-3.5" />
+                <ChevronDown className="w-3 h-3" />
               </button>
 
               {megaMenuOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-[600px] rounded-3xl border border-stone-200/55 bg-white p-6 shadow-2xl z-50 grid grid-cols-3 gap-6 animate-float">
+                <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-[640px] rounded-3xl border border-stone-150 bg-white p-6 shadow-2xl z-50 grid grid-cols-3 gap-6 animate-float transition-all duration-300">
                   <div className="space-y-3">
-                    <span className="text-[10px] font-black text-ayur-primary uppercase tracking-widest block">Panchakarma Detox</span>
+                    <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Panchakarma Detox</span>
                     <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li className="hover:text-ayur-primary cursor-pointer">Vamana (Emesis)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Virechana (Purgation)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Basti (Enema Therapy)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Nasya (Nasal Cleansing)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Raktamokshana (Blood purification)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Vamana (Emesis)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Virechana (Purgation)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Basti (Enema Therapy)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Nasya (Nasal Cleansing)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Raktamokshana (Blood purification)</li>
                     </ul>
                   </div>
 
                   <div className="space-y-3">
-                    <span className="text-[10px] font-black text-ayur-primary uppercase tracking-widest block">Clinical Therapies</span>
+                    <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Clinical Therapies</span>
                     <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li className="hover:text-ayur-primary cursor-pointer">Abhyanga (Warm Massage)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Shirodhara (Oil Flow)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Udvartana (Powder Massage)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer">Patra Pinda Sweda (Leaf steam)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Abhyanga (Warm Massage)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Shirodhara (Oil Flow)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Udvartana (Powder Massage)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('panchakarma')}>Patra Pinda Sweda</li>
                     </ul>
                   </div>
 
                   <div className="space-y-3">
-                    <span className="text-[10px] font-black text-ayur-primary uppercase tracking-widest block">Therapeutic Programs</span>
+                    <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Special Programs</span>
                     <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li className="hover:text-ayur-primary cursor-pointer" onClick={() => handleAnchorScroll('conditions')}>Joint Care (Sandhigata)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer" onClick={() => handleAnchorScroll('conditions')}>Stress & Insomnia Care</li>
-                      <li className="hover:text-ayur-primary cursor-pointer" onClick={() => handleAnchorScroll('conditions')}>Spine & Back Care (Kati Basti)</li>
-                      <li className="hover:text-ayur-primary cursor-pointer" onClick={() => handleAnchorScroll('conditions')}>Ayurvedic Weight Management</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Joint Care (Sandhigata)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Stress & Insomnia Care</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Spine & Back Care (Kati Basti)</li>
+                      <li className="hover:text-ayur-accent hover:translate-x-1 cursor-pointer transition-all duration-200" onClick={() => handleAnchorScroll('conditions')}>Weight Management</li>
                     </ul>
                   </div>
                 </div>
               )}
             </div>
 
-            <Link to="/doctors" className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors">
-              Our Doctors
+            <Link to="/doctors" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide">
+              Doctors
             </Link>
 
-            <Link to="/ai-assessment" className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1">
-              <span className="px-1.5 py-0.5 rounded-md bg-emerald-50 text-[9px] font-black text-ayur-primary border border-emerald-200">ONLINE</span>
-              <span>Consultation</span>
+            <Link to="/ai-assessment" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1 tracking-wide">
+              <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-[9px] font-bold text-ayur-primary border border-emerald-150">ONLINE</span>
+              <span>Online Consultation</span>
             </Link>
 
-            {/* Programs / Packages Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setProgramsDropdownOpen(true)}
-              onMouseLeave={() => setProgramsDropdownOpen(false)}
+            <button 
+              onClick={() => handleAnchorScroll('wellness-programs')}
+              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
             >
-              <button className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1 py-2">
-                <span>Wellness & Packages</span>
-                <ChevronDown className="w-3.5 h-3.5" />
-              </button>
+              Wellness Programs
+            </button>
 
-              {programsDropdownOpen && (
-                <div className="absolute right-0 mt-1 w-52 rounded-2xl border border-stone-200 bg-white p-2.5 shadow-xl z-50 space-y-1 animate-float">
-                  <button 
-                    onClick={() => handleAnchorScroll('wellness-programs')}
-                    className="w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-                  >
-                    Wellness Programs
-                  </button>
-                  <button 
-                    onClick={() => handleAnchorScroll('packages')}
-                    className="w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-                  >
-                    Health Packages
-                  </button>
-                </div>
-              )}
-            </div>
+            <button 
+              onClick={() => handleAnchorScroll('packages')}
+              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
+            >
+              Health Packages
+            </button>
 
             <button 
               onClick={() => handleAnchorScroll('blogs')}
-              className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors"
+              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
             >
               Blogs
             </button>
 
             <button 
               onClick={() => handleAnchorScroll('testimonials')}
-              className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors"
+              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
             >
               Testimonials
             </button>
 
             <button 
               onClick={() => handleAnchorScroll('contact')}
-              className="text-xs font-black text-stone-600 hover:text-ayur-primary transition-colors"
+              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
             >
               Contact
             </button>

@@ -181,6 +181,108 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
+// PUT /api/auth/profile: Update user profile details
+router.put('/profile', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user!.id;
+    const role = req.user!.role;
+    const { name, email, patientDetails, doctorDetails } = req.body;
+
+    // Update User Name/Email if provided
+    const userUpdate: any = {};
+    if (name) userUpdate.name = name;
+    if (email) userUpdate.email = email;
+
+    if (Object.keys(userUpdate).length > 0) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: userUpdate,
+      });
+    }
+
+    if (role === 'PATIENT' && patientDetails) {
+      const patientProfile = await prisma.patientProfile.findUnique({
+        where: { userId },
+      });
+
+      if (patientProfile) {
+        const updateData: any = {};
+        const fields = [
+          'age', 'gender', 'phone', 'bloodType', 'medicalHistory', 'weight', 
+          'bloodPressure', 'bloodSugar', 'sleepHours', 'waterIntake', 'exerciseMinutes', 
+          'mood', 'dob', 'height', 'maritalStatus', 'occupation', 'address', 'city', 
+          'state', 'country', 'pincode', 'emergencyName', 'emergencyPhone', 'allergies', 
+          'surgeries', 'medications', 'familyHistory', 'dietType', 'stressLevel', 
+          'heartRate', 'symptoms', 'insuranceDetails'
+        ];
+
+        for (const field of fields) {
+          if (patientDetails[field] !== undefined) {
+            if (['age', 'exerciseMinutes', 'heartRate'].includes(field)) {
+              updateData[field] = patientDetails[field] ? parseInt(patientDetails[field]) : null;
+            } else if (['weight', 'bloodSugar', 'sleepHours', 'waterIntake', 'height'].includes(field)) {
+              updateData[field] = patientDetails[field] ? parseFloat(patientDetails[field]) : null;
+            } else {
+              updateData[field] = patientDetails[field];
+            }
+          }
+        }
+
+        await prisma.patientProfile.update({
+          where: { id: patientProfile.id },
+          data: updateData,
+        });
+      }
+    } else if (role === 'DOCTOR' && doctorDetails) {
+      const doctorProfile = await prisma.doctorProfile.findUnique({
+        where: { userId },
+      });
+
+      if (doctorProfile) {
+        const updateData: any = {};
+        const fields = [
+          'qualification', 'experience', 'specialization', 'languages', 'fee', 
+          'clinicName', 'bio', 'certificates', 'consultModes', 'breakTime', 'holidays'
+        ];
+
+        for (const field of fields) {
+          if (doctorDetails[field] !== undefined) {
+            if (field === 'experience') {
+              updateData[field] = doctorDetails[field] ? parseInt(doctorDetails[field]) : doctorProfile.experience;
+            } else if (field === 'fee') {
+              updateData[field] = doctorDetails[field] ? parseFloat(doctorDetails[field]) : doctorProfile.fee;
+            } else {
+              updateData[field] = doctorDetails[field];
+            }
+          }
+        }
+
+        await prisma.doctorProfile.update({
+          where: { id: doctorProfile.id },
+          data: updateData,
+        });
+      }
+    }
+
+    const updatedUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        patientProfile: true,
+        doctorProfile: true,
+      },
+    });
+
+    return res.json({ success: true, user: updatedUser });
+  } catch (error: any) {
+    console.error('Profile update error:', error);
+    return res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+});
+
 // POST /api/auth/verify-otp: Mock OTP validation
 router.post('/verify-otp', (req: Request, res: Response) => {
   const { otp } = req.body;

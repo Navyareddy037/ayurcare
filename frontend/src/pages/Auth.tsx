@@ -684,6 +684,26 @@ export default function AuthPage() {
                         <option>High</option>
                       </select>
                     </div>
+                    <div className="space-y-1 sm:col-span-2">
+                      <label className="text-xs font-bold text-stone-700">Current Medications</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Metformin 500mg, Atorvastatin..."
+                        value={medications}
+                        onChange={(e) => setMedications(e.target.value)}
+                        className="w-full p-2 border border-stone-200 bg-white rounded-lg text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1 sm:col-span-2">
+                      <label className="text-xs font-bold text-stone-700">Previous Treatments & Medical History</label>
+                      <textarea
+                        placeholder="Detail any previous Ayurvedic, homoeopathic, or surgical treatments..."
+                        value={medicalHistory}
+                        onChange={(e) => setMedicalHistory(e.target.value)}
+                        rows={2}
+                        className="w-full p-2 border border-stone-200 bg-white rounded-lg text-xs"
+                      />
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -717,6 +737,21 @@ export default function AuthPage() {
                         className="w-full p-2 border border-stone-200 bg-white rounded-lg text-xs"
                       />
                     </div>
+                  </div>
+
+                  <div className="space-y-1 bg-stone-50 p-3 rounded-2xl border border-stone-150">
+                    <label className="text-xs font-bold text-stone-700 block">Upload Initial Medical Reports</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          alert(`Simulated upload successful: ${file.name} will be added to your health records vault.`);
+                        }
+                      }}
+                      className="w-full text-xs text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-ayur-primary hover:file:bg-emerald-100 cursor-pointer"
+                    />
                   </div>
 
                   <div className="flex gap-3 mt-4">
