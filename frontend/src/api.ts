@@ -7,7 +7,7 @@ const api = axios.create({
 
 // Automatically inject JWT tokens into headers of outgoing HTTP calls
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('ayurcare_token');
+  const token = localStorage.getItem('kayakalp_token');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
