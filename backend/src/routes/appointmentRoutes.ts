@@ -84,7 +84,7 @@ router.get('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
 router.post('/', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { id: patientId, role, email: patientEmail, name: patientName } = req.user!;
-    const { doctorId, date, timeSlot } = req.body;
+    const { doctorId, date, timeSlot, visitType } = req.body;
 
     if (role !== 'PATIENT') {
       return res.status(403).json({ error: 'Only patient accounts can schedule appointments' });
@@ -120,6 +120,7 @@ router.post('/', authMiddleware, async (req: AuthenticatedRequest, res: Response
         timeSlot,
         status: 'CONFIRMED',
         receiptId,
+        visitType: visitType || 'clinic',
       },
       include: {
         doctor: {

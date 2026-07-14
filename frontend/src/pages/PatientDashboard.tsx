@@ -1153,6 +1153,74 @@ This is a computer generated invoice and requires no signature.
                   </div>
                 </div>
 
+                {/* Panchkarma Multi-Day Treatment Tracker (Section 6.2 Blueprint Requirement) */}
+                <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-5">
+                  <div className="flex justify-between items-center border-b border-stone-100 dark:border-stone-800 pb-3">
+                    <div className="space-y-1">
+                      <h3 className="font-bold text-sm text-stone-900 dark:text-white flex items-center gap-1.5 font-serif">
+                        <Activity className="w-4 h-4 text-ayur-primary animate-pulse" />
+                        <span>Active Panchakarma Detox Program</span>
+                      </h3>
+                      <p className="text-[10px] text-stone-400">Personalized 7-Day Cleansing Protocol</p>
+                    </div>
+                    <span className="text-[9px] bg-emerald-100 dark:bg-emerald-950 text-ayur-primary dark:text-emerald-350 font-black px-2.5 py-1 rounded-full uppercase tracking-wider">
+                      Day 3 of 7
+                    </span>
+                  </div>
+
+                  {/* Day-by-Day Steps Tracker */}
+                  <div className="space-y-4">
+                    {[
+                      { day: 1, title: 'Deepana & Pachana (Kindling Agni)', desc: 'Consuming digestive stews and hot ginger water. Avoid heavy meals.', status: 'completed' },
+                      { day: 2, title: 'Snehapana (Internal Oleation)', desc: 'Warm medicated ghee dosage taken early morning to loose biological toxins.', status: 'completed' },
+                      { day: 3, title: 'Abhyanga & Swedana (External Sudation)', desc: 'Full-body oil massage followed by steam bath to move toxins to gut.', status: 'active' },
+                      { day: 4, title: 'Pradhana Karma - Virechana (Purgation)', desc: 'Clinical purgative therapy administered under Vaidya supervision.', status: 'pending' },
+                      { day: 5, title: 'Paschat Karma - Samsarjana Diet', desc: 'Gradually restoring diet from thin stews back to light solid grains.', status: 'pending' },
+                      { day: 6, title: 'Rasayana Rejuvenation (Nourishment)', desc: 'Rebuilding tissues with organic supplements (Chyawanprash & herbal oils).', status: 'pending' },
+                      { day: 7, title: 'Final Assessment & Dinacharya Guide', desc: 'Custom lifestyle routine consultation with Dr. Naveen Jadhav.', status: 'pending' }
+                    ].map((step, idx) => (
+                      <div key={idx} className="flex gap-4 items-start text-xs">
+                        {/* Tracker bullet indicators */}
+                        <div className="flex flex-col items-center shrink-0 mt-1">
+                          <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                            step.status === 'completed' ? 'bg-ayur-primary text-white' :
+                            step.status === 'active' ? 'bg-amber-500 text-white animate-pulse' :
+                            'bg-stone-105 dark:bg-stone-850 text-stone-450 border border-stone-200 dark:border-stone-800'
+                          }`}>
+                            {step.day}
+                          </span>
+                          {idx < 6 && <span className="w-0.5 h-10 bg-stone-250 dark:bg-stone-800"></span>}
+                        </div>
+
+                        {/* Details contents */}
+                        <div className="p-3 bg-stone-50/40 dark:bg-[#1C241F]/40 border border-stone-100 dark:border-stone-800/85 rounded-2xl flex-grow space-y-1">
+                          <div className="flex justify-between items-center">
+                            <span className="font-extrabold text-stone-900 dark:text-white">{step.title}</span>
+                            <span className={`text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                              step.status === 'completed' ? 'bg-emerald-100/70 text-emerald-805' :
+                              step.status === 'active' ? 'bg-amber-100 text-amber-800' :
+                              'bg-stone-100 text-stone-450 dark:bg-stone-800 dark:text-stone-500'
+                            }`}>
+                              {step.status}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-stone-500 dark:text-stone-400 font-medium leading-relaxed">{step.desc}</p>
+                          {step.status === 'active' && (
+                            <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200/50 text-[10px] text-amber-900 dark:text-amber-300 font-semibold space-y-1 mt-2">
+                              <span>⚠️ Active Restrictions:</span>
+                              <ul className="list-disc pl-4 space-y-0.5 font-medium text-stone-600 dark:text-stone-300">
+                                <li>Ensure early sleep before 10:00 PM.</li>
+                                <li>Avoid cold water and dry winds.</li>
+                                <li>Practice light breathing pranayama.</li>
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Diet and Yoga plan custom by Dosha */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   

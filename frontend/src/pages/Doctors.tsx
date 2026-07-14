@@ -27,6 +27,7 @@ export default function DoctorDirectory() {
   const [bookingTime, setBookingTime] = useState('');
   const [bookingStatus, setBookingStatus] = useState({ success: false, error: '' });
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [bookingType, setBookingType] = useState('clinic');
 
   // Review state
   const [reviewDocId, setReviewDocId] = useState<number | null>(null);
@@ -108,6 +109,7 @@ export default function DoctorDirectory() {
         doctorId: bookingDocId,
         date: bookingDate,
         timeSlot: bookingTime,
+        visitType: bookingType,
       });
 
       if (res.data && res.data.success) {
@@ -353,6 +355,34 @@ export default function DoctorDirectory() {
                       Booking Successful! Email confirmation simulation triggered.
                     </div>
                   )}
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">Consultation Mode</label>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setBookingType('clinic')}
+                        className={`flex-1 py-2 rounded-xl border text-[11px] font-bold transition-all ${
+                          bookingType === 'clinic' 
+                            ? 'bg-emerald-50 border-ayur-primary text-ayur-primary shadow-inner' 
+                            : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                        }`}
+                      >
+                        In-Clinic Visit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setBookingType('online')}
+                        className={`flex-1 py-2 rounded-xl border text-[11px] font-bold transition-all ${
+                          bookingType === 'online' 
+                            ? 'bg-emerald-50 border-ayur-primary text-ayur-primary shadow-inner' 
+                            : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                        }`}
+                      >
+                        Video Consult
+                      </button>
+                    </div>
+                  </div>
 
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Choose Date</label>

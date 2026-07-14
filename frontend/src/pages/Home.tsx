@@ -218,6 +218,7 @@ export default function Home() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const [contactSuccess, setContactSuccess] = useState(false);
+  const [testimonialFilter, setTestimonialFilter] = useState('All');
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setContactSuccess(true);
@@ -686,36 +687,65 @@ export default function Home() {
       </section>
 
       {/* 7. PATIENT TESTIMONIALS & SUCCESS STORIES */}
-      <section id="testimonials" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
+      <section id="testimonials" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-24">
         <div className="text-center space-y-3">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Success Stories</span>
           <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Real Healing Testimonials</h2>
           <p className="text-stone-500 text-xs sm:text-sm font-medium">Hear how our patients resolved chronic conditions using authentic Ayurveda.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {[
-            { name: 'Sameer Shah, Indore', disease: 'Chronic Acidity & Migraine', text: 'After 3 years of western pills, a 14-day Virechana detoxification at Kaya Kalp completely resolved my acid reflux. Truly grateful!' },
-            { name: 'Kiran Patel, Indore', disease: 'Joint Pain (Osteoarthritis)', text: 'The Janu Basti treatment and organic oils rebuilt my knees flexibility. I can walk long distances now without any pain!' }
-          ].map((t, idx) => (
-            <div key={idx} className="p-8 rounded-[32px] bg-white border border-stone-200/80 shadow-sm space-y-5 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />)}
-                </div>
-                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed italic">"{t.text}"</p>
-              </div>
-              <div className="border-t border-stone-100 pt-4 flex gap-3 items-center">
-                <div className="w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center font-bold text-xs text-ayur-primary">
-                  {t.name.charAt(0)}
-                </div>
-                <div>
-                  <div className="font-extrabold text-xs text-stone-900">{t.name}</div>
-                  <span className="text-[10px] text-ayur-primary font-bold">{t.disease}</span>
-                </div>
-              </div>
-            </div>
+        {/* Filter categories pill bar */}
+        <div className="flex flex-wrap justify-center gap-2 pt-2">
+          {['All', 'Musculoskeletal', 'Skin & Hair', 'Digestive & Neurological', "Women's Health & Obesity"].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setTestimonialFilter(cat)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                testimonialFilter === cat 
+                  ? 'bg-ayur-primary border-transparent text-white shadow-sm font-black' 
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+              }`}
+            >
+              {cat}
+            </button>
           ))}
+        </div>
+
+        {/* Testimonials list */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+          {[
+            { name: 'Sameer Shah, Indore', disease: 'Chronic Acidity & Migraine', text: 'After 3 years of western pills, a 14-day Virechana detoxification at Kaya Kalp completely resolved my acid reflux. Truly grateful!', cat: 'Digestive & Neurological' },
+            { name: 'Kiran Patel, Indore', disease: 'Joint Pain (Osteoarthritis)', text: 'The Janu Basti treatment and organic oils rebuilt my knees flexibility. I can walk long distances now without any pain!', cat: 'Musculoskeletal' },
+            { name: 'Ananya Sharma, Indore', disease: 'Severe Hair Fall & Dandruff', text: 'Hair Care Solutions and the Spa Pack stopped my hair fall within 3 weeks. My hair feels thicker and healthier.', cat: 'Skin & Hair' },
+            { name: 'Rajesh Verma, Indore', disease: 'Obesity & High Cholesterol', text: "The Udvartana dry powder scrub massage combined with diet suggestions helped me lose 8 kg in 2 months. My cholesterol levels are now normal.", cat: "Women's Health & Obesity" },
+            { name: 'Neha Gupta, Indore', disease: 'Psoriasis flare-ups', text: 'The deep internal purification therapies paired with soothing neem oils cleared up my scaling patches completely.', cat: 'Skin & Hair' },
+            { name: 'Rahul Mehta, Indore', disease: 'Stress & Chronic Insomnia', text: 'Shirodhara warm oil stream flow on the forehead calmed my hyperactive nerves. I sleep peacefully every single night now.', cat: 'Digestive & Neurological' }
+          ]
+            .filter((t) => testimonialFilter === 'All' || t.cat === testimonialFilter)
+            .map((t, idx) => (
+              <div key={idx} className="p-8 rounded-[32px] bg-white border border-stone-200/80 shadow-sm space-y-5 flex flex-col justify-between hover:border-emerald-300 transition-all duration-300">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />)}
+                    </div>
+                    <span className="text-[8px] bg-emerald-50 text-ayur-primary border border-emerald-150 font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                      {t.cat.split(' & ')[0]}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed italic font-medium">"{t.text}"</p>
+                </div>
+                <div className="border-t border-stone-100 pt-4 flex gap-3 items-center">
+                  <div className="w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center font-bold text-xs text-ayur-primary">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xs text-stone-900">{t.name}</div>
+                    <span className="text-[10px] text-ayur-primary font-bold">{t.disease}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </section>
 
