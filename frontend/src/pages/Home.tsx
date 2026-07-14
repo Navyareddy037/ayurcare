@@ -248,7 +248,7 @@ export default function Home() {
                 <span>Premium Ayurvedic Care & Healing Center</span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 leading-[1.1] font-sans">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 leading-[1.1] font-serif">
                 Authentic Ayurveda for <span className="text-ayur-primary relative">
                   Modern Vitality
                   <span className="absolute bottom-1 left-0 w-full h-1.5 bg-ayur-accent/20 -z-10 rounded"></span>
@@ -391,7 +391,7 @@ export default function Home() {
               <span>Legacy of Authentic Healing</span>
             </div>
             
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 leading-tight font-serif">
               Indore's Premier Ayurvedic Specialty Clinic
             </h2>
             
@@ -461,7 +461,7 @@ export default function Home() {
       <section id="conditions" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
         <div className="text-center space-y-3 mb-12">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Clinical Specialities</span>
-          <h2 className="text-3xl font-extrabold text-stone-900">Health Conditions We Treat</h2>
+          <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Health Conditions We Treat</h2>
           <p className="text-stone-500 text-xs sm:text-sm max-w-lg mx-auto font-medium">
             Ayurveda focuses on resolving deep-rooted biological imbalances instead of temporary symptomatic suppression.
           </p>
@@ -522,7 +522,7 @@ export default function Home() {
       <section id="wellness-programs" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
         <div className="text-center space-y-3 mb-12" id="packages">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Wellness Packages</span>
-          <h2 className="text-3xl font-extrabold text-stone-900">Customized Health Packages</h2>
+          <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Customized Health Packages</h2>
           <p className="text-stone-500 text-xs sm:text-sm max-w-lg mx-auto font-medium">
             Structured clinical stays paired with dietary cleansing and rejuvenating treatments.
           </p>
@@ -564,7 +564,7 @@ export default function Home() {
         {/* Section Header */}
         <div className="text-center space-y-3">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Kaya Kalp Pharmacy</span>
-          <h2 className="text-3xl font-extrabold text-stone-900">Our Ayurvedic Solutions</h2>
+          <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Our Ayurvedic Solutions</h2>
           <p className="text-stone-550 text-xs sm:text-sm max-w-lg mx-auto font-medium">
             Traditional Ayurvedic formulations designed to naturally improve your health and wellness.
           </p>
@@ -689,7 +689,7 @@ export default function Home() {
       <section id="testimonials" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
         <div className="text-center space-y-3">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Success Stories</span>
-          <h2 className="text-3xl font-extrabold text-stone-900">Real Healing Testimonials</h2>
+          <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Real Healing Testimonials</h2>
           <p className="text-stone-500 text-xs sm:text-sm font-medium">Hear how our patients resolved chronic conditions using authentic Ayurveda.</p>
         </div>
 
@@ -724,7 +724,7 @@ export default function Home() {
         <div className="flex justify-between items-end border-b border-stone-200/50 pb-6 mb-12">
           <div>
             <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider block mb-1">Health Insights</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">Official Health Blogs</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900 font-serif">Official Health Blogs</h2>
           </div>
           <Link to="/knowledge-hub" className="text-xs font-bold text-ayur-primary hover:underline flex items-center gap-1">
             <span>View All Articles</span>
@@ -758,7 +758,7 @@ export default function Home() {
 
       {/* 9. FAQs */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-stone-900">Frequently Asked Questions</h2>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-stone-900 font-serif">Frequently Asked Questions</h2>
         <div className="space-y-4">
           {[
             { q: 'Is Ayurvedic medicine safe alongside Western drugs?', a: 'Yes, under certified doctor supervision. Some herbs can interact with Western prescriptions (such as blood thinners or diabetic medication). It is important to disclose all current medications to your Vaidya.' },
@@ -791,7 +791,7 @@ export default function Home() {
         
         <div className="text-center space-y-3">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Get In Touch</span>
-          <h2 className="text-3xl font-extrabold text-stone-900">Contact Kaya Kalp</h2>
+          <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Contact Kaya Kalp</h2>
           <p className="text-stone-550 text-xs sm:text-sm max-w-lg mx-auto font-medium">
             Reach out for clinical queries, Panchakarma stays, or quick appointment assistance.
           </p>

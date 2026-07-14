@@ -366,7 +366,7 @@ export default function TreatmentsDetail() {
             <Heart className="w-3.5 h-3.5 text-ayur-accent animate-pulse" />
             <span>Ayurvedic Clinical Services</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Kaya Kalp Treatments Catalog</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight font-serif">Kaya Kalp Treatments Catalog</h1>
           <p className="text-xs sm:text-sm text-emerald-250 max-w-xl mx-auto font-medium leading-relaxed">
             Discover our comprehensive range of specialized clinical programs. We restore metabolic balance, eliminate metabolic toxins, and stimulate biological rejuvenation.
           </p>
@@ -464,7 +464,7 @@ export default function TreatmentsDetail() {
           <Heart className="w-3.5 h-3.5" />
           <span>Ayurvedic Clinical Therapies</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black">{treatment.title}</h1>
+        <h1 className="text-3xl sm:text-4xl font-black font-serif">{treatment.title}</h1>
         <p className="text-xs text-emerald-250 max-w-xl mx-auto font-medium">
           Deep healing via classical Ayurvedic medicine, targeting the root causes of {treatment.title.toLowerCase()}.
         </p>

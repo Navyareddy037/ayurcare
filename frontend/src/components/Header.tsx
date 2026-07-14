@@ -39,7 +39,7 @@ export default function Header() {
             <div className="w-10 h-10 rounded-2xl bg-ayur-primary flex items-center justify-center text-white shadow-md shadow-emerald-950/20 group-hover:scale-105 transition-transform duration-300">
               <Leaf className="w-5 h-5 text-emerald-100" />
             </div>
-            <span className="text-xl font-black tracking-tight text-stone-900 font-sans">
+            <span className="text-xl font-black tracking-tight text-stone-900 font-serif">
               Kaya <span className="text-ayur-primary font-black">Kalp</span>
             </span>
           </Link>
