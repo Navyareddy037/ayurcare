@@ -112,7 +112,7 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     badge1: '100% Herbal',
     badge2: 'Glow booster',
     desc: 'Traditional sandalwood mask to reverse facial sun tan, reduce skin dullness, and illuminate blood circulation.',
-    image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=350&h=250',
+    image: '/images/fairness_face_pack.png',
     benefits: [
       'Removes tanning',
       'Reduces skin dullness',
@@ -126,7 +126,7 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     badge1: '100% Herbal',
     badge2: 'Doctor Recommended',
     desc: 'Anti-bacterial neem blend that targets active acne nodes, purifies clogged pores, and cleanses oily skin.',
-    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=350&h=250',
+    image: '/images/neem_face_pack.png',
     benefits: [
       'Removes pimples',
       'Reduces acne',
@@ -140,7 +140,7 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     badge1: '100% Herbal',
     badge2: 'Doctor Recommended',
     desc: 'Anti-aging skin tightening mask that improves facial elasticity and gives a glowing, youthful appearance.',
-    image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=350&h=250',
+    image: '/images/kayakalp_face_pack.png',
     benefits: [
       'Skin tightening',
       'Anti-aging care',
