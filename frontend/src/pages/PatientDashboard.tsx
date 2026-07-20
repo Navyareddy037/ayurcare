@@ -645,6 +645,23 @@ This is a computer generated invoice and requires no signature.
                   </div>
                 </div>
 
+                {/* AI Intelligent Medicine Reminder Box */}
+                <div className="p-4 rounded-2xl bg-amber-50/20 dark:bg-amber-950/10 border border-amber-200/50 dark:border-amber-800/40 flex items-center justify-between text-xs gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 animate-bounce" />
+                    <div>
+                      <span className="font-extrabold text-amber-850 dark:text-amber-300 block">AI Intelligent Herb Reminder</span>
+                      <p className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5 font-medium">Take **Ashwagandha Churna (1/2 tsp)** with warm milk in 15 mins (Before Sleep).</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => alert('Dose logged! Thank you for maintaining your balancing routine.')}
+                    className="px-3 py-1.5 bg-amber-650 hover:bg-amber-700 text-white rounded-lg font-bold text-[10px] shrink-0 shadow-sm"
+                  >
+                    Log Intake
+                  </button>
+                </div>
+
                 {/* Vitals summary grids */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   

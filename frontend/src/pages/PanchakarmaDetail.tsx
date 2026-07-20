@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../api';
 import { 
   Heart, Sparkles, CheckCircle2, Calendar, HelpCircle, 
-  ArrowRight, ShieldCheck, Info, Leaf, Activity
+  ArrowRight, ShieldCheck, Info, Leaf, Activity, Check, Clock, User
 } from 'lucide-react';
 
 interface TherapyDetail {
@@ -70,13 +71,71 @@ const THERAPIES: TherapyDetail[] = [
 ];
 
 export default function PanchakarmaDetail() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<number>(0);
   const activeTherapy = THERAPIES[activeTab];
+
+  // Booking states
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [doctors, setDoctors] = useState<any[]>([]);
+  const [selectedDoctorId, setSelectedDoctorId] = useState('');
+  const [bookingDate, setBookingDate] = useState('');
+  const [bookingTime, setBookingTime] = useState('10:00');
+  const [visitType, setVisitType] = useState('clinic');
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [bookingError, setBookingError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const res = await api.get('/doctors');
+        if (res.data && res.data.success) {
+          // Filter doctors that have Panchakarma or general specializations
+          setDoctors(res.data.doctors || []);
+          if (res.data.doctors && res.data.doctors.length > 0) {
+            setSelectedDoctorId(res.data.doctors[0].id.toString());
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchDoctors();
+  }, []);
+
+  const handleBookingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBookingError('');
+    setSubmitting(true);
+
+    try {
+      const res = await api.post('/appointments', {
+        doctorId: selectedDoctorId,
+        date: bookingDate,
+        timeSlot: bookingTime,
+        visitType: visitType
+      });
+      if (res.data && res.data.success) {
+        setBookingSuccess(true);
+        setTimeout(() => {
+          setShowBookingModal(false);
+          setBookingSuccess(false);
+          setBookingDate('');
+          navigate('/dashboard/patient');
+        }, 2000);
+      }
+    } catch (err: any) {
+      setBookingError(err.response?.data?.error || 'Booking failed. Ensure you are logged in as a patient.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#FBFBF9] pb-20 font-sans">
       
-      {/* Hero Banner Header */}
+      {/* Hero Header */}
       <div className="bg-emerald-950 text-white py-16 text-center space-y-4">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900 text-emerald-350 text-xs font-bold uppercase tracking-wider">
           <Sparkles className="w-3.5 h-3.5" />
@@ -91,7 +150,7 @@ export default function PanchakarmaDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* LEFT COLUMN: Overview & Navigation tabs */}
+          {/* LEFT COLUMN: Overview & Selector tabs */}
           <div className="lg:col-span-4 space-y-6">
             
             {/* Overview Box */}
@@ -101,9 +160,9 @@ export default function PanchakarmaDetail() {
                 <span>Panchakarma Overview</span>
               </h3>
               <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                Panchakarma is not a luxury spa treatment. It is a highly scientific medical procedure designed to flush fat-soluble toxins out of cellular tissues, resetting your body's self-healing systems.
+                Panchakarma is not a luxury spa treatment. It is a highly scientific medical procedure designed to flush toxins out of cellular tissues, resetting your body's self-healing systems.
               </p>
-              <div className="p-3 bg-stone-50 rounded-xl border border-stone-150 text-[11px] text-stone-500 leading-relaxed">
+              <div className="p-3 bg-stone-50 rounded-xl border border-stone-150 text-[11px] text-stone-500 leading-relaxed font-medium">
                 <strong>Three Phases:</strong> Purvakarma (oiling & sweating), Pradhanakarma (detox extraction), and Paschatkarma (restorative diet).
               </div>
             </div>
@@ -111,7 +170,7 @@ export default function PanchakarmaDetail() {
             {/* Selector list */}
             <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-sm space-y-3">
               <h3 className="font-extrabold text-xs text-stone-900 uppercase tracking-wider block mb-1">Select Therapy</h3>
-              <div className="space-y-1.5 text-xs font-bold text-stone-750">
+              <div className="space-y-1.5 text-xs font-bold text-stone-755">
                 {THERAPIES.map((t, idx) => (
                   <button
                     key={t.name}
@@ -132,7 +191,7 @@ export default function PanchakarmaDetail() {
           </div>
 
           {/* RIGHT COLUMN: Therapy Details */}
-          <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white border border-stone-200/80 shadow-sm space-y-8">
+          <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white border border-stone-200/80 shadow-sm space-y-8 animate-fadeIn">
             
             {/* Header info */}
             <div className="border-b border-stone-100 pb-4 space-y-1.5">
@@ -197,39 +256,132 @@ export default function PanchakarmaDetail() {
               </div>
             </div>
 
-            {/* FAQs Accordion */}
-            <div className="pt-6 border-t border-stone-100 space-y-4">
-              <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Frequently Asked Questions</span>
-              <div className="p-4.5 rounded-2xl bg-amber-50/20 border border-amber-200/50 text-xs space-y-1.5">
-                <div className="font-extrabold text-stone-900 flex items-center gap-1">
-                  <HelpCircle className="w-4 h-4 text-ayur-primary" />
-                  <span>Is Panchakarma safe for elder patients?</span>
-                </div>
-                <p className="text-stone-600 leading-relaxed font-medium pl-5">
-                  Yes, but the intensity of the detoxification (such as the dose of purgatives or oiling) is heavily customized based on the patient's age, bone density, and current metabolic strength.
-                </p>
-              </div>
-            </div>
-
             {/* Direct Booking call to action */}
             <div className="p-6 rounded-3xl bg-emerald-950 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm">
               <div className="space-y-1">
                 <h4 className="font-extrabold text-sm">Ready for a complete body cleanse?</h4>
-                <p className="text-[10px] text-emerald-250 font-medium">Consult our chief Vaidya to get your custom Panchakarma schedule.</p>
+                <p className="text-[10px] text-emerald-250 font-medium">Schedule a custom {activeTherapy.name} session directly with a senior consultant.</p>
               </div>
-              <Link
-                to="/doctors"
-                className="px-5 py-2.5 bg-white text-emerald-950 hover:bg-emerald-50 text-xs font-black rounded-xl transition-all flex items-center gap-1 shrink-0"
+              <button
+                onClick={() => setShowBookingModal(true)}
+                className="px-5 py-2.5 bg-white text-emerald-950 hover:bg-emerald-50 text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shrink-0"
               >
-                <Calendar className="w-4 h-4" />
-                <span>Book Doctor Appointment</span>
-              </Link>
+                <Calendar className="w-4 h-4 text-emerald-900" />
+                <span>Book {activeTherapy.name} Session</span>
+              </button>
             </div>
 
           </div>
 
         </div>
       </div>
+
+      {/* Booking Form Modal */}
+      {showBookingModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
+          <div className="bg-white rounded-[32px] border border-stone-200 shadow-xl max-w-md w-full p-6 relative text-xs">
+            
+            <button 
+              onClick={() => setShowBookingModal(false)}
+              className="absolute top-4 right-4 text-stone-400 hover:text-stone-700 font-extrabold text-sm border border-stone-200 p-1 px-2.5 rounded-lg"
+            >
+              ✕
+            </button>
+
+            {bookingSuccess ? (
+              <div className="py-10 flex flex-col items-center justify-center text-center space-y-4 animate-fadeIn">
+                <div className="w-16 h-16 rounded-full bg-emerald-50 text-ayur-primary border border-emerald-200 flex items-center justify-center">
+                  <Check className="w-8 h-8" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-stone-900">Detox Session Booked!</h3>
+                  <p className="text-xs text-stone-550 mt-1">
+                    Your {activeTherapy.name} appointment has been successfully scheduled.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleBookingSubmit} className="space-y-4">
+                <div className="border-b border-stone-100 pb-2">
+                  <h3 className="font-extrabold text-sm text-stone-900 flex items-center gap-1.5">
+                    <Leaf className="w-4.5 h-4.5 text-ayur-primary" />
+                    Book Panchakarma Session
+                  </h3>
+                  <span className="text-[10px] text-stone-400 block mt-0.5">Therapy: {activeTherapy.name} ({activeTherapy.sanskrit})</span>
+                </div>
+
+                {bookingError && (
+                  <div className="p-2 bg-red-50 border border-red-150 text-red-750 font-semibold rounded-lg text-[10.5px]">
+                    {bookingError}
+                  </div>
+                )}
+
+                <div className="space-y-3.5">
+                  
+                  {/* Select Doctor */}
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-600 block">Select Consultant Vaidya</label>
+                    <select
+                      value={selectedDoctorId} onChange={(e) => setSelectedDoctorId(e.target.value)}
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-605"
+                    >
+                      {doctors.map(d => (
+                        <option key={d.id} value={d.id}>
+                          {d.user?.name} ({d.specialization || 'Ayurveda'})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Choose Date */}
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-600 block">Appointment Date</label>
+                    <input
+                      type="date" required value={bookingDate} onChange={(e) => setBookingDate(e.target.value)}
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl"
+                    />
+                  </div>
+
+                  {/* Choose Time slot */}
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-600 block">Preferred Time Slot</label>
+                    <select
+                      value={bookingTime} onChange={(e) => setBookingTime(e.target.value)}
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-605"
+                    >
+                      <option value="09:00">09:00 AM</option>
+                      <option value="10:30">10:30 AM</option>
+                      <option value="14:00">02:00 PM</option>
+                      <option value="15:30">03:30 PM</option>
+                    </select>
+                  </div>
+
+                  {/* Consultation Mode */}
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-600 block">Consultation Mode</label>
+                    <select
+                      value={visitType} onChange={(e) => setVisitType(e.target.value)}
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-605"
+                    >
+                      <option value="clinic">In-Clinic Session</option>
+                      <option value="online">Online Assessment / Video Call</option>
+                    </select>
+                  </div>
+
+                </div>
+
+                <button
+                  type="submit" disabled={submitting}
+                  className="w-full py-2.5 bg-ayur-primary hover:bg-ayur-secondary text-white font-extrabold rounded-xl transition-all shadow-sm"
+                >
+                  {submitting ? 'Creating schedule booking...' : 'Confirm Panchakarma Booking'}
+                </button>
+              </form>
+            )}
+
+          </div>
+        </div>
+      )}
       
     </div>
   );
