@@ -68,14 +68,13 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     category: 'Hair Care',
     badge1: '100% Herbal',
     badge2: 'Doctor Recommended',
-    desc: 'Helps control hair fall, stimulates growth, nourishes scalp, and helps relieve tension headaches.',
-    image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=350&h=250',
+    desc: 'Traditional Bhringraj and Amla infused oil formulation designed to nourish scalp follicles, control hair fall, and stimulate hair growth.',
+    image: '/images/hair_oil_product.png',
     benefits: [
       'Helps reduce hair fall',
-      'Controls dandruff',
-      'Strengthens thin hair',
-      'Helps relieve headaches',
-      'Nourishes scalp naturally'
+      'Nourishes scalp follicles',
+      'Promotes healthy hair growth',
+      'Improves hair strength & shine'
     ]
   },
   {
@@ -84,12 +83,12 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     badge1: '100% Herbal',
     badge2: 'Natural Shine',
     desc: 'Pure organic henna powder designed to deeply condition hair roots, rendering smooth, silky, and glowing texture.',
-    image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=350&h=250',
+    image: '/images/herbal_heena_product.png',
     benefits: [
-      'Makes hair smooth',
-      'Gives silky texture',
+      'Makes hair smooth & silky',
+      'Deeply conditions hair roots',
       'Improves natural shine',
-      'Conditions hair naturally'
+      'Conditions scalp naturally'
     ]
   },
   {
@@ -97,13 +96,13 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     category: 'Hair Care',
     badge1: '100% Herbal',
     badge2: 'Doctor Recommended',
-    desc: 'Intense spa pack designed to target structural hair dryness, clear dandruff build-up, and deep-condition follicles.',
-    image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=350&h=250',
+    desc: 'Intense herbal hair mask pack formulated to target structural hair dryness, eliminate scalp dandruff, and deeply condition follicles.',
+    image: '/images/hair_spa_pack_product.png',
     benefits: [
-      'Controls hair fall',
-      'Reduces dandruff',
-      'Deep nourishes hair',
-      'Makes hair smooth, silky, and healthy'
+      'Deep conditioning treatment',
+      'Reduces scalp dandruff',
+      'Improves hair texture',
+      'Makes hair smooth & healthy'
     ]
   },
   {
