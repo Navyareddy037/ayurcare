@@ -4,7 +4,7 @@ import { Camera, ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from
 interface GalleryItem {
   id: number;
   title: string;
-  category: 'Clinic' | 'Doctors' | 'Panchakarma' | 'Treatments' | 'Herbal Medicines' | 'Consultation' | 'Pharmacy' | 'Wellness' | 'Events';
+  category: 'Clinic' | 'Panchakarma' | 'Treatments' | 'Herbal Medicines' | 'Consultation' | 'Wellness' | 'Patient Stories';
   image: string;
   desc: string;
 }
@@ -12,70 +12,70 @@ interface GalleryItem {
 const GALLERY_DATA: GalleryItem[] = [
   {
     id: 1,
-    title: 'Consultation Suite',
+    title: 'Kaya Kalp Clinic Interior & Consultation Suite',
     category: 'Clinic',
-    image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Modern, peaceful consulting chambers designed for patient comfort and confidential pulse diagnosis.'
+    image: '/images/gallery_clinic_interior.png',
+    desc: 'Serene, traditional consulting chambers at Royal Avenue, New Palasia, designed for pulse diagnosis and patient comfort.'
   },
   {
     id: 2,
-    title: 'Panchakarma Shala',
+    title: 'Panchakarma Abhyanga Therapy Room',
     category: 'Panchakarma',
-    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Traditional wooden droni tables used for Ayurvedic medicated oil massages and steam detox procedures.'
+    image: '/images/hero_panchakarma_therapy.png',
+    desc: 'Traditional carved wooden Droni tables used for classical Ayurvedic warm oil massages and body detoxification.'
   },
   {
     id: 3,
-    title: 'Dr. Anjali Nair in Consultation',
-    category: 'Doctors',
-    image: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Certified Vaidya performing personalized Prakriti analysis and diagnosing metabolic conditions.'
+    title: 'Vaidya Nadi Pariksha & Doctor Consultation',
+    category: 'Consultation',
+    image: '/images/hero_doctor_consult.png',
+    desc: 'Senior Ayurvedic consultant evaluating Dosha imbalances (Vata, Pitta, Kapha) and prescribing custom healing routines.'
   },
   {
     id: 4,
-    title: 'Shirodhara Treatment Flow',
+    title: 'Shirodhara Medicated Oil Flow Treatment',
     category: 'Treatments',
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Precise pouring of warm medicated herbal oil on the forehead to relieve stress, insomnia, and migraines.'
+    image: '/images/gallery_shirodhara_therapy.png',
+    desc: 'Continuous pouring of warm medicated herbal oil on the forehead to relieve stress, anxiety, and chronic insomnia.'
   },
   {
     id: 5,
-    title: 'Herbal Pharmacy Inventory',
-    category: 'Pharmacy',
-    image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'GMP-certified organic wellness formulas, oils, and powdered herbal complexes ready for prescription.'
+    title: 'Classical Ayurvedic Herbal Medicine Preparation',
+    category: 'Herbal Medicines',
+    image: '/images/hero_herbal_prep.png',
+    desc: 'Traditional stone mortar and pestle preparation of raw herbs, neem, turmeric, and organic Jadi-Buti formulations.'
   },
   {
     id: 6,
-    title: 'Ayurvedic Herb Ingredients',
+    title: 'Fresh Medicinal Ayurvedic Herbs & Plants',
     category: 'Herbal Medicines',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Freshly harvested wild ashwagandha, amla, and neem leaves prepared according to classical methods.'
+    image: '/images/hero_ayurvedic_plants.png',
+    desc: 'Lush organic medicinal herbs (Tulsi, Neem, Amla, Aloe Vera) harvested for authentic clinical treatments.'
   },
   {
     id: 7,
-    title: 'Yoga and Meditation Session',
+    title: 'Therapeutic Yoga & Pranayama Meditation',
     category: 'Wellness',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Daily therapeutic yoga classes guiding patients towards breathing balance and stress reduction.'
+    image: '/images/gallery_yoga_meditation.png',
+    desc: 'Daily yoga and breathing exercises guiding patients towards mental tranquility and metabolic balance.'
   },
   {
     id: 8,
-    title: 'National Ayurveda Seminar 2026',
-    category: 'Events',
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Hosting academic panels with global experts discussing integrations in modern medicine.'
+    title: 'Patient Recovery & Wellness Testimonial',
+    category: 'Patient Stories',
+    image: '/images/gallery_happy_patient.png',
+    desc: 'Happy patient sharing recovery journey after undergoing a complete 14-day Panchakarma detoxification session.'
   },
   {
     id: 9,
-    title: 'Pulse Analysis (Nadi Pariksha)',
-    category: 'Consultation',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600&h=400',
-    desc: 'Determining physical body doshas (Vata, Pitta, Kapha) and identifying root organ sluggishness.'
+    title: 'Authentic Ayurvedic Spa & Wellness Center',
+    category: 'Clinic',
+    image: '/images/ayurveda_hero_bg.png',
+    desc: 'Atmospheric wellness gallery featuring traditional brass Urlis, fresh lotus flowers, and aromatic herbal oils.'
   }
 ];
 
-const CATEGORIES = ['All', 'Clinic', 'Doctors', 'Panchakarma', 'Treatments', 'Herbal Medicines', 'Consultation', 'Pharmacy', 'Wellness', 'Events'] as const;
+const CATEGORIES = ['All', 'Clinic', 'Consultation', 'Panchakarma', 'Treatments', 'Herbal Medicines', 'Wellness', 'Patient Stories'] as const;
 
 export default function Gallery() {
   const [selectedCat, setSelectedCat] = useState<string>('All');
@@ -108,17 +108,18 @@ export default function Gallery() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFBF9] pb-24 font-sans selection:bg-emerald-100 selection:text-emerald-950">
+    <div className="min-h-screen bg-[#FAF6EF] pb-24 font-sans selection:bg-[#1B4332] selection:text-white">
       
       {/* Header Banner */}
-      <div className="bg-emerald-950 text-white py-16 text-center space-y-4">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-900 text-emerald-350 text-xs font-bold uppercase tracking-wider">
-          <Camera className="w-3.5 h-3.5 text-ayur-accent" />
-          <span>Visual Showcase</span>
+      <div className="bg-[#1B4332] text-white py-16 text-center space-y-4 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#2D6A4F]/20 rounded-full blur-3xl -z-0"></div>
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#2D6A4F] text-[#FAF6EF] text-xs font-bold uppercase tracking-wider relative z-10">
+          <Camera className="w-3.5 h-3.5 text-[#D4A373]" />
+          <span>Visual Clinical Showcase</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Kaya Kalp Wellness Gallery</h1>
-        <p className="text-xs sm:text-sm text-emerald-250 max-w-xl mx-auto font-medium leading-relaxed">
-          Step inside our clinical sanctuaries, browse botanical pharmacies, and witness authentic Panchakarma detoxification procedures.
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight font-serif relative z-10">Kaya Kalp Authentic Gallery</h1>
+        <p className="text-xs sm:text-sm text-[#FAF6EF]/80 max-w-xl mx-auto font-medium leading-relaxed relative z-10">
+          Step inside our clinical sanctuaries, explore traditional Panchakarma shalas, and witness authentic Ayurvedic healing practices in Indore.
         </p>
       </div>
 
