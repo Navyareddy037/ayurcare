@@ -536,45 +536,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. WELLNESS PROGRAMS & HEALTH PACKAGES */}
-      <section id="wellness-programs" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-        <div className="text-center space-y-3 mb-12" id="packages">
-          <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Wellness Packages</span>
-          <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Customized Health Packages</h2>
-          <p className="text-stone-500 text-xs sm:text-sm max-w-lg mx-auto font-medium">
-            Structured clinical stays paired with dietary cleansing and rejuvenating treatments.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {PACKAGES.map((p, idx) => (
-            <div key={idx} className="p-8 rounded-[32px] bg-white border border-stone-200/80 hover:border-emerald-350 shadow-md flex flex-col justify-between space-y-6 hover:-translate-y-1 transition-all duration-300">
-              <div className="space-y-5">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-extrabold text-sm text-stone-900">{p.title}</h4>
-                    <span className="text-[10px] text-stone-400 font-bold block mt-1">{p.days} residential package</span>
-                  </div>
-                  <span className="text-lg font-black text-ayur-primary">{p.price}</span>
-                </div>
-                
-                <ul className="space-y-3.5 text-xs text-stone-605 font-medium border-t border-stone-100 pt-4">
-                  {p.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <Link to="/doctors" className="w-full py-2.5 bg-stone-50 hover:bg-emerald-50 text-stone-850 hover:text-ayur-primary font-bold text-center text-xs rounded-xl border border-stone-200 hover:border-emerald-200 transition-all">
-                Enquire Package
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* 6. OUR AYURVEDIC SOLUTIONS */}
       <section id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24 space-y-16">
