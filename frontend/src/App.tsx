@@ -61,9 +61,8 @@ export default function App() {
               <Route path="/doctors" element={<DoctorDirectory />} />
               <Route path="/ai-assessment" element={<AIAssessment />} />
               <Route path="/knowledge-hub" element={<KnowledgeHub />} />
-              <Route path="/treatments/:id?" element={<TreatmentsDetail />} />
               <Route path="/panchakarma" element={<PanchakarmaDetail />} />
-              <Route path="/products" element={<Products />} />
+              <Route path="/products" element={<Navigate to="/" replace />} />
               <Route path="/gallery" element={<Gallery />} />
 
               {/* Patient Routes */}

@@ -108,7 +108,6 @@ export default function Footer() {
             <ul className="space-y-2 text-[#E9E5D9]/80 font-medium">
               <li><Link to="/doctors" className="hover:text-[#D4A373] transition-colors">Specialist BAMS Vaidyas</Link></li>
               <li><Link to="/ai-assessment" className="hover:text-[#D4A373] transition-colors">AI Symptom Checker Hub</Link></li>
-              <li><Link to="/products" className="hover:text-[#D4A373] transition-colors">Herbal Pharmacy Store</Link></li>
               <li><Link to="/gallery" className="hover:text-[#D4A373] transition-colors">Clinic Photo Gallery</Link></li>
               <li><Link to="/auth" className="hover:text-[#D4A373] transition-colors">Patient Login Portal</Link></li>
             </ul>

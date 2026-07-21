@@ -115,11 +115,6 @@ export default function Header() {
               <span>AI Health Hub</span>
             </Link>
 
-            <Link to="/products" className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide flex items-center gap-1">
-              <ShoppingBag className="w-3.5 h-3.5 text-[#D4A373]" />
-              <span>Pharmacy</span>
-            </Link>
-
             <Link to="/gallery" className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide">
               Gallery
             </Link>
@@ -201,8 +196,6 @@ export default function Header() {
           <button onClick={() => handleAnchorScroll('about')} className="block py-2 text-[#1D241E]">About Us</button>
           <Link to="/panchakarma" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1B4332] font-bold">Panchakarma Detox</Link>
           <Link to="/doctors" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Specialist Vaidyas</Link>
-          <Link to="/ai-assessment" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1B4332] font-bold">AI Health Hub</Link>
-          <Link to="/products" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Herbal Pharmacy</Link>
           <Link to="/gallery" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Clinic Gallery</Link>
           
           <div className="pt-3 border-t border-[#E9E5D9] flex flex-col gap-2">
