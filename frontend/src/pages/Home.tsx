@@ -236,65 +236,69 @@ export default function Home() {
 
   return (
     <div className="space-y-24 pb-20 font-sans selection:bg-emerald-100 selection:text-emerald-950 bg-[#FBFBF9]">
-       {/* 1. HERO BANNER */}
-      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-24 bg-gradient-to-b from-emerald-50/40 via-[#FBFBF9] to-transparent">
-        <div className="absolute top-10 left-10 -z-10 w-96 h-96 rounded-full bg-emerald-150/30 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 -z-10 w-[500px] h-[500px] rounded-full bg-amber-100/20 blur-3xl"></div>
+      {/* 1. HERO BANNER */}
+      <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 bg-[#FAF6EF]">
+        
+        {/* Background Image & Nature Gradient Overlays */}
+        <div className="absolute inset-0 z-0 opacity-15 bg-cover bg-center" style={{ backgroundImage: "url('/images/ayurveda_hero_bg.png')" }}></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1B4332]/10 rounded-full blur-3xl -z-0 animate-pulseGlow"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#D4A373]/15 rounded-full blur-3xl -z-0"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-150/50 text-ayur-primary text-xs font-bold tracking-wide">
-                <Sparkles className="w-4 h-4 text-ayur-accent animate-spin" style={{ animationDuration: '6s' }} />
-                <span>Premium Ayurvedic Care & Healing Center</span>
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
+              
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1B4332]/10 border border-[#1B4332]/20 text-[#1B4332] text-xs font-bold tracking-wide">
+                <Sparkles className="w-4 h-4 text-[#D4A373] animate-spin" style={{ animationDuration: '6s' }} />
+                <span>Authentic Ayurvedic Care & Panchakarma Center</span>
               </div>
-              
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 leading-[1.1] font-serif">
-                Authentic Ayurveda for <span className="text-ayur-primary relative">
-                  Modern Vitality
-                  <span className="absolute bottom-1 left-0 w-full h-1.5 bg-ayur-accent/20 -z-10 rounded"></span>
-                </span>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1B4332] tracking-tight leading-[1.15] font-serif">
+                Reclaim Your Vitality Through <span className="text-[#D4A373]">Ancient Wisdom</span> & Natural Healing
               </h1>
-              
-              <p className="text-sm sm:text-base text-stone-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
-                Established with the vision of carrying forward the lineage of pure Ayurveda. Consult BAMS-certified Vaidyas, receive customized Panchakarma detoxes, and find natural balance.
+
+              <p className="text-sm sm:text-base text-[#526055] max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                Experience 100% authentic Panchakarma detoxification, specialized joint and skin therapies, and personalized Ayurvedic doctor consultations in Indore.
               </p>
 
-              {/* Call-to-action CTAs */}
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link
                   to="/doctors"
-                  className="px-7 py-3.5 rounded-2xl bg-ayur-primary text-white font-bold hover:bg-ayur-secondary transition-all shadow-lg hover:shadow-emerald-950/20 hover:scale-[1.02] flex items-center gap-1.5 text-xs tracking-wider uppercase"
+                  className="px-7 py-3.5 rounded-2xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-xl shadow-[#1B4332]/20 hover:-translate-y-0.5 transition-all duration-300"
                 >
+                  <Calendar className="w-4 h-4 text-[#D4A373]" />
                   <span>Book Consultation</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                
+
                 <Link
                   to="/ai-assessment"
-                  className="px-7 py-3.5 rounded-2xl bg-white border border-stone-200 text-stone-750 font-bold hover:bg-stone-50 transition-all hover:scale-[1.02] text-xs flex items-center gap-2 shadow-sm"
+                  className="px-7 py-3.5 rounded-2xl bg-white hover:bg-[#FAF6EF] text-[#1B4332] font-extrabold text-xs sm:text-sm border border-[#1B4332]/30 flex items-center gap-2 shadow-md hover:-translate-y-0.5 transition-all duration-300"
                 >
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                  <span>Online AI Consultation</span>
+                  <Sparkles className="w-4 h-4 text-[#D4A373]" />
+                  <span>AI Symptom Checker</span>
                 </Link>
               </div>
 
-              {/* Trusted metrics */}
-              <div className="grid grid-cols-3 gap-6 pt-8 max-w-md mx-auto lg:mx-0 border-t border-stone-200/60">
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-ayur-primary">25+</div>
-                  <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-1">Expert Vaidyas</div>
+              {/* Animated Statistics Counters */}
+              <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[#E9E5D9] max-w-lg mx-auto lg:mx-0">
+                <div className="text-center lg:text-left space-y-1">
+                  <div className="text-2xl sm:text-3xl font-black text-[#1B4332] font-serif">{counters.patients.toLocaleString()}+</div>
+                  <div className="text-[11px] text-[#526055] font-bold uppercase tracking-wider">Patients Healed</div>
                 </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-ayur-primary">12,500+</div>
-                  <div className="text-[10px] text-stone-505 font-bold uppercase tracking-wider mt-1">Healed Patients</div>
+                <div className="text-center lg:text-left space-y-1 border-x border-[#E9E5D9] px-2">
+                  <div className="text-2xl sm:text-3xl font-black text-[#1B4332] font-serif">{counters.years}+ Years</div>
+                  <div className="text-[11px] text-[#526055] font-bold uppercase tracking-wider">Indore Heritage</div>
                 </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-ayur-primary">99.2%</div>
-                  <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-1">Recovery Rate</div>
+                <div className="text-center lg:text-left space-y-1">
+                  <div className="text-2xl sm:text-3xl font-black text-[#1B4332] font-serif">{counters.treatments}+</div>
+                  <div className="text-[11px] text-[#526055] font-bold uppercase tracking-wider">Herbal Therapies</div>
                 </div>
               </div>
+
             </div>
 
             {/* Right Overlapping Images Grid Montage */}

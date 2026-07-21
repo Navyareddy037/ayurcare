@@ -8,20 +8,21 @@ export default {
     extend: {
       colors: {
         ayur: {
-          light: '#F7F3EC',
-          dark: '#2B2B28',
-          primary: '#1F4535', // Deep Green
-          secondary: '#6B6963', // Warm Gray
-          accent: '#C7833E', // Saffron Accent
-          cream: '#F7F3EC', // Cream Background
-          sand: '#EDE6D8', // Sand
-          charcoal: '#2B2B28', // Charcoal Text
-          warmGray: '#6B6963', // Warm Gray
+          light: '#FAF6EF',
+          dark: '#111813',
+          primary: '#1B4332', // Deep Forest Green (#1B4332)
+          secondary: '#2D6A4F', // Sage / Emerald Green
+          accent: '#D4A373', // Saffron / Gold Accent (#D4A373)
+          gold: '#E9C46A',
+          cream: '#FAF6EF', // Warm Cream (#FAF6EF)
+          sand: '#E9E5D9',
+          charcoal: '#1D241E',
+          warmGray: '#526055',
         }
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        serif: ['Lora', 'Fraunces', 'Georgia', 'serif'],
+        sans: ['Poppins', 'Inter', 'sans-serif'],
+        serif: ['Lora', 'Georgia', 'serif'],
       },
     },
   },

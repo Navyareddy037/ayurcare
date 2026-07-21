@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Menu, X, Leaf, User as UserIcon, LogOut, LayoutDashboard, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, Leaf, User as UserIcon, LogOut, LayoutDashboard, ChevronDown, Sparkles, Calendar, ShoppingBag, PhoneCall } from 'lucide-react';
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -9,7 +9,6 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
-  const [programsDropdownOpen, setProgramsDropdownOpen] = useState(false);
 
   const getDashboardLink = () => {
     if (!user) return '/auth';
@@ -30,31 +29,34 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-stone-200/50 bg-white/80 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-[#E9E5D9] bg-[#FAF6EF]/90 backdrop-blur-md shadow-xs transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-2xl bg-ayur-primary flex items-center justify-center text-white shadow-md shadow-emerald-950/20 group-hover:scale-105 transition-transform duration-300">
-              <Leaf className="w-5 h-5 text-emerald-100" />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-2xl bg-[#1B4332] flex items-center justify-center text-white shadow-md shadow-[#1B4332]/20 group-hover:scale-105 transition-transform duration-300">
+              <Leaf className="w-5 h-5 text-[#FAF6EF]" />
             </div>
-            <span className="text-xl font-black tracking-tight text-stone-900 font-serif">
-              Kaya <span className="text-ayur-primary font-black">Kalp</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold tracking-tight text-[#1B4332] font-sans">
+                Kaya <span className="text-[#D4A373] font-extrabold">Kalp</span>
+              </span>
+              <span className="text-[9px] uppercase tracking-widest text-[#526055] font-semibold -mt-1">Indore Ayurvedic Wellness</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation links */}
-          <nav className="hidden xl:flex items-center gap-6">
-            <Link to="/" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide">
+          <nav className="hidden xl:flex items-center gap-7">
+            <Link to="/" className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide">
               Home
             </Link>
             
             <button 
               onClick={() => handleAnchorScroll('about')}
-              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
+              className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide"
             >
-              About Kaya Kalp
+              About Us
             </button>
 
             {/* Treatments Mega Menu Trigger */}
@@ -63,213 +65,154 @@ export default function Header() {
               onMouseEnter={() => setMegaMenuOpen(true)}
               onMouseLeave={() => setMegaMenuOpen(false)}
             >
-              <button className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1 py-2 tracking-wide">
+              <button className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors flex items-center gap-1 py-2 tracking-wide">
                 <span>Treatments</span>
-                <ChevronDown className="w-3 h-3" />
+                <ChevronDown className="w-3 h-3 text-[#526055]" />
               </button>
 
               {megaMenuOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-[640px] rounded-3xl border border-stone-150 bg-white p-6 shadow-2xl z-50 grid grid-cols-3 gap-6 animate-float transition-all duration-300">
+                <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-[680px] rounded-3xl border border-[#E9E5D9] bg-[#FAF6EF] p-6 shadow-2xl z-50 grid grid-cols-3 gap-6 animate-fadeIn transition-all duration-300">
                   <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Panchakarma Detox</span>
-                    <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Vamana (Emesis)</Link></li>
-                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Virechana (Purgation)</Link></li>
-                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Basti (Enema Therapy)</Link></li>
-                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Nasya (Nasal Cleansing)</Link></li>
-                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Raktamokshana (Blood purification)</Link></li>
+                    <span className="text-[10px] font-bold text-[#1B4332] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5">Panchakarma Detox</span>
+                    <ul className="space-y-2 text-xs text-[#526055] font-medium">
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Vamana (Therapeutic Emesis)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Virechana (Purgation Therapy)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Basti (Enema Therapy)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Nasya (Nasal Cleansing)</Link></li>
+                      <li><Link to="/panchakarma" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Raktamokshana (Bloodletting)</Link></li>
                     </ul>
                   </div>
 
                   <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Clinical Therapies</span>
-                    <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li><Link to="/treatments/joint-pain" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Abhyanga (Warm Massage)</Link></li>
-                      <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Shirodhara (Oil Flow)</Link></li>
-                      <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Udvartana (Powder Massage)</Link></li>
-                      <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Patra Pinda Sweda</Link></li>
+                    <span className="text-[10px] font-bold text-[#1B4332] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5">Clinical Therapies</span>
+                    <ul className="space-y-2 text-xs text-[#526055] font-medium">
+                      <li><Link to="/treatments/joint-pain" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Abhyanga Warm Massage</Link></li>
+                      <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Shirodhara Oil Stream</Link></li>
+                      <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Udvartana Powder Massage</Link></li>
+                      <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Patra Pinda Sweda</Link></li>
                     </ul>
                   </div>
 
                   <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-ayur-primary uppercase tracking-wider block border-b border-stone-100 pb-1">Special Programs</span>
-                    <ul className="space-y-1.5 text-xs text-stone-600 font-medium">
-                      <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Joint Care (Sandhigata)</Link></li>
-                      <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Stress & Insomnia Care</Link></li>
-                      <li><Link to="/treatments/joint-pain" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Spine & Back Care (Kati Basti)</Link></li>
-                      <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-ayur-accent hover:translate-x-1 block transition-all duration-200">Weight Management</Link></li>
+                    <span className="text-[10px] font-bold text-[#1B4332] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5">Special Care</span>
+                    <ul className="space-y-2 text-xs text-[#526055] font-medium">
+                      <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Joint & Spine Care</Link></li>
+                      <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Stress & Sleep Care</Link></li>
+                      <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Obesity Management</Link></li>
+                      <li><Link to="/products" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Skincare & Haircare</Link></li>
                     </ul>
                   </div>
                 </div>
               )}
             </div>
 
-            <Link to="/doctors" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide">
+            <Link to="/doctors" className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide">
               Doctors
             </Link>
 
-            <Link to="/ai-assessment" className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors flex items-center gap-1 tracking-wide">
-              <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-[9px] font-bold text-ayur-primary border border-emerald-150">ONLINE</span>
-              <span>Online Consultation</span>
+            <Link to="/ai-assessment" className="text-xs font-bold text-[#1B4332] flex items-center gap-1.5 bg-[#2D6A4F]/10 px-3 py-1.5 rounded-full border border-[#2D6A4F]/20 hover:bg-[#1B4332] hover:text-white transition-all">
+              <Sparkles className="w-3.5 h-3.5 text-[#D4A373]" />
+              <span>AI Health Hub</span>
             </Link>
 
-            <button 
-              onClick={() => handleAnchorScroll('blogs')}
-              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
-            >
-              Blogs
-            </button>
+            <Link to="/products" className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide flex items-center gap-1">
+              <ShoppingBag className="w-3.5 h-3.5 text-[#D4A373]" />
+              <span>Pharmacy</span>
+            </Link>
 
-            <button 
-              onClick={() => handleAnchorScroll('contact')}
-              className="text-xs font-semibold text-stone-600 hover:text-ayur-primary transition-colors tracking-wide"
-            >
-              Contact
-            </button>
+            <Link to="/gallery" className="text-xs font-semibold text-[#1D241E] hover:text-[#1B4332] transition-colors tracking-wide">
+              Gallery
+            </Link>
           </nav>
 
-          {/* User Sign In Actions */}
-          <div className="hidden xl:flex items-center gap-4">
+          {/* User Profile & Action CTA */}
+          <div className="hidden sm:flex items-center gap-3">
             {user ? (
               <div className="relative">
-                <button
+                <button 
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-stone-200 hover:bg-stone-50 transition-all text-xs font-bold text-stone-700"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-[#E9E5D9] bg-white hover:border-[#1B4332] text-xs font-bold text-[#1D241E] transition-all shadow-xs"
                 >
-                  <UserIcon className="w-4 h-4 text-ayur-primary" />
-                  <span>{user.name.split(' ')[0]}</span>
-                  <span className="text-[9px] bg-emerald-50 text-ayur-primary px-1.5 py-0.5 rounded font-extrabold uppercase">
-                    {user.role}
-                  </span>
+                  <div className="w-6 h-6 rounded-full bg-[#1B4332] text-white flex items-center justify-center text-[10px] font-bold">
+                    {user.name?.charAt(0)}
+                  </div>
+                  <span className="max-w-[100px] truncate">{user.name}</span>
+                  <ChevronDown className="w-3 h-3 text-[#526055]" />
                 </button>
 
                 {dropdownOpen && (
-                  <>
-                    <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)}></div>
-                    <div className="absolute right-0 mt-2 w-48 rounded-xl border border-stone-200 bg-white p-2 shadow-lg z-20">
-                      <Link
-                        to={getDashboardLink()}
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-xs font-bold text-stone-700 hover:bg-stone-100 transition-colors"
-                      >
-                        <LayoutDashboard className="w-4 h-4 text-stone-500" />
-                        Dashboard
-                      </Link>
-                      <button
-                        onClick={() => {
-                          setDropdownOpen(false);
-                          logout();
-                          navigate('/');
-                        }}
-                        className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-xs font-bold text-red-650 hover:bg-red-50 transition-colors mt-1"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Log Out
-                      </button>
-                    </div>
-                  </>
+                  <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-[#E9E5D9] bg-white p-2 shadow-xl z-50 text-xs font-semibold space-y-1">
+                    <Link 
+                      to={getDashboardLink()} 
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#FAF6EF] text-[#1D241E]"
+                    >
+                      <LayoutDashboard className="w-4 h-4 text-[#1B4332]" />
+                      <span>Dashboard Portal</span>
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        logout();
+                        setDropdownOpen(false);
+                      }}
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 rounded-xl hover:bg-red-50 text-red-700"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 )}
               </div>
             ) : (
-              <Link
+              <Link 
                 to="/auth"
-                className="px-4.5 py-2.25 text-xs font-black rounded-xl bg-ayur-primary text-white hover:bg-ayur-secondary transition-all shadow-sm shadow-emerald-950/15"
+                className="text-xs font-bold text-[#1B4332] hover:text-[#2D6A4F] px-3.5 py-2 rounded-xl border border-[#1B4332]/20 hover:border-[#1B4332] transition-all"
               >
-                Sign In Portal
+                Sign In
               </Link>
             )}
+
+            <Link
+              to="/doctors"
+              className="px-4.5 py-2.5 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-[#1B4332]/15"
+            >
+              <Calendar className="w-4 h-4 text-[#D4A373]" />
+              <span>Book Consult</span>
+            </Link>
           </div>
 
-          <div className="flex xl:hidden items-center">
+          {/* Mobile menu trigger */}
+          <div className="flex xl:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-stone-100 text-stone-605"
+              className="p-2.5 rounded-xl border border-[#E9E5D9] text-[#1D241E] hover:bg-white"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
+
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-t border-stone-200 bg-white px-4 pt-2 pb-5 space-y-1 bg-white/95 backdrop-blur shadow-inner">
-          <Link
-            to="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Home
-          </Link>
-          <button
-            onClick={() => handleAnchorScroll('about')}
-            className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            About Kaya Kalp
-          </button>
-          <Link
-            to="/treatments"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Treatments
-          </Link>
-          <Link
-            to="/doctors"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Doctors
-          </Link>
-          <Link
-            to="/ai-assessment"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Online Consultation
-          </Link>
-          <button
-            onClick={() => handleAnchorScroll('blogs')}
-            className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Blogs
-          </button>
-          <button
-            onClick={() => handleAnchorScroll('contact')}
-            className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-          >
-            Contact
-          </button>
+        <div className="xl:hidden bg-[#FAF6EF] border-b border-[#E9E5D9] px-4 pt-3 pb-6 space-y-3 font-semibold text-xs animate-fadeIn">
+          <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Home</Link>
+          <button onClick={() => handleAnchorScroll('about')} className="block py-2 text-[#1D241E]">About Us</button>
+          <Link to="/panchakarma" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1B4332] font-bold">Panchakarma Detox</Link>
+          <Link to="/doctors" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Specialist Vaidyas</Link>
+          <Link to="/ai-assessment" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1B4332] font-bold">AI Health Hub</Link>
+          <Link to="/products" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Herbal Pharmacy</Link>
+          <Link to="/gallery" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-[#1D241E]">Clinic Gallery</Link>
           
-          <div className="border-t border-stone-150 mt-3 pt-3">
+          <div className="pt-3 border-t border-[#E9E5D9] flex flex-col gap-2">
             {user ? (
-              <div className="space-y-1">
-                <span className="block px-3 text-[10px] font-bold text-stone-400 uppercase">Logged in as {user.name}</span>
-                <Link
-                  to={getDashboardLink()}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-xs font-bold text-stone-750 hover:bg-stone-50"
-                >
-                  Dashboard
-                </Link>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    logout();
-                    navigate('/');
-                  }}
-                  className="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-red-650 hover:bg-red-50"
-                >
-                  Log Out
-                </button>
-              </div>
+              <Link to={getDashboardLink()} onClick={() => setMobileMenuOpen(false)} className="w-full py-2.5 bg-[#1B4332] text-white text-center rounded-xl font-bold">
+                Go to Dashboard
+              </Link>
             ) : (
-              <Link
-                to="/auth"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center px-4 py-2 rounded-xl bg-ayur-primary text-white font-extrabold text-xs"
-              >
-                Sign In
+              <Link to="/auth" onClick={() => setMobileMenuOpen(false)} className="w-full py-2.5 border border-[#1B4332] text-[#1B4332] text-center rounded-xl font-bold">
+                Sign In / Register
               </Link>
             )}
           </div>

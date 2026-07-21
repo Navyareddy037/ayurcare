@@ -1,112 +1,155 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Leaf, PhoneCall, MapPin, Mail, AlertTriangle, Clock, Facebook, Twitter, Instagram } from 'lucide-react';
+import { Leaf, Phone, Mail, MapPin, Clock, ArrowRight, ShieldCheck, Heart, Instagram, Facebook, Youtube } from 'lucide-react';
 
 export default function Footer() {
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setSubscribed(true);
+    setNewsletterEmail('');
+    setTimeout(() => setSubscribed(false), 3000);
+  };
+
   return (
-    <footer className="border-t border-stone-850 bg-stone-950 text-stone-400 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+    <footer className="bg-[#111813] text-[#FAF6EF] border-t border-[#1B4332]/40 relative overflow-hidden font-sans">
+      
+      {/* Organic Background Leaf Patterns */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#1B4332]/20 rounded-full blur-3xl -z-0"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#2D6A4F]/10 rounded-full blur-3xl -z-0"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 space-y-12">
+        
+        {/* Top Newsletter & Brand Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 border-b border-stone-800/80 items-center">
           
-          {/* Brand - Span 4 */}
-          <div className="md:col-span-4 space-y-5">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-2xl bg-ayur-primary flex items-center justify-center text-white shadow-md">
-                <Leaf className="w-5 h-5 text-emerald-100 animate-pulse" />
+          <div className="lg:col-span-6 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#1B4332] flex items-center justify-center text-[#FAF6EF] shadow-md">
+                <Leaf className="w-5 h-5 text-[#D4A373]" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">
-                Kaya <span className="text-ayur-accent font-black">Kalp</span>
+              <span className="text-2xl font-bold tracking-tight text-white font-serif">
+                Kaya <span className="text-[#D4A373] font-black">Kalp</span>
               </span>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-stone-400 max-w-sm font-medium">
-              Established with the vision of carrying forward the lineage of pure Ayurveda, Kaya Kalp Wellness Center combines time-tested clinical therapies with modern diagnostic verification to restore physiological balance.
+            <p className="text-xs text-[#E9E5D9]/70 max-w-md leading-relaxed font-medium">
+              Indore’s premier authentic Ayurvedic hospital and Panchakarma clinic. Restoring mind, body, and soul balance through centuries-old natural healing science.
             </p>
-            {/* Social media icons */}
-            <div className="flex gap-3 pt-2 text-stone-400">
-              <a href="#" className="p-2 rounded-xl bg-stone-900 hover:bg-ayur-primary hover:text-white transition-colors">
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a href="#" className="p-2 rounded-xl bg-stone-900 hover:bg-ayur-primary hover:text-white transition-colors">
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a href="#" className="p-2 rounded-xl bg-stone-900 hover:bg-ayur-primary hover:text-white transition-colors">
-                <Twitter className="w-4 h-4" />
-              </a>
-            </div>
           </div>
 
-          {/* Quick Directory Links - Span 3 */}
-          <div className="md:col-span-3">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-ayur-accent pl-2">
-              Kaya Kalp Directory
-            </h3>
-            <ul className="space-y-2 text-xs font-semibold">
-              <li>
-                <Link to="/" className="hover:text-ayur-accent transition-colors">Home</Link>
+          <div className="lg:col-span-6 space-y-3">
+            <h4 className="font-extrabold text-xs text-[#FAF6EF] uppercase tracking-wider flex items-center gap-1.5">
+              <Mail className="w-4 h-4 text-[#D4A373]" />
+              <span>Join Kaya Kalp Wellness Newsletter</span>
+            </h4>
+            {subscribed && (
+              <span className="text-xs text-[#2D6A4F] font-bold block">Thank you! You have subscribed to weekly wellness notes.</span>
+            )}
+            <form onSubmit={handleSubscribe} className="flex gap-2 text-xs">
+              <input
+                type="email"
+                required
+                placeholder="Enter your email address..."
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-[#1D241E] border border-stone-800 text-white placeholder-stone-500 focus:outline-none focus:border-[#1B4332]"
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 bg-[#1B4332] hover:bg-[#2D6A4F] text-white font-bold rounded-xl shrink-0 transition-all shadow-md"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+        {/* Middle Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
+          
+          {/* Col 1: About & Hours */}
+          <div className="space-y-4">
+            <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#D4A373]">Clinic Operational Hours</h5>
+            <ul className="space-y-2 text-[#E9E5D9]/80 font-medium">
+              <li className="flex justify-between border-b border-stone-800/60 pb-1.5">
+                <span>Monday - Saturday:</span>
+                <span className="font-bold text-white">9:00 AM - 6:00 PM</span>
               </li>
-              <li>
-                <Link to="/treatments" className="hover:text-ayur-accent transition-colors">Treatments Catalog</Link>
+              <li className="flex justify-between border-b border-stone-800/60 pb-1.5">
+                <span>Sunday:</span>
+                <span className="text-[#D4A373] font-bold">Prior Bookings</span>
               </li>
-              <li>
-                <Link to="/doctors" className="hover:text-ayur-accent transition-colors">Specialist Doctors</Link>
-              </li>
-              <li>
-                <Link to="/gallery" className="hover:text-ayur-accent transition-colors">Wellness Gallery</Link>
-              </li>
-              <li>
-                <Link to="/knowledge-hub" className="hover:text-ayur-accent transition-colors">Health & Wellness Blogs</Link>
-              </li>
-              <li>
-                <Link to="/ai-assessment" className="hover:text-ayur-accent transition-colors">AI Symptom Checker</Link>
+              <li className="flex items-center gap-2 pt-1 text-[11px] text-stone-400">
+                <Clock className="w-3.5 h-3.5 text-[#2D6A4F]" />
+                <span>Emergency Desk 24/7 Available</span>
               </li>
             </ul>
           </div>
 
-          {/* Contact Details - Span 3 */}
-          <div className="md:col-span-3">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-ayur-accent pl-2">
-              Contact & Support
-            </h3>
-            <ul className="space-y-3 text-xs font-medium">
+          {/* Col 2: Treatments */}
+          <div className="space-y-4">
+            <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#D4A373]">Key Treatments</h5>
+            <ul className="space-y-2 text-[#E9E5D9]/80 font-medium">
+              <li><Link to="/panchakarma" className="hover:text-[#D4A373] transition-colors">Panchakarma Detoxification</Link></li>
+              <li><Link to="/treatments/joint-pain" className="hover:text-[#D4A373] transition-colors">Abhyanga Herbal Massage</Link></li>
+              <li><Link to="/treatments/migraine" className="hover:text-[#D4A373] transition-colors">Shirodhara Oil Flow Therapy</Link></li>
+              <li><Link to="/treatments/arthritis" className="hover:text-[#D4A373] transition-colors">Joint & Spine Kati Basti</Link></li>
+              <li><Link to="/treatments/weight-loss" className="hover:text-[#D4A373] transition-colors">Udvartana Weight Management</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 3: Quick Links */}
+          <div className="space-y-4">
+            <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#D4A373]">Quick Navigation</h5>
+            <ul className="space-y-2 text-[#E9E5D9]/80 font-medium">
+              <li><Link to="/doctors" className="hover:text-[#D4A373] transition-colors">Specialist BAMS Vaidyas</Link></li>
+              <li><Link to="/ai-assessment" className="hover:text-[#D4A373] transition-colors">AI Symptom Checker Hub</Link></li>
+              <li><Link to="/products" className="hover:text-[#D4A373] transition-colors">Herbal Pharmacy Store</Link></li>
+              <li><Link to="/gallery" className="hover:text-[#D4A373] transition-colors">Clinic Photo Gallery</Link></li>
+              <li><Link to="/auth" className="hover:text-[#D4A373] transition-colors">Patient Login Portal</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 4: Address & Contact */}
+          <div className="space-y-4">
+            <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#D4A373]">Indore Clinic Contact</h5>
+            <ul className="space-y-3 text-[#E9E5D9]/80 font-medium">
               <li className="flex items-start gap-2.5">
-                <PhoneCall className="w-4 h-4 text-ayur-accent mt-0.5 shrink-0" />
-                <span className="leading-snug">+91 98277-55555</span>
+                <MapPin className="w-4 h-4 text-[#D4A373] mt-0.5 shrink-0" />
+                <span>102, Royal Avenue, New Palasia, Indore (M.P.) - 452001</span>
               </li>
-              <li className="flex items-start gap-2.5">
-                <Mail className="w-4 h-4 text-ayur-accent mt-0.5 shrink-0" />
-                <span className="leading-snug">care@kayakalpindore.com</span>
+              <li className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#D4A373] shrink-0" />
+                <span>+91 98277-55555</span>
               </li>
-              <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-ayur-accent mt-0.5 shrink-0" />
-                <span className="leading-snug">102, Royal Avenue, New Palasia, Indore (M.P.) - 452001</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-ayur-accent mt-0.5 shrink-0" />
-                <span className="leading-snug text-stone-400">Mon - Sat: 9:00 AM - 6:00 PM</span>
+              <li className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#D4A373] shrink-0" />
+                <span>care@kayakalpindore.com</span>
               </li>
             </ul>
           </div>
 
-          {/* Disclaimer - Span 2 */}
-          <div className="md:col-span-2 p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 space-y-2 text-xs">
-            <div className="flex items-center gap-2 text-amber-500 font-bold">
-              <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
-              <span>Medical Disclaimer</span>
+        </div>
+
+        {/* Disclaimer & Bottom Bar */}
+        <div className="border-t border-stone-800/80 pt-8 space-y-4 text-[10.5px] text-stone-500 font-medium">
+          <p className="leading-relaxed">
+            <strong>Medical Disclaimer:</strong> The information provided on Kaya Kalp website is for educational purposes only. Always consult a qualified Ayurvedic physician (Vaidya) for clinical diagnoses or altering medicinal doses.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[#E9E5D9]/60">
+            <span>&copy; 2026 Kaya Kalp Ayurvedic Wellness Center, Indore. All Rights Reserved.</span>
+            <div className="flex gap-4">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Ayurvedic Guidelines</a>
             </div>
-            <p className="text-[10px] text-stone-400 leading-relaxed font-medium">
-              Kaya Kalp's digital symptom checkers and herb indexes are for educational guidance only. Please consult certified Vaidyas for medical treatments.
-            </p>
           </div>
         </div>
 
-        <div className="border-t border-stone-850 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] sm:text-xs">
-          <p className="text-stone-500">&copy; {new Date().getFullYear()} Kaya Kalp Ayurvedic Wellness Center. All rights reserved.</p>
-          <div className="flex gap-4 text-stone-500 font-medium">
-            <span className="hover:text-white cursor-pointer transition-colors">Terms of Service</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Disclaimer</span>
-          </div>
-        </div>
       </div>
     </footer>
   );
