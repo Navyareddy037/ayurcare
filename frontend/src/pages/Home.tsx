@@ -153,7 +153,7 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     badge1: '100% Herbal Formula',
     badge2: 'Doctor Recommended',
     desc: 'High absorption massage formulation to alleviate chronic joint arthritis, gout swelling, back, and neck pain.',
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=350&h=250',
+    image: '/images/pain_relief_oil_product.png',
     benefits: [
       'Joint Pain Support',
       'Arthritis Relief',
@@ -170,7 +170,7 @@ const SOLUTIONS_DATA: SolutionCard[] = [
     badge1: '100% Herbal',
     badge2: 'Doctor Recommended',
     desc: 'Classical Jadi-Buti capsules designed to assist healthy fat reduction, relieve bowel constipation, and boost digestion.',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=350&h=250',
+    image: '/images/weight_mgmt_pills_product.png',
     benefits: [
       'Supports healthy weight loss',
       'Relieves constipation',
