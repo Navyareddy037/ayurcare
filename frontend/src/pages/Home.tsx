@@ -303,42 +303,54 @@ export default function Home() {
 
             {/* Right Overlapping Images Grid Montage */}
             <div className="lg:col-span-5 relative w-full h-[450px] hidden lg:block">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl -z-10"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#1B4332]/10 rounded-full blur-3xl -z-10"></div>
               
-              {/* Collage Image 1: Doctor consulting with patient */}
-              <div className="absolute top-0 left-0 w-48 h-48 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-20">
+              {/* Collage Image 1: Doctor Consultation */}
+              <div className="absolute top-0 left-0 w-48 h-48 rounded-[24px] overflow-hidden shadow-lg border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-20 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=350&h=350" 
-                  alt="Doctor Consultation" 
-                  className="w-full h-full object-cover" 
+                  src="/images/hero_doctor_consult.png" 
+                  alt="Ayurvedic Doctor Consultation" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1B4332]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex items-end">
+                  <span className="text-[10px] text-white font-bold">Vaidya Nadi Consultation</span>
+                </div>
               </div>
 
-              {/* Collage Image 2: Happy family wellness */}
-              <div className="absolute top-12 right-0 w-40 h-40 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-10">
+              {/* Collage Image 2: Panchakarma Detox Therapy */}
+              <div className="absolute top-10 right-0 w-44 h-44 rounded-[24px] overflow-hidden shadow-lg border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-10 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=300&h=300" 
-                  alt="Happy family wellness" 
-                  className="w-full h-full object-cover" 
+                  src="/images/hero_panchakarma_therapy.png" 
+                  alt="Panchakarma Detox Therapy" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1B4332]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex items-end">
+                  <span className="text-[10px] text-white font-bold">Abhyanga Oil Therapy</span>
+                </div>
               </div>
 
-              {/* Collage Image 3: Herbal preparation */}
-              <div className="absolute bottom-2 left-8 w-44 h-44 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-30">
+              {/* Collage Image 3: Herbal Medicine Preparation */}
+              <div className="absolute bottom-2 left-6 w-44 h-44 rounded-[24px] overflow-hidden shadow-lg border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-30 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=350&h=350" 
-                  alt="Herbal formulation preparation" 
-                  className="w-full h-full object-cover" 
+                  src="/images/hero_herbal_prep.png" 
+                  alt="Herbal Medicine Preparation" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1B4332]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex items-end">
+                  <span className="text-[10px] text-white font-bold">Jadi-Buti Formulation</span>
+                </div>
               </div>
 
-              {/* Collage Image 4: Green medicinal plants */}
-              <div className="absolute bottom-16 right-4 w-32 h-32 rounded-[24px] overflow-hidden shadow-md border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-20">
+              {/* Collage Image 4: Fresh Medicinal Herbs */}
+              <div className="absolute bottom-12 right-2 w-36 h-36 rounded-[24px] overflow-hidden shadow-lg border-2 border-white hover:scale-105 hover:z-40 transition-all duration-500 z-20 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=250&h=250" 
-                  alt="Green medicinal plants" 
-                  className="w-full h-full object-cover" 
+                  src="/images/hero_ayurvedic_plants.png" 
+                  alt="Fresh Medicinal Herbs & Plants" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1B4332]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex items-end">
+                  <span className="text-[10px] text-white font-bold">Pure Organic Herbs</span>
+                </div>
               </div>
 
               {/* Floating Leaf 1 */}
