@@ -119,15 +119,15 @@ export default function Footer() {
             <ul className="space-y-3 text-[#E9E5D9]/80 font-medium">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#D4A373] mt-0.5 shrink-0" />
-                <span>102, Royal Avenue, New Palasia, Indore (M.P.) - 452001</span>
+                <span>102, Royal Avenue, 18/2-C, New Palasia, Indore (M.P.) - 452001</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#D4A373] shrink-0" />
-                <span>+91 98277-55555</span>
+                <span>+91 9827775075 / 0731-4045075</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#D4A373] shrink-0" />
-                <span>care@kayakalpindore.com</span>
+                <span>dr.naveenjadhav@gmail.com</span>
               </li>
             </ul>
           </div>

@@ -783,21 +783,21 @@ export default function Home() {
                   <MapPin className="w-5 h-5 text-ayur-primary mt-0.5 shrink-0" />
                   <div>
                     <strong>Kaya Kalp Wellness Center</strong>
-                    <div className="text-xs text-stone-500 mt-1">102, Royal Avenue, New Palasia, Indore (M.P.) - 452001</div>
+                    <div className="text-xs text-stone-500 mt-1">102, Royal Avenue, 18/2-C, New Palasia, Indore (M.P.) - 452001</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-ayur-primary shrink-0" />
                   <div>
                     <strong>Helpline Desks</strong>
-                    <div className="text-xs text-stone-500 mt-1">+91 98277-55555 (Consultation Desk)</div>
+                    <div className="text-xs text-stone-500 mt-1">+91 9827775075 / 0731-4045075</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-ayur-primary shrink-0" />
                   <div>
-                    <strong>Support Email</strong>
-                    <div className="text-xs text-stone-500 mt-1">care@kayakalpindore.com</div>
+                    <strong>Official Email</strong>
+                    <div className="text-xs text-stone-500 mt-1">dr.naveenjadhav@gmail.com</div>
                   </div>
                 </div>
               </div>
@@ -820,7 +820,7 @@ export default function Home() {
                 </div>
                 <div>
                   <strong className="text-amber-805 block">Emergency Patient Desk:</strong>
-                  <span className="text-stone-605 font-bold">+91 98277-55555</span>
+                  <span className="text-stone-605 font-bold">+91 9827775075</span>
                 </div>
               </div>
 
