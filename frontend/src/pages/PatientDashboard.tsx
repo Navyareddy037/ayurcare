@@ -64,7 +64,7 @@ export default function PatientDashboard() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'appointments' | 'records' | 'wellness' | 'treatmentPlans' | 'aiCoach' | 'notifications' | 'payments' | 'support'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'appointments' | 'records' | 'wellness' | 'treatmentPlans' | 'aiCoach' | 'notifications' | 'support'>('overview');
   const [darkMode, setDarkMode] = useState(false);
   const [lang, setLang] = useState<'en' | 'hi'>('en');
 
@@ -151,7 +151,17 @@ export default function PatientDashboard() {
 
       const appRes = await api.get('/appointments');
       if (appRes.data && appRes.data.success) {
-        setAppointments(appRes.data.appointments || []);
+        const rawApps = appRes.data.appointments || [];
+        const seen = new Set();
+        const uniqueApps = rawApps.filter((app: any) => {
+          const key = `${app.doctorId}-${app.date}-${app.timeSlot}`;
+          if (seen.has(key)) {
+            return false;
+          }
+          seen.add(key);
+          return true;
+        });
+        setAppointments(uniqueApps);
       }
 
       const ticketRes = await api.get('/appointments/tickets');
@@ -704,8 +714,26 @@ export default function PatientDashboard() {
     );
   }
 
-  const upcomingAppointments = appointments.filter(app => app.status === 'CONFIRMED' || app.status === 'PENDING');
-  const pastAppointments = appointments.filter(app => app.status === 'COMPLETED' || app.status === 'CANCELLED');
+  const now = new Date();
+  
+  const isAppointmentInPast = (app: any) => {
+    try {
+      const [year, month, day] = app.date.split('-').map(Number);
+      const [hours, minutes] = (app.timeSlot || '00:00').split(':').map(Number);
+      const appDateTime = new Date(year, month - 1, day, hours, minutes);
+      return appDateTime < now;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const upcomingAppointments = appointments.filter(app => 
+    (app.status === 'CONFIRMED' || app.status === 'PENDING') && !isAppointmentInPast(app)
+  );
+  
+  const pastAppointments = appointments.filter(app => 
+    app.status === 'COMPLETED' || app.status === 'CANCELLED' || isAppointmentInPast(app)
+  );
   
   const getCountdownText = () => {
     const conf = upcomingAppointments.find(a => a.status === 'CONFIRMED');
@@ -795,7 +823,6 @@ export default function PatientDashboard() {
                 { id: 'treatmentPlans', label: text.reminders, icon: Clock },
                 { id: 'aiCoach', label: text.aiCoach, icon: Activity },
                 { id: 'notifications', label: `${text.notifications} (${unreadNotifCount})`, icon: Bell },
-                { id: 'payments', label: text.payments, icon: CreditCard },
                 { id: 'support', label: text.support, icon: HelpCircle }
               ].map((item) => {
                 const Icon = item.icon;
@@ -1058,22 +1085,22 @@ export default function PatientDashboard() {
                     <span className="text-xs font-bold text-amber-800 dark:text-amber-300 block">Reschedule Consultation Appointment</span>
                     <form onSubmit={handleRescheduleSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-stone-500 block">Date</label>
+                        <label className="text-[10px] font-bold text-stone-700 dark:text-stone-300 block">Date</label>
                         <input
                           type="date" required value={rescheduleDate} onChange={(e) => setRescheduleDate(e.target.value)}
-                          className="w-full p-2 border border-stone-200 bg-white dark:bg-stone-850 rounded-lg text-xs"
+                          className="w-full p-2 border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-850 text-stone-900 dark:text-white rounded-lg text-xs font-semibold focus:outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-stone-500 block">Time Slot</label>
+                        <label className="text-[10px] font-bold text-stone-700 dark:text-stone-300 block">Time Slot</label>
                         <select required value={rescheduleTime} onChange={(e) => setRescheduleTime(e.target.value)}
-                          className="w-full p-2 border border-stone-200 bg-white dark:bg-stone-850 rounded-lg text-xs"
+                          className="w-full p-2 border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-850 text-stone-900 dark:text-white rounded-lg text-xs font-semibold focus:outline-none"
                         >
-                          <option value="">Select Time Slot</option>
-                          <option value="10:00">10:00 AM</option>
-                          <option value="11:30">11:30 AM</option>
-                          <option value="14:00">02:00 PM</option>
-                          <option value="15:30">03:30 PM</option>
+                          <option value="" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">Select Time Slot</option>
+                          <option value="10:00" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">10:00 AM</option>
+                          <option value="11:30" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">11:30 AM</option>
+                          <option value="14:00" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">02:00 PM</option>
+                          <option value="15:30" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">03:30 PM</option>
                         </select>
                       </div>
                       <div className="flex gap-2">
@@ -1117,7 +1144,7 @@ export default function PatientDashboard() {
                                 setRescheduleAppId(app.id);
                                 setRescheduleDate(app.date);
                               }}
-                              className="px-3 py-2 rounded-xl border border-stone-200 dark:border-stone-800 font-bold hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px]"
+                              className="px-3 py-2 rounded-xl bg-ayur-primary text-white font-bold hover:bg-ayur-secondary text-[10px] shadow-sm transition-all animate-pulse-subtle"
                             >
                               Reschedule
                             </button>
@@ -1678,57 +1705,6 @@ export default function PatientDashboard() {
               </div>
             )}
 
-            {/* TAB 8: Payment History */}
-            {activeTab === 'payments' && (
-              <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4 animate-fadeIn">
-                <h3 className="font-bold text-sm text-stone-900 dark:text-white flex items-center gap-1.5">
-                  <CreditCard className="w-4 h-4 text-ayur-primary" />
-                  <span>Clinical Consultation Payments</span>
-                </h3>
-
-                {appointments.length === 0 ? (
-                  <p className="text-xs text-stone-400 italic">No consult booking records found.</p>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs text-left border-collapse">
-                      <thead>
-                        <tr className="border-b border-stone-200 dark:border-stone-800 text-stone-400 font-bold uppercase text-[9px] tracking-widest">
-                          <th className="py-2.5">Receipt ID</th>
-                          <th className="py-2.5">Date</th>
-                          <th className="py-2.5">Consultant Vaidya</th>
-                          <th className="py-2.5">Amount paid</th>
-                          <th className="py-2.5">Status</th>
-                          <th className="py-2.5 text-right">Invoice</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-stone-100 dark:divide-stone-800 font-medium">
-                        {appointments.map((app, i) => (
-                          <tr key={i} className="hover:bg-stone-50/50 dark:hover:bg-stone-800/10">
-                            <td className="py-3 font-mono">{app.receiptId || 'REC-MOCK'}</td>
-                            <td className="py-3">{app.date}</td>
-                            <td className="py-3 font-bold text-stone-800 dark:text-stone-200">{app.doctor?.user?.name || 'Ayurvedic Consultant'}</td>
-                            <td className="py-3 font-bold">₹{app.doctor?.fee || 500}</td>
-                            <td className="py-3">
-                              <span className="px-2 py-0.5 rounded bg-emerald-50 text-[10px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 uppercase tracking-wider">
-                                SUCCESS
-                              </span>
-                            </td>
-                            <td className="py-3 text-right">
-                              <button
-                                onClick={() => handleDownloadInvoice(app)}
-                                className="px-2.5 py-1 rounded bg-[#F6F7F5] dark:bg-stone-800 border border-stone-200 dark:border-stone-700 hover:bg-stone-100 text-[10px] font-bold"
-                              >
-                                Download
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-            )}
 
             {/* TAB 9: Support Tickets */}
             {activeTab === 'support' && (

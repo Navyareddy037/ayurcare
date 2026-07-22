@@ -402,7 +402,7 @@ export default function DoctorDirectory() {
                   {bookingDate && (
                     <div className="space-y-3">
                       <div className="space-y-1.5">
-                        <span className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block">Morning Session</span>
+                        <span className="text-[9px] font-extrabold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">Morning Session</span>
                         <div className="flex flex-wrap gap-2">
                           {MORNING_SLOTS.map((time) => {
                             const isBooked = bookedSlots.includes(time);
@@ -413,10 +413,10 @@ export default function DoctorDirectory() {
                                 type="button"
                                 disabled={isBooked}
                                 onClick={() => setBookingTime(time)}
-                                className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                                  isBooked ? 'bg-stone-200 text-stone-400 border-transparent cursor-not-allowed' :
-                                  isSelected ? 'bg-ayur-primary text-white border-transparent shadow' :
-                                  'bg-white hover:bg-stone-50 border-stone-200 text-stone-750'
+                                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-850 cursor-not-allowed' :
+                                  isSelected ? 'bg-amber-500 text-white border-transparent shadow-md font-bold ring-2 ring-amber-400/50' :
+                                  'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-emerald-250 dark:border-emerald-900/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/40'
                                 }`}
                               >
                                 {time}
@@ -427,7 +427,7 @@ export default function DoctorDirectory() {
                       </div>
 
                       <div className="space-y-1.5">
-                        <span className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block">Afternoon Session</span>
+                        <span className="text-[9px] font-extrabold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">Afternoon Session</span>
                         <div className="flex flex-wrap gap-2">
                           {AFTERNOON_SLOTS.map((time) => {
                             const isBooked = bookedSlots.includes(time);
@@ -438,10 +438,10 @@ export default function DoctorDirectory() {
                                 type="button"
                                 disabled={isBooked}
                                 onClick={() => setBookingTime(time)}
-                                className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                                  isBooked ? 'bg-stone-200 text-stone-400 border-transparent cursor-not-allowed' :
-                                  isSelected ? 'bg-ayur-primary text-white border-transparent shadow' :
-                                  'bg-white hover:bg-stone-50 border-stone-200 text-stone-750'
+                                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-850 cursor-not-allowed' :
+                                  isSelected ? 'bg-amber-500 text-white border-transparent shadow-md font-bold ring-2 ring-amber-400/50' :
+                                  'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-emerald-250 dark:border-emerald-900/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/40'
                                 }`}
                               >
                                 {time}
@@ -452,7 +452,7 @@ export default function DoctorDirectory() {
                       </div>
 
                       <div className="space-y-1.5">
-                        <span className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block">Evening Session</span>
+                        <span className="text-[9px] font-extrabold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">Evening Session</span>
                         <div className="flex flex-wrap gap-2">
                           {EVENING_SLOTS.map((time) => {
                             const isBooked = bookedSlots.includes(time);
@@ -463,10 +463,10 @@ export default function DoctorDirectory() {
                                 type="button"
                                 disabled={isBooked}
                                 onClick={() => setBookingTime(time)}
-                                className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                                  isBooked ? 'bg-stone-200 text-stone-400 border-transparent cursor-not-allowed' :
-                                  isSelected ? 'bg-ayur-primary text-white border-transparent shadow' :
-                                  'bg-white hover:bg-stone-50 border-stone-200 text-stone-750'
+                                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-850 cursor-not-allowed' :
+                                  isSelected ? 'bg-amber-500 text-white border-transparent shadow-md font-bold ring-2 ring-amber-400/50' :
+                                  'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-emerald-250 dark:border-emerald-900/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/40'
                                 }`}
                               >
                                 {time}
