@@ -773,8 +773,8 @@ export default function Home() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* Column 1: Contact Details & Hours (Span 5) */}
-          <div className="lg:col-span-5 p-8 sm:p-10 rounded-[32px] bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between space-y-8">
+          {/* Column 1: Contact Details & Hours (Span 6) */}
+          <div className="lg:col-span-6 p-8 sm:p-10 rounded-[32px] bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between space-y-8">
             <div className="space-y-6">
               
               {/* Address details */}
@@ -856,8 +856,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Column 2: Appointment Request Form (Span 4) */}
-          <div className="lg:col-span-4 p-8 sm:p-10 rounded-[32px] bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between space-y-6">
+          {/* Column 2: Appointment Request Form (Span 6) */}
+          <div className="lg:col-span-6 p-8 sm:p-10 rounded-[32px] bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <h4 className="font-extrabold text-xs text-stone-900 uppercase tracking-wider block">Quick Inquiry Form</h4>
               <p className="text-[11px] text-stone-500 font-medium">Submit a request and our doctors will coordinate within 2 hours.</p>
@@ -906,17 +906,6 @@ export default function Home() {
                 </button>
               </form>
             </div>
-          </div>
-
-          {/* Column 3: Google Map Frame (Span 3) */}
-          <div className="lg:col-span-3 rounded-[32px] overflow-hidden border border-stone-200/80 shadow-sm min-h-[300px] relative">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12!1m3!1d3680.125712217688!2d75.8778051759493!3d22.72355522744747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd375323cb11%3A0xe54e668c2e648835!2sNew%20Palasia%2C%20Indore%2C%20Madhya%2520Pradesh%2520452001!5e0!3m2!1sen!2sin!4v1719747120401!5m2!1sen!2sin" 
-              className="absolute inset-0 w-full h-full border-0" 
-              allowFullScreen={true}
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
           </div>
 
         </div>
