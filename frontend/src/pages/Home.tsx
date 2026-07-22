@@ -921,6 +921,27 @@ export default function Home() {
 
         </div>
       </section>
+
+      {/* Google Maps Section */}
+      <section className="py-14 bg-[#FAF9F5] border-t border-stone-200/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl font-extrabold text-stone-900 tracking-tight">Visit Our Clinic</h3>
+            <p className="text-xs text-stone-500 max-w-lg mx-auto font-medium">
+              102, Royal Avenue, 18/2-C, Lala Banarasilal Dawar Marg, New Palasia, Indore (M.P.) - 452001 (Near Curewell Hospital)
+            </p>
+          </div>
+          <div className="rounded-[32px] overflow-hidden border border-stone-200/80 shadow-md h-[400px] relative bg-white">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.122894331448!2d75.882676!3d22.723657999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd370c99fcfb%3A0x6b44747719602fba!2sKaya%20Kalp%20Ayurvedic%20Clinic!5e0!3m2!1sen!2sin!4v1719747120401!5m2!1sen!2sin" 
+              className="w-full h-full border-0" 
+              allowFullScreen={true}
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

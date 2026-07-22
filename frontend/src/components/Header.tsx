@@ -161,7 +161,7 @@ export default function Header() {
             ) : (
               <Link 
                 to="/auth"
-                className="text-xs font-bold text-[#1B4332] hover:text-[#2D6A4F] px-3.5 py-2 rounded-xl border border-[#1B4332]/20 hover:border-[#1B4332] transition-all"
+                className="text-xs font-bold text-[#1B4332] hover:text-[#2D6A4F] px-4 py-2 rounded-xl border border-[#1B4332]/20 hover:border-[#1B4332] transition-all flex items-center justify-center"
               >
                 Sign In
               </Link>
@@ -169,10 +169,10 @@ export default function Header() {
 
             <Link
               to="/doctors"
-              className="px-4.5 py-2.5 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-[#1B4332]/15"
+              className="px-4 py-2 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-[#1B4332]/15"
             >
               <Calendar className="w-4 h-4 text-[#D4A373]" />
-              <span>Book Consult</span>
+              <span>Book Now</span>
             </Link>
           </div>
 
