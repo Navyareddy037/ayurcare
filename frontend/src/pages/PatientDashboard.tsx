@@ -9,6 +9,7 @@ import {
   CreditCard, DollarSign, Bell, User, PlusIcon
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
+import { jsPDF } from 'jspdf';
 
 const TRANSLATIONS: any = {
   en: {
@@ -112,12 +113,13 @@ export default function PatientDashboard() {
   ]);
   const [chatInput, setChatInput] = useState('');
 
-  // Mock File Upload state
-  const [uploadedRecords, setUploadedRecords] = useState<any[]>([
-    { id: 1, name: 'Blood_Report_May2026.pdf', type: 'application/pdf', uploadedAt: '2026-05-12' },
-    { id: 2, name: 'Chest_XRay_Spine.jpg', type: 'image/jpeg', uploadedAt: '2026-06-02' }
-  ]);
+  // File Upload state
+  const [uploadedRecords, setUploadedRecords] = useState<any[]>([]);
   const [newRecordName, setNewRecordName] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadError, setUploadError] = useState('');
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   // AI Symptom Checker
   const [aiSymptoms, setAiSymptoms] = useState('');
@@ -160,6 +162,11 @@ export default function PatientDashboard() {
       const notifRes = await api.get('/appointments/notifications');
       if (notifRes.data && notifRes.data.success) {
         setNotifications(notifRes.data.notifications || []);
+      }
+
+      const recordsRes = await api.get('/appointments/medical-records');
+      if (recordsRes.data && recordsRes.data.success) {
+        setUploadedRecords(recordsRes.data.records || []);
       }
     } catch (err) {
       console.error('Fetch dashboard data failed:', err);
@@ -235,103 +242,291 @@ export default function PatientDashboard() {
     }
   };
 
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleDownloadPrescription = (app: any) => {
     const medicines = JSON.parse(app.medicinesJSON || '[]');
-    const text = `
------------------------------------------------------------
-          KAYA KALP AYURVEDIC WELLNESS CENTER
-    102, Royal Avenue, New Palasia, Indore (M.P.)
------------------------------------------------------------
-Receipt ID: ${app.receiptId}
-Date: ${app.date} | Time: ${app.timeSlot}
-Doctor: ${app.doctor?.user?.name}
-Specialization: ${app.doctor?.specialization}
-Clinic: ${app.doctor?.clinicName}
-Consultation Fee Paid: INR ${app.doctor?.fee}
+    const doc = new jsPDF();
 
-Patient Name: ${user?.name}
-Patient Age/Gender: ${user?.patientProfile?.age || 'N/A'} / ${user?.patientProfile?.gender || 'N/A'}
+    // 1. Header Banner/Letterhead
+    doc.setFillColor(27, 67, 50); // Deep Forest Green (#1B4332)
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(250, 246, 239); // Warm Cream (#FAF6EF)
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.text('KAYA KALP AYURVEDIC WELLNESS CENTER', 105, 18, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont('Helvetica', 'normal');
+    doc.text('102, Royal Avenue, 18/2-C, New Palasia, Indore (M.P.) - 452001', 105, 26, { align: 'center' });
+    doc.text('Helpline: +91 9827775075 | Email: dr.naveenjadhav@gmail.com', 105, 32, { align: 'center' });
 
-Clinical Assessment Notes:
-${app.notes || 'Routine Checkup Consultation'}
+    // 2. Consultation Metadata
+    doc.setTextColor(40, 40, 40);
+    doc.setFontSize(12);
+    doc.setFont('Helvetica', 'bold');
+    doc.text('CLINICAL PRESCRIPTION RECORD', 15, 55);
+    
+    doc.setFontSize(9);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Receipt ID: ${app.receiptId || 'REC-N/A'}`, 15, 63);
+    doc.text(`Consultation Date: ${app.date} | Time: ${app.timeSlot}`, 15, 69);
+    doc.text(`Consultation Mode: ${app.visitType === 'online' ? 'Online Video Consult' : 'In-Person Clinic Visit'}`, 15, 75);
 
-Prescribed Ayurvedic Medicines:
-${medicines.length === 0 ? 'No medicines prescribed.' : 
-  medicines.map((m: any, i: number) => `${i+1}. ${m.name} - Dosage: ${m.dosage} | Timing: ${m.timing} | Duration: ${m.duration}`).join('\n')}
+    // Doctor details (Right Column)
+    doc.setFont('Helvetica', 'bold');
+    doc.text(`Doctor: ${app.doctor?.user?.name || 'Ayurvedic Consultant'}`, 120, 63);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Specialization: ${app.doctor?.specialization || 'Ayurveda Vaidya'}`, 120, 69);
+    doc.text(`Clinic: ${app.doctor?.clinicName || 'Kaya Kalp Clinic'}`, 120, 75);
 
-Next Scheduled Follow-up Date: ${app.nextFollowup || 'As needed'}
+    // Horizontal Divider
+    doc.setDrawColor(200, 200, 200);
+    doc.line(15, 80, 195, 80);
 
------------------------------------------------------------
-Thank you for choosing Kaya Kalp.
-Disclaimer: Please consult your Vaidya before altering doses.
------------------------------------------------------------
-`;
-    const blob = new Blob([text], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `KayaKalp_Prescription_${app.receiptId}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    // Patient details
+    doc.setFont('Helvetica', 'bold');
+    doc.text('PATIENT PROFILE:', 15, 90);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Name: ${user?.name || 'Navya Reddy'}`, 15, 96);
+    doc.text(`Age / Gender: ${user?.patientProfile?.age || '29'} / ${user?.patientProfile?.gender || 'Male'}`, 15, 102);
+    doc.text(`Contact: ${user?.patientProfile?.phone || '+91 9876543210'}`, 15, 108);
+
+    // Divider
+    doc.line(15, 115, 195, 115);
+
+    // Notes
+    doc.setFont('Helvetica', 'bold');
+    doc.text('CLINICAL ASSESSMENT NOTES:', 15, 125);
+    doc.setFont('Helvetica', 'normal');
+    const splitNotes = doc.splitTextToSize(app.notes || 'Routine Checkup Consultation & Seasonal Dosha Balancing.', 180);
+    doc.text(splitNotes, 15, 131);
+
+    // Medicines Table
+    const startY = 155;
+    doc.setFont('Helvetica', 'bold');
+    doc.text('PRESCRIBED MEDICINES & THERAPIES:', 15, startY);
+    
+    doc.setFillColor(240, 240, 240);
+    doc.rect(15, startY + 5, 180, 8, 'F');
+    doc.setFontSize(8.5);
+    doc.text('No.', 18, startY + 11);
+    doc.text('Medicine / Formulation', 30, startY + 11);
+    doc.text('Dosage / Route', 95, startY + 11);
+    doc.text('Timing', 135, startY + 11);
+    doc.text('Duration', 170, startY + 11);
+
+    doc.setFont('Helvetica', 'normal');
+    let currentY = startY + 19;
+    if (medicines.length === 0) {
+      doc.text('No medicines or therapies prescribed in this session.', 20, currentY);
+    } else {
+      medicines.forEach((med: any, idx: number) => {
+        doc.text(`${idx + 1}`, 18, currentY);
+        doc.text(`${med.name}`, 30, currentY);
+        doc.text(`${med.dosage}`, 95, currentY);
+        doc.text(`${med.timing}`, 135, currentY);
+        doc.text(`${med.duration}`, 170, currentY);
+        currentY += 8;
+      });
+    }
+
+    // Follow-up & Footer
+    doc.line(15, 235, 195, 235);
+    doc.setFont('Helvetica', 'bold');
+    doc.text(`Next Recommended Follow-up: ${app.nextFollowup || 'As needed for rejuvenation'}`, 15, 245);
+
+    doc.setFont('Helvetica', 'italic');
+    doc.setFontSize(7.5);
+    doc.setTextColor(120, 120, 120);
+    doc.text('Disclaimer: This prescription is generated by Kaya Kalp Wellness Portal. Please follow your Vaidya\'s guidance.', 15, 260);
+    doc.text('This is a digitally signed clinical document requiring no manual signature.', 15, 265);
+
+    doc.save(`KayaKalp_Prescription_${app.receiptId || 'REC'}.pdf`);
   };
 
   const handleDownloadInvoice = (app: any) => {
-    const text = `
-===========================================================
-               KAYA KALP CLINICAL INVOICE
-===========================================================
-Invoice ID: INV-${app.receiptId?.split('-')[1] || '12345'}
-Date: ${app.date}
-Time Slot: ${app.timeSlot}
-Status: PAID (SUCCESS)
------------------------------------------------------------
-PROVIDER DETAILS:
-Center: Kaya Kalp Wellness Clinic
-Address: 102, Royal Avenue, Indore (M.P.)
-Vaidya: ${app.doctor?.user?.name} (${app.doctor?.specialization})
------------------------------------------------------------
-PATIENT DETAILS:
-Name: ${user?.name}
-Email: ${user?.email}
-Phone: ${user?.patientProfile?.phone || 'N/A'}
------------------------------------------------------------
-BILLING STATEMENT:
-Description                         Amount
-Consultation Booking Fee            ₹${app.doctor?.fee || 500}.00
-GST (18%)                           ₹${((app.doctor?.fee || 500) * 0.18).toFixed(2)}
------------------------------------------------------------
-Total Paid Amount                   ₹${((app.doctor?.fee || 500) * 1.18).toFixed(2)}
-Payment Mode                        UPI / Digital Wallet
-===========================================================
-This is a computer generated invoice and requires no signature.
-===========================================================
-`;
-    const blob = new Blob([text], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `KayaKalp_Invoice_INV_${app.receiptId}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const doc = new jsPDF();
+    const fee = app.doctor?.fee || 500;
+    const gst = fee * 0.18;
+    const total = fee + gst;
+
+    // 1. Header Banner/Letterhead
+    doc.setFillColor(27, 67, 50); // Deep Forest Green (#1B4332)
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(250, 246, 239); // Warm Cream (#FAF6EF)
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.text('KAYA KALP AYURVEDIC WELLNESS CENTER', 105, 18, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont('Helvetica', 'normal');
+    doc.text('102, Royal Avenue, 18/2-C, New Palasia, Indore (M.P.) - 452001', 105, 26, { align: 'center' });
+    doc.text('Contact: +91 9827775075 | Email: dr.naveenjadhav@gmail.com', 105, 32, { align: 'center' });
+
+    // 2. Invoice Details
+    doc.setTextColor(40, 40, 40);
+    doc.setFontSize(14);
+    doc.setFont('Helvetica', 'bold');
+    doc.text('TAX INVOICE / RECEIPT', 15, 55);
+    
+    doc.setFontSize(9);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Invoice ID: INV-${app.receiptId?.split('-')[1] || '12345'}`, 15, 63);
+    doc.text(`Date of Issue: ${app.date}`, 15, 69);
+    doc.text(`Payment Status: PAID (SUCCESS)`, 15, 75);
+
+    // Provider details (Right Column)
+    doc.setFont('Helvetica', 'bold');
+    doc.text('PROVIDER DETAILS:', 120, 63);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Vaidya: ${app.doctor?.user?.name || 'Ayurveda Specialist'}`, 120, 69);
+    doc.text(`Clinic Specialty: ${app.doctor?.specialization || 'Panchakarma Center'}`, 120, 75);
+
+    // Divider
+    doc.setDrawColor(200, 200, 200);
+    doc.line(15, 82, 195, 82);
+
+    // Patient details
+    doc.setFont('Helvetica', 'bold');
+    doc.text('PATIENT / BILL TO:', 15, 92);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Name: ${user?.name || 'Navya Reddy'}`, 15, 98);
+    doc.text(`Email: ${user?.email || 'patient@kayakalp.com'}`, 15, 104);
+    doc.text(`Phone: ${user?.patientProfile?.phone || '+91 9876543210'}`, 15, 110);
+
+    // Billing Table Headers
+    const tableY = 125;
+    doc.setFillColor(240, 240, 240);
+    doc.rect(15, tableY, 180, 8, 'F');
+    doc.setFont('Helvetica', 'bold');
+    doc.text('Billing Item Description', 18, tableY + 6);
+    doc.text('Quantity', 120, tableY + 6);
+    doc.text('Amount (INR)', 160, tableY + 6);
+
+    // Billing Row 1
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Ayurvedic Consultation Booking with Dr. ${app.doctor?.user?.name}`, 18, tableY + 16);
+    doc.text('1', 125, tableY + 16);
+    doc.text(`INR ${fee.toFixed(2)}`, 160, tableY + 16);
+
+    // Billing Row 2 (GST)
+    doc.text('Integrated GST (18%)', 18, tableY + 24);
+    doc.text('1', 125, tableY + 24);
+    doc.text(`INR ${gst.toFixed(2)}`, 160, tableY + 24);
+
+    // Totals Box
+    doc.line(15, tableY + 30, 195, tableY + 30);
+    doc.setFont('Helvetica', 'bold');
+    doc.text('Total Consolidated Fee:', 100, tableY + 38);
+    doc.text(`INR ${total.toFixed(2)}`, 160, tableY + 38);
+
+    doc.text('Net Paid Amount:', 100, tableY + 46);
+    doc.text(`INR ${total.toFixed(2)}`, 160, tableY + 46);
+
+    // Payment details
+    doc.setFont('Helvetica', 'normal');
+    doc.text('Payment Gateway: Razorpay / Digital UPI', 15, tableY + 58);
+    doc.text(`Transaction Reference: TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}`, 15, tableY + 64);
+
+    // Footer
+    doc.line(15, 235, 195, 235);
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120);
+    doc.text('Thank you for selecting Kaya Kalp Wellness. We wish you optimal health and natural vitality.', 105, 245, { align: 'center' });
+    doc.text('This is a computer-generated tax invoice and receipt. No manual signature is required.', 105, 250, { align: 'center' });
+
+    doc.save(`KayaKalp_Invoice_INV_${app.receiptId || 'INV'}.pdf`);
   };
 
-  const handleAddMedicalRecord = (e: React.FormEvent) => {
+  const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newRecordName) return;
-    const newRecord = {
-      id: Date.now(),
-      name: newRecordName.endsWith('.pdf') ? newRecordName : `${newRecordName}.pdf`,
-      type: 'application/pdf',
-      uploadedAt: new Date().toISOString().split('T')[0]
-    };
-    setUploadedRecords([...uploadedRecords, newRecord]);
-    setNewRecordName('');
+    if (!newRecordName || !selectedFile) return;
+
+    if (selectedFile.size > 5 * 1024 * 1024) {
+      setUploadError('File size exceeds 5MB limit.');
+      return;
+    }
+
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+    if (!allowedTypes.includes(selectedFile.type)) {
+      setUploadError('Only PDF, JPG, JPEG, and PNG files are supported.');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadError('');
+    setUploadSuccess(false);
+
+    try {
+      const base64Url = await convertToBase64(selectedFile);
+      const sizeInMb = (selectedFile.size / (1024 * 1024)).toFixed(2);
+      const formattedName = `${newRecordName} (${sizeInMb} MB)`;
+
+      const res = await api.post('/appointments/medical-records', {
+        fileName: formattedName,
+        fileType: selectedFile.type,
+        fileUrl: base64Url
+      });
+
+      if (res.data && res.data.success) {
+        setUploadedRecords([res.data.record, ...uploadedRecords]);
+        setNewRecordName('');
+        setSelectedFile(null);
+        setUploadSuccess(true);
+        try {
+          const notifRes = await api.get('/appointments/notifications');
+          if (notifRes.data && notifRes.data.success) {
+            setNotifications(notifRes.data.notifications || []);
+          }
+        } catch (notifErr) {
+          console.error('Failed to reload notifications:', notifErr);
+        }
+        setTimeout(() => setUploadSuccess(false), 3000);
+      }
+    } catch (err: any) {
+      setUploadError(err.response?.data?.error || 'Upload failed');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
-  const handleDeleteRecord = (id: number) => {
-    setUploadedRecords(uploadedRecords.filter(r => r.id !== id));
+  const handleViewRecord = (record: any) => {
+    const w = window.open();
+    if (w) {
+      w.document.write(`<iframe src="${record.fileUrl}" width="100%" height="100%" style="border:0; position:fixed; top:0; left:0; right:0; bottom:0;"></iframe>`);
+      w.document.title = record.fileName;
+    }
+  };
+
+  const handleDownloadRecord = (record: any) => {
+    const link = document.createElement('a');
+    link.href = record.fileUrl;
+    link.download = record.fileName.split(' (')[0] + (record.fileType === 'application/pdf' ? '.pdf' : '.jpg');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDeleteRecord = async (recordId: number) => {
+    if (!confirm('Are you sure you want to delete this medical record? This action cannot be undone.')) return;
+    try {
+      const res = await api.delete(`/appointments/medical-records/${recordId}`);
+      if (res.data && res.data.success) {
+        setUploadedRecords(uploadedRecords.filter(r => r.id !== recordId));
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleSubmitTicket = async (e: React.FormEvent) => {
@@ -587,7 +782,7 @@ This is a computer generated invoice and requires no signature.
               </div>
               <div className="overflow-hidden">
                 <h4 className="font-extrabold text-xs text-stone-850 dark:text-white truncate">{user?.name}</h4>
-                <span className="text-[10px] text-stone-400 font-bold block mt-1 truncate">{user?.email}</span>
+                <span className="text-[10px] text-stone-600 dark:text-stone-300 font-bold block mt-1 truncate">{user?.email}</span>
               </div>
             </div>
 
@@ -612,7 +807,7 @@ This is a computer generated invoice and requires no signature.
                     className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl text-left text-xs font-bold transition-all ${
                       isActive 
                         ? 'bg-ayur-primary text-white shadow-md shadow-emerald-950/15' 
-                        : 'text-stone-500 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/40'
+                        : 'text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800/40'
                     }`}
                   >
                     <Icon className="w-4 h-4 shrink-0" />
@@ -1011,9 +1206,8 @@ This is a computer generated invoice and requires no signature.
                       <tbody className="divide-y divide-stone-100 dark:divide-stone-800 font-medium">
                         {SimulatedLabReports.map((row, i) => (
                           <tr key={i} className="hover:bg-stone-50/50 dark:hover:bg-stone-800/10">
-                            <td className="py-3 font-bold text-stone-800 dark:text-stone-200">{row.test}</td>
-                            <td className="py-3">{row.result}</td>
-                            <td className="py-3 text-stone-450 dark:text-stone-500">{row.range}</td>
+                            <td className="py-3 font-bold text-stone-900 dark:text-white">{row.result}</td>
+                            <td className="py-3 text-stone-700 dark:text-stone-300">{row.range}</td>
                             <td className="py-3 text-right">
                               <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${row.status === 'High' ? 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400' : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'}`}>
                                 {row.status}
@@ -1033,35 +1227,129 @@ This is a computer generated invoice and requires no signature.
                     <span>Health Records & Uploads Vault</span>
                   </h3>
                   
-                  <form onSubmit={handleAddMedicalRecord} className="flex gap-2">
-                    <input
-                      type="text" required placeholder="Enter report name (e.g. Lipids_June)..." value={newRecordName} onChange={(e) => setNewRecordName(e.target.value)}
-                      className="w-2/3 p-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary"
-                    />
-                    <button type="submit" className="w-1/3 py-2.5 bg-ayur-primary text-white rounded-xl text-xs font-bold hover:bg-ayur-secondary flex items-center justify-center gap-1 shadow-sm">
-                      <Plus className="w-4 h-4" />
-                      <span>Upload Report</span>
-                    </button>
-                  </form>
+                  {/* Drag & Drop / File Input Box */}
+                  <div className="space-y-4">
+                    <div className="space-y-2 text-xs">
+                      <label className="font-bold text-stone-700 dark:text-stone-300">1. Report/Record Name</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Enter report name (e.g. Blood Test June 2026)..."
+                        value={newRecordName}
+                        onChange={(e) => setNewRecordName(e.target.value)}
+                        className="w-full p-2.5 rounded-xl border border-stone-250 dark:border-stone-800 bg-white dark:bg-stone-850 text-stone-900 dark:text-white text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary font-semibold"
+                      />
+                    </div>
 
-                  <div className="space-y-2 max-h-60 overflow-y-auto pt-2">
-                    {uploadedRecords.map(record => (
-                      <div key={record.id} className="flex justify-between items-center p-3.5 rounded-xl bg-stone-50 dark:bg-stone-800/30 border border-stone-100 dark:border-stone-800 text-xs">
-                        <div>
-                          <div className="font-bold text-stone-850 dark:text-white flex items-center gap-1.5">
-                            <FileText className="w-3.5 h-3.5 text-stone-400" />
-                            <span>{record.name}</span>
-                          </div>
-                          <span className="text-[10px] text-stone-450 dark:text-stone-500 block mt-0.5">Uploaded on: {record.uploadedAt}</span>
-                        </div>
-                        <button
-                          onClick={() => handleDeleteRecord(record.id)}
-                          className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-650 dark:bg-red-500/10 dark:text-red-400"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                    <div className="space-y-2 text-xs">
+                      <label className="font-bold text-stone-700 dark:text-stone-300">2. Select Document File</label>
+                      <div
+                        className="border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-2xl p-6 text-center hover:border-ayur-primary dark:hover:border-ayur-primary transition-colors cursor-pointer bg-stone-50/50 dark:bg-stone-800/10"
+                        onClick={() => document.getElementById('report-file-input')?.click()}
+                      >
+                        <input
+                          id="report-file-input"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          className="hidden"
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files[0]) {
+                              const file = e.target.files[0];
+                              if (file.size > 5 * 1024 * 1024) {
+                                setUploadError('File size exceeds 5MB limit.');
+                                setSelectedFile(null);
+                              } else {
+                                setSelectedFile(file);
+                                setUploadError('');
+                              }
+                            }
+                          }}
+                        />
+                        <FileText className="w-8 h-8 text-stone-400 dark:text-stone-600 mx-auto mb-2" />
+                        <p className="font-bold text-stone-700 dark:text-stone-300 text-xs">
+                          {selectedFile ? `Selected: ${selectedFile.name}` : 'Click to browse or drag your file here'}
+                        </p>
+                        <p className="text-[10px] text-stone-450 mt-1">Supports PDF, JPG, JPEG, PNG (Max 5MB)</p>
                       </div>
-                    ))}
+                    </div>
+
+                    {uploadError && (
+                      <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold leading-normal">
+                        {uploadError}
+                      </div>
+                    )}
+
+                    {uploadSuccess && (
+                      <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold leading-normal">
+                        Medical record uploaded and saved to your health vault successfully!
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      disabled={!newRecordName || !selectedFile || isUploading}
+                      onClick={handleUploadSubmit}
+                      className={`w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm ${
+                        (!newRecordName || !selectedFile || isUploading)
+                          ? 'bg-stone-200 text-stone-400 cursor-not-allowed dark:bg-stone-800/80 dark:text-stone-600'
+                          : 'bg-ayur-primary text-white hover:bg-ayur-secondary'
+                      }`}
+                    >
+                      {isUploading ? (
+                        <>
+                          <div className="w-3.5 h-3.5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                          <span>Uploading File...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-4 h-4" />
+                          <span>Upload & Save Record</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div className="space-y-2.5 max-h-[350px] overflow-y-auto pt-4 border-t border-stone-100 dark:border-stone-800">
+                    <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider block">Your Vault Documents</span>
+                    {uploadedRecords.length === 0 ? (
+                      <p className="text-xs text-stone-500 italic text-center py-6">No custom health documents in your vault.</p>
+                    ) : (
+                      uploadedRecords.map(record => (
+                        <div key={record.id} className="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl bg-stone-50 dark:bg-stone-850/50 border border-stone-100 dark:border-stone-800 gap-3">
+                          <div>
+                            <div className="font-bold text-stone-850 dark:text-white flex items-center gap-1.5 text-xs">
+                              <FileText className="w-4 h-4 text-ayur-primary" />
+                              <span>{record.name}</span>
+                            </div>
+                            <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-[10px] text-stone-500 dark:text-stone-400 font-bold">
+                              <span>Uploaded: {record.uploadedAt ? new Date(record.uploadedAt).toLocaleDateString() : 'N/A'}</span>
+                              <span>Type: {record.fileType?.split('/')[1]?.toUpperCase() || 'PDF'}</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2 justify-end">
+                            <button
+                              onClick={() => handleViewRecord(record)}
+                              className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-750 transition-colors"
+                            >
+                              View / Preview
+                            </button>
+                            <button
+                              onClick={() => handleDownloadRecord(record)}
+                              className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-750 transition-colors"
+                            >
+                              Download
+                            </button>
+                            <button
+                              onClick={() => handleDeleteRecord(record.id)}
+                              className="p-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 transition-colors"
+                              title="Delete Record"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
 

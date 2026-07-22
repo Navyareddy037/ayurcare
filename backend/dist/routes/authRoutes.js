@@ -9,7 +9,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = __importDefault(require("../lib/db"));
 const authMiddleware_1 = require("../middleware/authMiddleware");
 const router = (0, express_1.Router)();
-const JWT_SECRET = process.env.JWT_SECRET || 'ayurcare-secret-key-for-internship-evaluation-98765';
+const JWT_SECRET = process.env.JWT_SECRET || 'kayakalp-secret-key-for-internship-evaluation-98765';
 // GET /api/auth/me: Get current user details from JWT token
 router.get('/me', authMiddleware_1.authMiddleware, async (req, res) => {
     try {
@@ -106,7 +106,7 @@ router.post('/signup', async (req, res) => {
                     specialization: doctorDetails?.specialization || 'Panchakarma Specialist',
                     languages: doctorDetails?.languages || 'English, Hindi',
                     fee: doctorDetails?.fee ? parseFloat(doctorDetails.fee) : 500,
-                    clinicName: doctorDetails?.clinicName || 'AyurCare Wellness Clinic',
+                    clinicName: doctorDetails?.clinicName || 'Kaya Kalp Wellness Center',
                     bio: doctorDetails?.bio || 'Experienced Ayurvedic Vaidya.',
                     status: 'APPROVED', // Auto approved for development demo
                     certificates: doctorDetails?.certificates || null,

@@ -96,6 +96,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     localStorage.removeItem('kayakalp_token');
+    if (api.defaults.headers.common) {
+      delete api.defaults.headers.common['Authorization'];
+    }
     setUser(null);
   };
 

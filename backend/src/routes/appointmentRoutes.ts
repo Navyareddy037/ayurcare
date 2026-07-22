@@ -135,6 +135,15 @@ router.post('/', authMiddleware, async (req: AuthenticatedRequest, res: Response
     const doctorName = appointment.doctor?.user?.name || 'Ayurvedic Specialist';
     await sendBookingEmail(patientEmail, patientName, doctorName, date, timeSlot, receiptId);
 
+    // Create in-app notification for patient
+    await prisma.notification.create({
+      data: {
+        userId: patientId,
+        type: 'BOOKING_REQUEST',
+        message: `Your appointment with Dr. ${doctorName} has been confirmed for ${date} at ${timeSlot}.`
+      }
+    });
+
     return res.status(201).json({ success: true, appointment });
   } catch (error: any) {
     console.error('Book appointment error:', error);
@@ -231,8 +240,32 @@ router.put('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
 
     if (emailTrigger === 'CANCEL') {
       await sendCancellationEmail(patientEmail, patientName, doctorName, appointment.date);
+      await prisma.notification.create({
+        data: {
+          userId: appointment.patientId,
+          type: 'CANCELLED',
+          message: `Your appointment with Dr. ${doctorName} on ${appointment.date} has been cancelled.`
+        }
+      });
     } else if (emailTrigger === 'RESCHEDULE' && date && timeSlot) {
       await sendRescheduleEmail(patientEmail, patientName, doctorName, date, timeSlot);
+      await prisma.notification.create({
+        data: {
+          userId: appointment.patientId,
+          type: 'RESCHEDULED',
+          message: `Your appointment with Dr. ${doctorName} has been rescheduled to ${date} at ${timeSlot}.`
+        }
+      });
+    }
+
+    if ((prescription !== undefined || medicinesJSON !== undefined) && role === 'DOCTOR') {
+      await prisma.notification.create({
+        data: {
+          userId: appointment.patientId,
+          type: 'PRESCRIPTION_AVAILABLE',
+          message: `A new prescription is available from Dr. ${doctorName} for your consultation on ${appointment.date}.`
+        }
+      });
     }
 
     return res.json({ success: true, appointment: updated });
@@ -397,6 +430,72 @@ router.put('/tickets/admin/:id', authMiddleware, async (req: AuthenticatedReques
       data: { response, status }
     });
     return res.json({ success: true, ticket: updated });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/appointments/medical-records: List all medical records for current patient
+router.get('/medical-records', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: patientId } = req.user!;
+    const records = await prisma.medicalRecord.findMany({
+      where: { patientId },
+      orderBy: { uploadedAt: 'desc' }
+    });
+    return res.json({ success: true, records });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /api/appointments/medical-records: Upload a new medical record
+router.post('/medical-records', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: patientId } = req.user!;
+    const { fileName, fileType, fileUrl } = req.body;
+    if (!fileName || !fileType || !fileUrl) {
+      return res.status(400).json({ error: 'Missing file details (fileName, fileType, fileUrl)' });
+    }
+    const record = await prisma.medicalRecord.create({
+      data: {
+        patientId,
+        fileName,
+        fileType,
+        fileUrl
+      }
+    });
+
+    // Create in-app notification for the patient
+    await prisma.notification.create({
+      data: {
+        userId: patientId,
+        type: 'LAB_REPORT',
+        message: `New medical record "${fileName}" has been successfully uploaded to your vault.`
+      }
+    });
+
+    return res.status(201).json({ success: true, record });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE /api/appointments/medical-records/:id: Delete medical record by ID
+router.delete('/medical-records/:id', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id: patientId } = req.user!;
+    const recordId = parseInt(req.params.id);
+    const record = await prisma.medicalRecord.findUnique({
+      where: { id: recordId }
+    });
+    if (!record || record.patientId !== patientId) {
+      return res.status(403).json({ error: 'Unauthorized to delete this record' });
+    }
+    await prisma.medicalRecord.delete({
+      where: { id: recordId }
+    });
+    return res.json({ success: true, message: 'Record deleted successfully' });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
