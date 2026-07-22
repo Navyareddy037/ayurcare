@@ -84,7 +84,13 @@ export default function Header() {
                   </div>
 
                   <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-[#1B4332] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5">Clinical Therapies</span>
+                    <Link 
+                      to="/treatments/clinical-therapies" 
+                      onClick={() => setMegaMenuOpen(false)}
+                      className="text-[10px] font-bold text-[#1B4332] hover:text-[#2D6A4F] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5 transition-colors"
+                    >
+                      Clinical Therapies
+                    </Link>
                     <ul className="space-y-2 text-xs text-[#526055] font-medium">
                       <li><Link to="/treatments/joint-pain" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Abhyanga Warm Massage</Link></li>
                       <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Shirodhara Oil Stream</Link></li>
@@ -94,12 +100,18 @@ export default function Header() {
                   </div>
 
                   <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-[#1B4332] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5">Special Care</span>
+                    <Link 
+                      to="/treatments/special-care" 
+                      onClick={() => setMegaMenuOpen(false)}
+                      className="text-[10px] font-bold text-[#1B4332] hover:text-[#2D6A4F] uppercase tracking-wider block border-b border-[#E9E5D9] pb-1.5 transition-colors"
+                    >
+                      Special Care
+                    </Link>
                     <ul className="space-y-2 text-xs text-[#526055] font-medium">
                       <li><Link to="/treatments/arthritis" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Joint & Spine Care</Link></li>
                       <li><Link to="/treatments/migraine" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Stress & Sleep Care</Link></li>
                       <li><Link to="/treatments/weight-loss" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Obesity Management</Link></li>
-                      <li><Link to="/products" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Skincare & Haircare</Link></li>
+                      <li><Link to="/doctors" onClick={() => setMegaMenuOpen(false)} className="hover:text-[#1B4332] hover:translate-x-1 block transition-all">Skincare & Haircare</Link></li>
                     </ul>
                   </div>
                 </div>

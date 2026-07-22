@@ -312,22 +312,22 @@ const TREATMENTS_REGISTRY: Record<string, TreatmentData> = {
 };
 
 const TREATMENT_IMAGES: Record<string, string> = {
-  'arthritis': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400&h=300',
-  'diabetes': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400&h=300',
-  'thyroid': 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=400&h=300',
-  'hair-fall': 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&q=80&w=400&h=300',
-  'skin-disorders': 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400&h=300',
-  'psoriasis': 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400&h=300',
-  'weight-loss': 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400&h=300',
-  'digestive-disorders': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400&h=300',
-  'womens-health': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=300',
-  'mens-health': 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400&h=300',
-  'migraine': 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=400&h=300',
-  'joint-pain': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400&h=300',
-  'liver-disorders': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400&h=300',
-  'kidney-disorders': 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=400&h=300',
-  'pcos': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=300',
-  'infertility': 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=400&h=300'
+  'arthritis': '/images/panchakarma_therapy.png',
+  'diabetes': '/images/hero_ayurvedic_plants.png',
+  'thyroid': '/images/hero_doctor_consult.png',
+  'hair-fall': '/images/hair_oil_product.png',
+  'skin-disorders': '/images/fairness_face_pack.png',
+  'psoriasis': '/images/neem_face_pack.png',
+  'weight-loss': '/images/weight_mgmt_pills_product.png',
+  'digestive-disorders': '/images/hero_herbal_prep.png',
+  'womens-health': '/images/gallery_yoga_meditation.png',
+  'mens-health': '/images/gallery_happy_patient.png',
+  'migraine': '/images/gallery_shirodhara_therapy.png',
+  'joint-pain': '/images/gallery_clinic_interior.png',
+  'liver-disorders': '/images/hero_ayurvedic_plants.png',
+  'kidney-disorders': '/images/hero_herbal_prep.png',
+  'pcos': '/images/gallery_yoga_meditation.png',
+  'infertility': '/images/gallery_happy_patient.png'
 };
 
 const TREATMENT_INFOS: Record<string, { duration: string; suitableFor: string }> = {
@@ -355,8 +355,19 @@ export default function TreatmentsDetail() {
   
   const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'lifestyle' | 'faqs'>('overview');
 
-  // If no specific treatment key is requested, show catalog listing
-  if (!id) {
+  const CLINICAL_KEYS = ['joint-pain', 'migraine', 'weight-loss', 'arthritis', 'thyroid', 'diabetes', 'infertility', 'womens-health'];
+  const SPECIAL_KEYS = ['arthritis', 'migraine', 'weight-loss', 'skin-disorders', 'psoriasis', 'pcos', 'hair-fall', 'liver-disorders', 'kidney-disorders'];
+
+  const isCatalog = !id || id === 'clinical-therapies' || id === 'special-care' || !TREATMENTS_REGISTRY[id];
+
+  if (isCatalog) {
+    const filter = id === 'clinical-therapies' ? 'clinical' : id === 'special-care' ? 'special' : 'all';
+    const filteredRegistry = Object.entries(TREATMENTS_REGISTRY).filter(([key]) => {
+      if (filter === 'clinical') return CLINICAL_KEYS.includes(key);
+      if (filter === 'special') return SPECIAL_KEYS.includes(key);
+      return true;
+    });
+
     return (
       <div className="min-h-screen bg-[#FBFBF9] pb-24 font-sans selection:bg-emerald-100 selection:text-emerald-950">
         
@@ -372,12 +383,48 @@ export default function TreatmentsDetail() {
           </p>
         </div>
 
+        {/* Catalog Categories Tab Bar */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+          <div className="flex justify-center gap-3 text-xs font-bold border-b border-stone-200/50 pb-4">
+            <Link 
+              to="/treatments" 
+              className={`px-4 py-2 rounded-xl transition-all border ${
+                (!id || (id !== 'clinical-therapies' && id !== 'special-care'))
+                  ? 'bg-ayur-primary border-transparent text-white shadow'
+                  : 'bg-white border-stone-200 text-stone-605 hover:bg-stone-50'
+              }`}
+            >
+              All Treatments
+            </Link>
+            <Link 
+              to="/treatments/clinical-therapies" 
+              className={`px-4 py-2 rounded-xl transition-all border ${
+                id === 'clinical-therapies'
+                  ? 'bg-ayur-primary border-transparent text-white shadow'
+                  : 'bg-white border-stone-200 text-stone-605 hover:bg-stone-50'
+              }`}
+            >
+              Clinical Therapies
+            </Link>
+            <Link 
+              to="/treatments/special-care" 
+              className={`px-4 py-2 rounded-xl transition-all border ${
+                id === 'special-care'
+                  ? 'bg-ayur-primary border-transparent text-white shadow'
+                  : 'bg-white border-stone-200 text-stone-605 hover:bg-stone-50'
+              }`}
+            >
+              Special Care
+            </Link>
+          </div>
+        </div>
+
         {/* Catalog Grid */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {Object.entries(TREATMENTS_REGISTRY).map(([key, item]) => {
-              const image = TREATMENT_IMAGES[key] || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400&h=300';
+            {filteredRegistry.map(([key, item]) => {
+              const image = TREATMENT_IMAGES[key] || '/images/panchakarma_therapy.png';
               const info = TREATMENT_INFOS[key] || { duration: '7 - 14 Days', suitableFor: 'Chronic patient support' };
 
               return (
@@ -506,8 +553,22 @@ export default function TreatmentsDetail() {
           </div>
 
           {/* RIGHT: Detailed tabs panel */}
-          <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white border border-stone-200/80 shadow-sm space-y-8">
+          <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white border border-stone-200/80 shadow-sm space-y-8 animate-fadeIn">
             
+            {/* Treatment Main Image Banner */}
+            <div className="rounded-[24px] overflow-hidden h-64 sm:h-80 shadow-md relative bg-stone-50">
+              <img 
+                src={TREATMENT_IMAGES[activeKey] || '/images/panchakarma_therapy.png'} 
+                alt={treatment.title} 
+                className="w-full h-full object-cover" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent flex items-end p-6">
+                <span className="bg-ayur-primary/95 text-white text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-widest backdrop-blur-xs">
+                  {treatment.category} &bull; Classical Program
+                </span>
+              </div>
+            </div>
+
             {/* Tabs Headers */}
             <div className="flex border-b border-stone-200 text-xs font-black">
               {[

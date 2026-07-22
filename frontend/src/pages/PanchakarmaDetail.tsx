@@ -52,7 +52,7 @@ const THERAPIES: TherapyDetail[] = [
     name: 'Nasya',
     sanskrit: 'Nasal Oil Administration (मनो-मस्तिष्क शोधन)',
     target: 'Toxins in the head, neck, sinuses, and sensory organs.',
-    procedure: 'A gentle face and neck massage is performed, followed by localized herbal steam over the forehead and cheeks. Medford herbal oil drops (like Anu Taila) are administered into each nostril while the patient inhales deeply.',
+    procedure: 'A gentle face and neck massage is performed, followed by localized herbal steam over the forehead and cheeks. Medicated herbal oil drops (like Anu Taila) are administered into each nostril while the patient inhales deeply.',
     beforeCare: 'Clean teeth and mouth. Do not take Nasya immediately after food, bathing, or exposure to heavy sun.',
     afterCare: 'Gargle with warm water. Avoid cold water drafts, smoke, dust, and direct cooling fans.',
     diseases: ['Sinusitis, migraine, and tension headaches', 'Premature hair graying and hair loss', 'Cervical spondylosis and frozen shoulder', 'Insomnia and high anxiety'],
