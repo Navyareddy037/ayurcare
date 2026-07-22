@@ -889,7 +889,7 @@ export default function PatientDashboard() {
                   
                   {/* Gauge 1: Ayurvedic health score */}
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm flex flex-col justify-between items-center text-center">
-                    <h3 className="font-bold text-xs text-stone-400 uppercase tracking-wider block w-full text-left">
+                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block w-full text-left">
                       {text.healthScore}
                     </h3>
                     <div className="relative w-28 h-28 my-4 flex items-center justify-center rounded-full border-4 border-emerald-50 dark:border-emerald-950/20">
@@ -906,7 +906,7 @@ export default function PatientDashboard() {
 
                   {/* Gauge 2: BMI Calculator */}
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm flex flex-col justify-between space-y-4">
-                    <h3 className="font-bold text-xs text-stone-400 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
                       BMI Classification
                     </h3>
                     <div className="space-y-2 text-center pt-2">
@@ -928,7 +928,7 @@ export default function PatientDashboard() {
 
                   {/* Vitals Summary logs */}
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4">
-                    <h3 className="font-bold text-xs text-stone-400 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
                       Logged Vitals Summary
                     </h3>
                     <div className="grid grid-cols-2 gap-2 text-xs">
@@ -939,7 +939,7 @@ export default function PatientDashboard() {
                         { label: 'Sleep hours', value: `${vitals?.sleepHours || 7.5} hrs` }
                       ].map((v, i) => (
                         <div key={i} className="p-2.5 bg-[#F6F7F5] dark:bg-[#1C241F] rounded-xl border border-stone-150 dark:border-stone-800">
-                          <span className="text-[9px] text-stone-450 dark:text-stone-500 block font-bold">{v.label}</span>
+                          <span className="text-[9px] text-stone-450 dark:text-stone-300 block font-bold">{v.label}</span>
                           <span className="font-bold text-stone-800 dark:text-white text-xs">{v.value}</span>
                         </div>
                       ))}
@@ -951,7 +951,7 @@ export default function PatientDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   {/* Dosha pie chart representation */}
                   <div className="md:col-span-4 p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4 flex flex-col justify-between">
-                    <h3 className="font-bold text-xs text-stone-400 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
                       Dosha Assessment Profile
                     </h3>
                     <div className="flex flex-col gap-3 py-2">
@@ -970,14 +970,14 @@ export default function PatientDashboard() {
                         </div>
                       ))}
                     </div>
-                    <div className="p-2.5 bg-emerald-500/5 rounded-xl border border-emerald-500/10 text-[10px] text-stone-500 text-center font-medium">
-                      Primary Imbalance: <strong className="text-ayur-primary">{doshaInfo.primary}</strong>
+                    <div className="p-2.5 bg-emerald-500/5 rounded-xl border border-emerald-500/10 text-[10px] text-stone-500 dark:text-stone-400 text-center font-medium">
+                      Primary Imbalance: <strong className="text-ayur-primary dark:text-emerald-450">{doshaInfo.primary}</strong>
                     </div>
                   </div>
 
                   {/* Vitals charts */}
                   <div className="md:col-span-8 p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4">
-                    <h3 className="font-bold text-xs text-stone-400 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
                       {text.vitalsTrend}
                     </h3>
                     {history.length > 0 ? (
@@ -1001,7 +1001,7 @@ export default function PatientDashboard() {
 
                 {/* Vitals Logger Form */}
                 <div className="p-6 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4">
-                  <h3 className="font-bold text-xs text-stone-400 uppercase tracking-wider block">
+                  <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
                     {text.vitalsLogger}
                   </h3>
                   {vitalsSuccess && (
@@ -1123,7 +1123,7 @@ export default function PatientDashboard() {
                   </h3>
 
                   {upcomingAppointments.length === 0 ? (
-                    <div className="p-8 text-center bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 rounded-[24px] text-xs text-stone-400">
+                    <div className="p-8 text-center bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 rounded-[24px] text-xs text-stone-400 dark:text-stone-300">
                       No upcoming consults scheduled.
                     </div>
                   ) : (
@@ -1131,10 +1131,10 @@ export default function PatientDashboard() {
                       {upcomingAppointments.map(app => (
                         <div key={app.id} className="p-5 rounded-2xl border border-stone-200/50 dark:border-stone-800/80 bg-white dark:bg-[#151B17] flex justify-between items-center text-xs">
                           <div>
-                            <div className="font-bold text-stone-905 dark:text-white text-sm">{app.doctor?.user?.name}</div>
-                            <div className="text-[10px] text-ayur-primary font-bold mt-0.5">{app.doctor?.specialization}</div>
-                            <div className="text-stone-500 dark:text-stone-400 mt-2 font-medium flex items-center gap-1">
-                              <Clock className="w-3.5 h-3.5" />
+                            <div className="font-bold text-stone-900 dark:text-white text-sm">{app.doctor?.user?.name}</div>
+                            <div className="text-[10px] text-ayur-primary dark:text-emerald-450 font-bold mt-0.5">{app.doctor?.specialization}</div>
+                            <div className="text-stone-500 dark:text-stone-300 mt-2 font-medium flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-300" />
                               <span>{app.date} &bull; {app.timeSlot} ({app.visitType || 'Clinic'})</span>
                             </div>
                           </div>
@@ -1167,7 +1167,7 @@ export default function PatientDashboard() {
                     <span>{text.previous}</span>
                   </h3>
                   {pastAppointments.length === 0 ? (
-                    <p className="text-xs text-stone-500 italic">No past appointments logged.</p>
+                    <p className="text-xs text-stone-550 dark:text-stone-400 italic">No past appointments logged.</p>
                   ) : (
                     <div className="space-y-4">
                       {pastAppointments.map(app => (
@@ -1175,19 +1175,19 @@ export default function PatientDashboard() {
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="font-bold text-stone-900 dark:text-white text-sm">{app.doctor?.user?.name}</div>
-                              <div className="text-[10px] text-stone-400 mt-0.5">{app.date} &bull; {app.timeSlot}</div>
+                              <div className="text-[10px] text-stone-500 dark:text-stone-300 mt-0.5">{app.date} &bull; {app.timeSlot}</div>
                             </div>
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleDownloadPrescription(app)}
-                                className="px-2.5 py-1.5 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1"
+                                className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1 text-stone-700 dark:text-stone-250"
                               >
                                 <Download className="w-3.5 h-3.5" />
                                 <span>Receipt</span>
                               </button>
                               <button
                                 onClick={() => handleDownloadInvoice(app)}
-                                className="px-2.5 py-1.5 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1"
+                                className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1 text-stone-700 dark:text-stone-250"
                               >
                                 <DollarSign className="w-3.5 h-3.5" />
                                 <span>Invoice</span>
@@ -1196,8 +1196,8 @@ export default function PatientDashboard() {
                           </div>
                           
                           {app.notes && (
-                            <div className="p-3 bg-stone-50 dark:bg-stone-800/30 border border-stone-105 dark:border-stone-800/80 rounded-xl text-stone-650 dark:text-stone-300">
-                              <div className="font-bold text-[9px] uppercase tracking-widest text-stone-400 mb-1">Doctor Assessment Notes</div>
+                            <div className="p-3 bg-stone-50 dark:bg-stone-800/30 border border-stone-105 dark:border-stone-800/80 rounded-xl text-stone-700 dark:text-stone-250">
+                              <div className="font-bold text-[9px] uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-1">Doctor Assessment Notes</div>
                               <p className="italic text-xs">"{app.notes}"</p>
                             </div>
                           )}
@@ -1721,19 +1721,19 @@ export default function PatientDashboard() {
                   )}
                   <form onSubmit={handleSubmitTicket} className="space-y-4 text-xs">
                     <div className="space-y-1.5">
-                      <label className="text-stone-500 font-bold block">Subject</label>
+                      <label className="text-stone-700 dark:text-stone-300 font-bold block">Subject</label>
                       <input
                         type="text" placeholder="e.g. Issues downloading prescription receipt, rescheduling..." required
                         value={ticketSubject} onChange={(e) => setTicketSubject(e.target.value)}
-                        className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-[#FBFBF9] dark:bg-stone-800 rounded-lg text-xs"
+                        className="w-full p-2.5 border border-stone-300 dark:border-stone-700 bg-[#FBFBF9] dark:bg-stone-800 text-stone-900 dark:text-white rounded-lg text-xs"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-stone-500 font-bold block">Description of Issue</label>
+                      <label className="text-stone-700 dark:text-stone-300 font-bold block">Description of Issue</label>
                       <textarea
                         placeholder="Please provide details about your issue..." required rows={3}
                         value={ticketDesc} onChange={(e) => setTicketDesc(e.target.value)}
-                        className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-[#FBFBF9] dark:bg-stone-800 rounded-lg text-xs"
+                        className="w-full p-2.5 border border-stone-300 dark:border-stone-700 bg-[#FBFBF9] dark:bg-stone-800 text-stone-900 dark:text-white rounded-lg text-xs"
                       />
                     </div>
                     <button type="submit" className="px-4.5 py-2.5 bg-ayur-primary text-white rounded-xl font-bold hover:bg-ayur-secondary shadow-sm transition-all">
