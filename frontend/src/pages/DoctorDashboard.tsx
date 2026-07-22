@@ -45,7 +45,7 @@ export default function DoctorDashboard() {
   const navigate = useNavigate();
 
   // Active view tab state
-  const [activeTab, setActiveTab] = useState<'queue' | 'calendar' | 'patients' | 'video' | 'chat' | 'analytics' | 'availability' | 'tasks'>('queue');
+  const [activeTab, setActiveTab] = useState<'queue' | 'calendar' | 'patients' | 'video' | 'chat' | 'availability' | 'tasks'>('queue');
   
   const [appointments, setAppointments] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
@@ -464,53 +464,7 @@ export default function DoctorDashboard() {
 
   const selectedDayAppointments = selectedCalendarDay ? getCalendarDayAppointments(selectedCalendarDay) : [];
 
-  // Recharts Analytics calculations
-  const getRevenueAnalytics = () => {
-    // Group monthly earnings
-    const monthlyMap = new Map();
-    appointments.forEach(app => {
-      if (app.status === 'COMPLETED') {
-        const monthName = new Date(app.date).toLocaleString('default', { month: 'short' });
-        const amount = app.doctor?.fee || 500;
-        monthlyMap.set(monthName, (monthlyMap.get(monthName) || 0) + amount);
-      }
-    });
 
-    const data = Array.from(monthlyMap.entries()).map(([month, val]) => ({
-      month,
-      revenue: val
-    }));
-
-    if (data.length === 0) {
-      data.push({ month: 'May', revenue: 4500 });
-      data.push({ month: 'Jun', revenue: 9500 });
-      data.push({ month: 'Jul', revenue: 16000 });
-    }
-
-    return data;
-  };
-
-  const getVisitTypesAnalytics = () => {
-    let clinicCount = 0;
-    let onlineCount = 0;
-    let followupCount = 0;
-
-    appointments.forEach(app => {
-      if (app.visitType === 'online') onlineCount++;
-      else if (app.visitType === 'follow-up') followupCount++;
-      else clinicCount++;
-    });
-
-    return [
-      { name: 'Clinic Visit', value: clinicCount || 5, color: '#2E5A44' },
-      { name: 'Online Consult', value: onlineCount || 8, color: '#C59B67' },
-      { name: 'Follow-up', value: followupCount || 3, color: '#487A60' }
-    ];
-  };
-
-  const revenueData = getRevenueAnalytics();
-  const visitTypesData = getVisitTypesAnalytics();
-  const totalRevenue = revenueData.reduce((acc, curr) => acc + curr.revenue, 0);
 
   const text = TRANSLATIONS[lang];
 
@@ -582,7 +536,6 @@ export default function DoctorDashboard() {
                 { id: 'patients', label: 'Patient Registry', icon: Users },
                 { id: 'video', label: 'Video Consult room', icon: Video },
                 { id: 'chat', label: 'Vaidya Chat', icon: MessageSquare },
-                { id: 'analytics', label: 'Revenue Analytics', icon: TrendingUp },
                 { id: 'availability', label: 'Availability & Clinics', icon: Clock },
                 { id: 'tasks', label: text.tasksLabel, icon: CheckSquare }
               ].map((item) => {
@@ -1220,77 +1173,7 @@ export default function DoctorDashboard() {
               </div>
             )}
 
-            {/* TAB 6: Analytics */}
-            {activeTab === 'analytics' && (
-              <div className="space-y-6 animate-fadeIn">
-                
-                {/* Statistics counts cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  <div className="p-5 bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 rounded-3xl shadow-sm text-xs space-y-1">
-                    <span className="font-bold text-stone-400 uppercase text-[9px] tracking-wider block">Monthly Total Earnings</span>
-                    <h3 className="text-2xl font-black text-ayur-primary">₹{totalRevenue}</h3>
-                    <span className="text-[10px] text-stone-500 block">Based on completed consults</span>
-                  </div>
-                  <div className="p-5 bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 rounded-3xl shadow-sm text-xs space-y-1">
-                    <span className="font-bold text-stone-400 uppercase text-[9px] tracking-wider block">Consultation queue bookings</span>
-                    <h3 className="text-2xl font-black text-stone-850 dark:text-white">{appointments.length}</h3>
-                    <span className="text-[10px] text-stone-500 block">Total registered patients</span>
-                  </div>
-                  <div className="p-5 bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 rounded-3xl shadow-sm text-xs space-y-1">
-                    <span className="font-bold text-stone-400 uppercase text-[9px] tracking-wider block">Approval Rating</span>
-                    <h3 className="text-2xl font-black text-amber-500">4.9 / 5.0</h3>
-                    <span className="text-[10px] text-stone-500 block">Based on patient reviews</span>
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  
-                  {/* Earnings line chart */}
-                  <div className="p-5 bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 rounded-3xl shadow-sm space-y-4">
-                    <h4 className="font-extrabold text-xs text-stone-900 dark:text-white flex items-center gap-1">
-                      <TrendingUp className="w-4 h-4 text-ayur-primary" />
-                      Practice revenue monthly trend
-                    </h4>
-                    <div className="h-44 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={revenueData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                          <XAxis dataKey="month" stroke="#888" fontSize={9} />
-                          <YAxis stroke="#888" fontSize={9} />
-                          <Tooltip contentStyle={{ fontSize: '10px' }} />
-                          <Line type="monotone" dataKey="revenue" stroke="#2E5A44" strokeWidth={2.5} name="Revenue (₹)" />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-
-                  {/* Visit Mode distribution bar chart */}
-                  <div className="p-5 bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 rounded-3xl shadow-sm space-y-4">
-                    <h4 className="font-extrabold text-xs text-stone-900 dark:text-white flex items-center gap-1">
-                      <Users className="w-4 h-4 text-ayur-primary" />
-                      Consultation Visit Modes Distribution
-                    </h4>
-                    <div className="h-44 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={visitTypesData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                          <XAxis dataKey="name" stroke="#888" fontSize={9} />
-                          <YAxis stroke="#888" fontSize={9} />
-                          <Tooltip contentStyle={{ fontSize: '10px' }} />
-                          <Bar dataKey="value" name="Appointments count">
-                            {visitTypesData.map((entry, idx) => (
-                              <Cell key={`cell-${idx}`} fill={entry.color} />
-                            ))}
-                          </Bar>
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            )}
 
             {/* TAB 7: Availability & practice settings */}
             {activeTab === 'availability' && (
