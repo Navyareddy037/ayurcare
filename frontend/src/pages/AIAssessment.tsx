@@ -369,31 +369,33 @@ export default function AIAssessment() {
       </div>
 
       {/* Tabs Menu */}
-      <div className="flex flex-wrap justify-center gap-2 border-b border-stone-200 pb-4 text-xs font-bold">
-        {[
-          { id: 'symptomChecker', label: 'AI Symptom Checker', icon: Activity },
-          { id: 'doshaQuiz', label: 'AI Dosha Assessment', icon: Compass },
-          { id: 'dietPlanner', label: 'AI Diet & Yoga Planner', icon: FileText },
-          { id: 'wellnessCoach', label: 'AI Wellness Coach (Chat)', icon: MessageSquare },
-          { id: 'progressAnalyzer', label: 'AI Progress Analysis', icon: Heart }
-        ].map(tab => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl transition-all ${
-                isActive 
-                  ? 'bg-ayur-primary text-white shadow shadow-emerald-950/15' 
-                  : 'bg-white border border-stone-200 text-stone-605 hover:bg-stone-50'
-              }`}
-            >
-              <Icon className="w-4 h-4 shrink-0" />
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
+      <div className="w-full overflow-x-auto scrollbar-none">
+        <div className="flex sm:flex-wrap justify-start sm:justify-center gap-1.5 sm:gap-2 border-b border-stone-200 dark:border-stone-800 pb-4 text-[11px] sm:text-xs font-bold min-w-max sm:min-w-0">
+          {[
+            { id: 'symptomChecker', label: 'AI Symptom Checker', icon: Activity },
+            { id: 'doshaQuiz', label: 'AI Dosha Assessment', icon: Compass },
+            { id: 'dietPlanner', label: 'AI Diet & Yoga Planner', icon: FileText },
+            { id: 'wellnessCoach', label: 'AI Wellness Coach (Chat)', icon: MessageSquare },
+            { id: 'progressAnalyzer', label: 'AI Progress Analysis', icon: Heart }
+          ].map(tab => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex items-center gap-1.5 px-3 sm:px-4.5 py-2 sm:py-2.5 rounded-xl transition-all ${
+                  isActive 
+                    ? 'bg-ayur-primary text-white shadow shadow-emerald-950/15' 
+                    : 'bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-605 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800'
+                }`}
+              >
+                <Icon className="w-4 h-4 shrink-0" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Grid Workspaces */}

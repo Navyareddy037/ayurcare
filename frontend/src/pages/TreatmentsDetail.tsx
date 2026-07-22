@@ -532,22 +532,38 @@ export default function TreatmentsDetail() {
 
             {/* TAB CONTENT: Overview */}
             {activeTab === 'overview' && (
-              <div className="space-y-6 text-xs sm:text-sm">
+              <div className="space-y-6 text-xs sm:text-sm animate-fadeIn">
                 <div className="space-y-2">
                   <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Condition Description</span>
-                  <p className="text-stone-600 leading-relaxed font-medium">{treatment.overview}</p>
+                  <p className="text-stone-605 dark:text-stone-300 leading-relaxed font-medium">{treatment.overview}</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-stone-100">
+                {/* Duration, Recovery, Suitable For Card Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                  <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 dark:bg-emerald-950/10 dark:border-emerald-900/50 space-y-1">
+                    <span className="text-[9px] text-stone-450 dark:text-stone-400 font-bold uppercase tracking-wider block">Treatment Duration</span>
+                    <span className="text-xs font-bold text-emerald-800 dark:text-emerald-350">{TREATMENT_INFOS[activeKey]?.duration || '7 - 14 Days'}</span>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 dark:bg-emerald-950/10 dark:border-emerald-900/50 space-y-1">
+                    <span className="text-[9px] text-stone-450 dark:text-stone-400 font-bold uppercase tracking-wider block">Who Should Take It</span>
+                    <span className="text-xs font-bold text-emerald-800 dark:text-emerald-350 truncate block" title={TREATMENT_INFOS[activeKey]?.suitableFor}>{TREATMENT_INFOS[activeKey]?.suitableFor || 'People seeking Dosha balance'}</span>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 dark:bg-emerald-950/10 dark:border-emerald-900/50 space-y-1">
+                    <span className="text-[9px] text-stone-450 dark:text-stone-400 font-bold uppercase tracking-wider block">Recovery Process</span>
+                    <span className="text-xs font-bold text-emerald-800 dark:text-emerald-350">1 - 2 Weeks (Gradual Balancing)</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-stone-100 dark:border-stone-850">
                   <div className="space-y-2">
-                    <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block flex items-center gap-1">
+                    <span className="text-[10px] text-stone-405 dark:text-stone-400 font-extrabold uppercase tracking-widest block flex items-center gap-1">
                       <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
                       Common Symptoms
                     </span>
-                    <ul className="space-y-2 text-xs text-stone-600 font-medium">
+                    <ul className="space-y-2 text-xs text-stone-600 dark:text-stone-300 font-medium">
                       {treatment.symptoms.map((s, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-605 shrink-0 mt-0.5" />
                           <span>{s}</span>
                         </li>
                       ))}
@@ -555,11 +571,11 @@ export default function TreatmentsDetail() {
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block">Root Causes</span>
-                    <ul className="space-y-2 text-xs text-stone-600 font-medium">
+                    <span className="text-[10px] text-stone-405 dark:text-stone-400 font-extrabold uppercase tracking-widest block">Root Causes</span>
+                    <ul className="space-y-2 text-xs text-stone-600 dark:text-stone-300 font-medium">
                       {treatment.causes.map((c, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-605 shrink-0 mt-0.5" />
                           <span>{c}</span>
                         </li>
                       ))}
@@ -567,9 +583,9 @@ export default function TreatmentsDetail() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/50 space-y-1.5 mt-4">
-                  <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-wider block">Ayur Diagnosis Guidelines</span>
-                  <p className="text-xs text-stone-605 font-medium leading-relaxed">{treatment.diagnosis}</p>
+                <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-900 border border-stone-200/50 dark:border-stone-800 space-y-1.5 mt-4">
+                  <span className="text-[10px] text-stone-400 dark:text-stone-500 font-bold uppercase tracking-wider block">Ayur Diagnosis Guidelines</span>
+                  <p className="text-xs text-stone-605 dark:text-stone-300 font-medium leading-relaxed">{treatment.diagnosis}</p>
                 </div>
               </div>
             )}
@@ -598,28 +614,42 @@ export default function TreatmentsDetail() {
 
             {/* TAB CONTENT: Diet & Lifestyle */}
             {activeTab === 'lifestyle' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs sm:text-sm">
-                <div className="space-y-3">
-                  <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Dietary Recommendations</span>
-                  <ul className="space-y-2.5 text-xs text-stone-600 font-medium">
-                    {treatment.diet.map((d, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{d}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div className="space-y-6 text-xs sm:text-sm animate-fadeIn">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Dietary Recommendations</span>
+                    <ul className="space-y-2.5 text-xs text-stone-600 dark:text-stone-300 font-medium">
+                      {treatment.diet.map((d, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-605 shrink-0 mt-0.5" />
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="space-y-3">
+                    <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Lifestyle Advice</span>
+                    <ul className="space-y-2.5 text-xs text-stone-600 dark:text-stone-300 font-medium">
+                      {treatment.lifestyle.map((l, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-605 shrink-0 mt-0.5" />
+                          <span>{l}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
-                <div className="space-y-3">
-                  <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Lifestyle Advice</span>
-                  <ul className="space-y-2.5 text-xs text-stone-600 font-medium">
-                    {treatment.lifestyle.map((l, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{l}</span>
-                      </li>
-                    ))}
+                {/* Post-Treatment Care Instructions */}
+                <div className="p-5 rounded-2xl bg-amber-50/30 border border-amber-250/50 dark:bg-amber-950/10 dark:border-amber-900/50 space-y-2 mt-6">
+                  <span className="text-[10px] text-amber-800 dark:text-amber-300 font-extrabold uppercase tracking-wider block">⚠️ Post-Treatment Care Instructions</span>
+                  <ul className="list-disc pl-4 space-y-1.5 text-stone-605 dark:text-stone-305 font-medium text-xs">
+                    <li>Avoid direct exposure to cold wind, air conditioning, and dust immediately after therapy.</li>
+                    <li>Favour warm, easily digestible meals (peya, kitchari) for 24-48 hours.</li>
+                    <li>Refrain from high-intensity workouts; stick to gentle walks or joint rotations.</li>
+                    <li>Sip warm water or ginger tea throughout the day to support cellular waste elimination (Ama digestion).</li>
+                    <li>Allow the medicated herbal oils to remain on the skin for at least 1-2 hours before taking a warm shower.</li>
                   </ul>
                 </div>
               </div>

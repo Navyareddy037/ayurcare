@@ -8,10 +8,10 @@ import {
 } from 'lucide-react';
 
 const CONDITIONS = [
-  { name: 'Sandhigata Vata (Arthritis & Joint Care)', description: 'Therapeutic warm oil pooling and herbal poultices to rebuild joint lubricating fluids and soothe chronic inflammation.', code: 'Joints' },
-  { name: 'Kati Basti (Back & Spine Conditions)', description: 'Warm herbal decoctions retained on the lumbosacral region to treat disc compression, sciatica, and chronic aches.', code: 'Spine' },
-  { name: 'Skin Disorders (Psoriasis & Eczema)', description: 'Deep internal purification therapies (Virechana) paired with soothing neem and turmeric topical formulations.', code: 'Skin' },
-  { name: 'Obesity & Weight Management', description: 'Dry herbal powder scrub massages (Udvartana) designed to activate lipid metabolism and cleanse skin tissue.', code: 'Weight' }
+  { name: 'Sandhigata Vata (Arthritis & Joint Care)', description: 'Therapeutic warm oil pooling and herbal poultices to rebuild joint lubricating fluids and soothe chronic inflammation.', id: 'arthritis' },
+  { name: 'Kati Basti (Back & Spine Conditions)', description: 'Warm herbal decoctions retained on the lumbosacral region to treat disc compression, sciatica, and chronic aches.', id: 'joint-pain' },
+  { name: 'Skin Disorders (Psoriasis & Eczema)', description: 'Deep internal purification therapies (Virechana) paired with soothing neem and turmeric topical formulations.', id: 'skin-disorders' },
+  { name: 'Obesity & Weight Management', description: 'Dry herbal powder scrub massages (Udvartana) designed to activate lipid metabolism and cleanse skin tissue.', id: 'weight-loss' }
 ];
 
 const PANCHAKARMA = [
@@ -385,7 +385,7 @@ export default function Home() {
             {/* Doctor Portrait */}
             <div className="absolute top-0 left-0 w-60 h-64 rounded-3xl overflow-hidden shadow border-4 border-white hover:scale-[1.02] transition-transform duration-300">
               <img 
-                src="https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=400&h=400" 
+                src="/images/hero_doctor_consult.png" 
                 alt="Ayurvedic Doctor Portrait" 
                 className="w-full h-full object-cover" 
               />
@@ -394,7 +394,7 @@ export default function Home() {
             {/* Ayurvedic Herbs Preparation */}
             <div className="absolute bottom-4 right-4 w-52 h-48 rounded-3xl overflow-hidden shadow border-4 border-white hover:scale-[1.02] transition-transform duration-300 z-10">
               <img 
-                src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400&h=300" 
+                src="/images/hero_herbal_prep.png" 
                 alt="Ayurvedic Herbs" 
                 className="w-full h-full object-cover" 
               />
@@ -494,8 +494,8 @@ export default function Home() {
                 <h4 className="font-bold text-sm text-stone-900 leading-snug">{c.name}</h4>
                 <p className="text-xs text-stone-500 leading-relaxed font-medium">{c.description}</p>
               </div>
-              <Link to="/doctors" className="pt-2 text-[10px] text-ayur-primary font-bold hover:text-ayur-secondary flex items-center gap-1">
-                <span>View Therapies</span>
+              <Link to={`/treatments/${c.id}`} className="pt-2 text-[10px] text-ayur-primary font-bold hover:text-ayur-secondary flex items-center gap-1">
+                <span>View Treatment Details</span>
                 <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
@@ -570,7 +570,7 @@ export default function Home() {
                 <span className="text-stone-400 font-bold">|</span>
                 <span>450+ Verified Clinical Reviews in Indore</span>
               </div>
-              <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="text-ayur-primary font-bold hover:underline flex items-center gap-0.5">
+              <a href="https://www.google.com/maps/place/Kaya+Kalp+Ayurvedic+Clinic/@22.723658,75.882676,15z/data=!4m2!3m1!1s0x3962fd370c99fcfb:0x6b44747719602fba" target="_blank" rel="noopener noreferrer" className="text-ayur-primary font-bold hover:underline flex items-center gap-0.5">
                 <span>View Google Listing</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
