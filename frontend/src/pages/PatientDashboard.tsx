@@ -176,7 +176,7 @@ export default function PatientDashboard() {
         setNotifications(notifRes.data.notifications || []);
       }
 
-      const recordsRes = await api.get('/appointments/medical-records');
+      const recordsRes = await api.get('/patient/medical-records');
       if (recordsRes.data && recordsRes.data.success) {
         setUploadedRecords(recordsRes.data.records || []);
       }
@@ -488,44 +488,60 @@ export default function PatientDashboard() {
     }
   };
 
+  const getFileUrl = (fileUrl: string) => {
+    if (!fileUrl) return '';
+    if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://') || fileUrl.startsWith('data:')) {
+      return fileUrl;
+    }
+    const apiBase = api.defaults.baseURL || 'http://localhost:5000/api';
+    const serverBase = apiBase.replace(/\/api$/, '');
+    return `${serverBase}${fileUrl}`;
+  };
+
   const handleUploadSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!newRecordName.trim()) {
-      setUploadError('Report name is mandatory.');
+    setUploadError('');
+    setUploadSuccess(false);
+
+    if (!newRecordName || !newRecordName.trim()) {
+      setUploadError('Please enter the report name.');
       return;
     }
     if (!selectedFile) {
-      setUploadError('Please select a file to upload.');
+      setUploadError('Please select a document.');
       return;
     }
 
     if (selectedFile.size > 5 * 1024 * 1024) {
-      setUploadError('File size exceeds 5MB limit.');
+      setUploadError('Maximum upload size is 5 MB.');
       return;
     }
 
     const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
     if (!allowedTypes.includes(selectedFile.type)) {
-      setUploadError('Only PDF, JPG, JPEG, and PNG files are supported.');
+      setUploadError('Only PDF, JPG, JPEG and PNG files are allowed.');
       return;
     }
 
     setIsUploading(true);
-    setUploadError('');
-    setUploadSuccess(false);
 
     try {
       const formData = new FormData();
       formData.append('reportName', newRecordName);
       formData.append('file', selectedFile);
+      if (user?.id) {
+        formData.append('patientId', String(user.id));
+      }
 
-      const res = await api.post('/appointments/medical-records', formData, {
+      console.log('Sending multipart upload request to /patient/medical-records/upload...');
+      const res = await api.post('/patient/medical-records/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (res.data && res.data.success) {
+        console.log('Upload success:', res.data.record);
         setUploadedRecords([res.data.record, ...uploadedRecords]);
         setNewRecordName('');
         setSelectedFile(null);
@@ -538,10 +554,23 @@ export default function PatientDashboard() {
         } catch (notifErr) {
           console.error('Failed to reload notifications:', notifErr);
         }
-        setTimeout(() => setUploadSuccess(false), 3000);
+        setTimeout(() => setUploadSuccess(false), 4000);
       }
     } catch (err: any) {
-      setUploadError(err.response?.data?.error || 'Upload failed');
+      console.error('Upload failed with error:', err);
+      let errMsg = 'Upload failed';
+      if (!err.response) {
+        errMsg = 'Network error. Please check your internet connection.';
+      } else if (err.response.status === 401) {
+        errMsg = 'Session expired. Please sign in again.';
+      } else if (err.response.status === 403) {
+        errMsg = 'Unauthorized access.';
+      } else if (err.response.status >= 500) {
+        errMsg = 'Server error. Please try again later.';
+      } else {
+        errMsg = err.response.data?.error || 'Upload failed';
+      }
+      setUploadError(errMsg);
     } finally {
       setIsUploading(false);
     }
@@ -549,16 +578,18 @@ export default function PatientDashboard() {
 
   const handleViewRecord = (record: any) => {
     const isImage = ['image/jpeg', 'image/jpg', 'image/png'].includes(record.fileType);
+    const fullUrl = getFileUrl(record.fileUrl);
     if (isImage) {
-      setPreviewImage(record.fileUrl);
+      setPreviewImage(fullUrl);
     } else {
-      window.open(record.fileUrl, '_blank');
+      window.open(fullUrl, '_blank');
     }
   };
 
   const handleDownloadRecord = (record: any) => {
+    const fullUrl = getFileUrl(record.fileUrl);
     const link = document.createElement('a');
-    link.href = record.fileUrl;
+    link.href = fullUrl;
     link.download = record.fileName;
     document.body.appendChild(link);
     link.click();
@@ -568,13 +599,23 @@ export default function PatientDashboard() {
   const handleDeleteRecord = async (recordId: number) => {
     if (!confirm('Are you sure you want to delete this medical record? This action cannot be undone.')) return;
     try {
-      const res = await api.delete(`/appointments/medical-records/${recordId}`);
+      const res = await api.delete(`/patient/medical-records/${recordId}`);
       if (res.data && res.data.success) {
         setUploadedRecords(uploadedRecords.filter(r => r.id !== recordId));
       }
     } catch (err: any) {
-      console.error(err);
-      alert(err.response?.data?.error || 'Failed to delete record.');
+      console.error('Delete failed:', err);
+      let errMsg = 'Failed to delete record.';
+      if (!err.response) {
+        errMsg = 'Network error. Please check your connection.';
+      } else if (err.response.status === 401) {
+        errMsg = 'Session expired. Please sign in again.';
+      } else if (err.response.status === 403) {
+        errMsg = 'Unauthorized access.';
+      } else {
+        errMsg = err.response.data?.error || 'Failed to delete record.';
+      }
+      alert(errMsg);
     }
   };
 
@@ -1362,12 +1403,12 @@ export default function PatientDashboard() {
 
                     <button
                       type="button"
-                      disabled={!newRecordName || !selectedFile || isUploading}
+                      disabled={isUploading}
                       onClick={() => handleUploadSubmit()}
                       className={`w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm ${
-                        (!newRecordName || !selectedFile || isUploading)
+                        isUploading
                           ? 'bg-stone-200 text-stone-400 cursor-not-allowed dark:bg-stone-800/85 dark:text-stone-650'
-                          : 'bg-ayur-primary text-white hover:bg-ayur-secondary'
+                          : 'bg-ayur-primary text-white hover:bg-ayur-secondary cursor-pointer'
                       }`}
                     >
                       {isUploading ? (

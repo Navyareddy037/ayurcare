@@ -39,6 +39,7 @@ if (!fs.existsSync(uploadDir)) {
 // Serve uploads statically
 app.use('/uploads', express.static(uploadDir));
 
+app.use('/api/patient/medical-records', medicalRecordRoutes);
 app.use('/api/medical-records', medicalRecordRoutes);
 app.use('/api/appointments/medical-records', medicalRecordRoutes);
 app.use('/api/appointments', appointmentRoutes);
