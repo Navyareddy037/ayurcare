@@ -43,29 +43,38 @@ const upload = multer({
 
 // GET /api/medical-records: List all medical records for the current patient
 router.get('/', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  console.log(`[GET /api/medical-records] Request received from user ID: ${req.user?.id}`);
   try {
     const { id: patientId } = req.user!;
     const records = await prisma.medicalRecord.findMany({
       where: { patientId },
       orderBy: { uploadedAt: 'desc' }
     });
+    console.log(`[GET /api/medical-records] Retrieved ${records.length} records for patient ID: ${patientId}`);
     return res.json({ success: true, records });
   } catch (error: any) {
-    console.error('Fetch records error:', error);
+    console.error('[GET /api/medical-records] Error fetching records:', error);
     return res.status(500).json({ error: error.message || 'Internal server error' });
   }
 });
 
 // POST /api/medical-records: Upload a new medical record
 router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
+  console.log(`[POST /api/medical-records] Upload request received from user ID: ${req.user?.id}`);
+  console.log('[POST /api/medical-records] Upload started...');
+
   upload.single('file')(req, res, async (err) => {
     if (err) {
+      console.error('[POST /api/medical-records] Multer or upload error:', err);
       if (err instanceof multer.MulterError) {
         if (err.code === 'LIMIT_FILE_SIZE') {
+          console.warn('[POST /api/medical-records] Validation failed: File size exceeds 5MB limit');
           return res.status(400).json({ error: 'File size exceeds 5MB limit.' });
         }
+        console.warn(`[POST /api/medical-records] Validation failed: Multer error - ${err.message}`);
         return res.status(400).json({ error: err.message });
       }
+      console.warn(`[POST /api/medical-records] Validation failed: ${err.message}`);
       return res.status(400).json({ error: err.message });
     }
 
@@ -74,14 +83,20 @@ router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
       const { reportName } = req.body;
       const file = req.file;
 
+      console.log(`[POST /api/medical-records] Upload completed. File saved: ${file?.filename}`);
+
       if (!reportName || reportName.trim() === '') {
+        console.warn('[POST /api/medical-records] Validation failed: Missing report name');
         if (file) {
-          fs.unlinkSync(file.path);
+          try {
+            fs.unlinkSync(file.path);
+          } catch (e) {}
         }
         return res.status(400).json({ error: 'Report name is mandatory.' });
       }
 
       if (!file) {
+        console.warn('[POST /api/medical-records] Validation failed: No file selected');
         return res.status(400).json({ error: 'Please select a file to upload.' });
       }
 
@@ -89,6 +104,7 @@ router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
       const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
 
       // Create record in DB
+      console.log('[POST /api/medical-records] Saving record to database...');
       const record = await prisma.medicalRecord.create({
         data: {
           patientId,
@@ -99,6 +115,7 @@ router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
           fileUrl
         }
       });
+      console.log(`[POST /api/medical-records] Database saved successfully. Record ID: ${record.id}`);
 
       // Create in-app notification for the patient
       await prisma.notification.create({
@@ -109,9 +126,10 @@ router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
         }
       });
 
+      console.log('[POST /api/medical-records] Response returned: success=true');
       return res.status(201).json({ success: true, record });
     } catch (error: any) {
-      console.error('Upload records error:', error);
+      console.error('[POST /api/medical-records] Exception error:', error);
       if (req.file) {
         try {
           fs.unlinkSync(req.file.path);
@@ -124,11 +142,14 @@ router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
 
 // DELETE /api/medical-records/:id: Delete medical record by ID
 router.delete('/:id', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  const recordId = parseInt(req.params.id);
+  console.log(`[DELETE /api/medical-records/${recordId}] Request received from user ID: ${req.user?.id}`);
+
   try {
     const { id: patientId } = req.user!;
-    const recordId = parseInt(req.params.id);
 
     if (isNaN(recordId)) {
+      console.warn(`[DELETE /api/medical-records/${req.params.id}] Validation failed: Invalid record ID`);
       return res.status(400).json({ error: 'Invalid record ID.' });
     }
 
@@ -137,10 +158,12 @@ router.delete('/:id', authMiddleware, async (req: AuthenticatedRequest, res: Res
     });
 
     if (!record) {
+      console.warn(`[DELETE /api/medical-records/${recordId}] Validation failed: Record not found`);
       return res.status(404).json({ error: 'Record not found.' });
     }
 
     if (record.patientId !== patientId) {
+      console.warn(`[DELETE /api/medical-records/${recordId}] Validation failed: Unauthorized user`);
       return res.status(403).json({ error: 'Unauthorized to delete this record.' });
     }
 
@@ -150,19 +173,25 @@ router.delete('/:id', authMiddleware, async (req: AuthenticatedRequest, res: Res
       if (filename) {
         const filePath = path.join(uploadDir, filename);
         if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath);
+          console.log(`[DELETE /api/medical-records/${recordId}] Deleting file from storage: ${filePath}`);
+          try {
+            fs.unlinkSync(filePath);
+          } catch (e) {}
         }
       }
     }
 
     // Delete from DB
+    console.log(`[DELETE /api/medical-records/${recordId}] Deleting record from database...`);
     await prisma.medicalRecord.delete({
       where: { id: recordId }
     });
+    console.log(`[DELETE /api/medical-records/${recordId}] Database deletion complete`);
 
+    console.log(`[DELETE /api/medical-records/${recordId}] Response returned: success=true`);
     return res.json({ success: true, message: 'Medical record deleted successfully.' });
   } catch (error: any) {
-    console.error('Delete record error:', error);
+    console.error(`[DELETE /api/medical-records/${recordId}] Error deleting record:`, error);
     return res.status(500).json({ error: error.message || 'Internal server error' });
   }
 });

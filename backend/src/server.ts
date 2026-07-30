@@ -30,11 +30,6 @@ app.use(express.json());
 // REST API Route mapping
 app.use('/api/auth', authRoutes);
 app.use('/api/doctors', doctorRoutes);
-app.use('/api/appointments', appointmentRoutes);
-app.use('/api/health-tracker', trackerRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/knowledge', knowledgeRoutes);
-app.use('/api/ai-assessment', aiRoutes);
 
 // Ensure local uploads directory exists
 const uploadDir = path.join(process.cwd(), 'uploads');
@@ -46,6 +41,11 @@ app.use('/uploads', express.static(uploadDir));
 
 app.use('/api/medical-records', medicalRecordRoutes);
 app.use('/api/appointments/medical-records', medicalRecordRoutes);
+app.use('/api/appointments', appointmentRoutes);
+app.use('/api/health-tracker', trackerRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/knowledge', knowledgeRoutes);
+app.use('/api/ai-assessment', aiRoutes);
 
 // Base route for server health verification
 app.get('/', (req, res) => {

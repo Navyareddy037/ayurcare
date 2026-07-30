@@ -30,11 +30,6 @@ app.use(express_1.default.json());
 // REST API Route mapping
 app.use('/api/auth', authRoutes_1.default);
 app.use('/api/doctors', doctorRoutes_1.default);
-app.use('/api/appointments', appointmentRoutes_1.default);
-app.use('/api/health-tracker', trackerRoutes_1.default);
-app.use('/api/reviews', reviewRoutes_1.default);
-app.use('/api/knowledge', knowledgeRoutes_1.default);
-app.use('/api/ai-assessment', aiRoutes_1.default);
 // Ensure local uploads directory exists
 const uploadDir = path_1.default.join(process.cwd(), 'uploads');
 if (!fs_1.default.existsSync(uploadDir)) {
@@ -44,6 +39,11 @@ if (!fs_1.default.existsSync(uploadDir)) {
 app.use('/uploads', express_1.default.static(uploadDir));
 app.use('/api/medical-records', medicalRecordRoutes_1.default);
 app.use('/api/appointments/medical-records', medicalRecordRoutes_1.default);
+app.use('/api/appointments', appointmentRoutes_1.default);
+app.use('/api/health-tracker', trackerRoutes_1.default);
+app.use('/api/reviews', reviewRoutes_1.default);
+app.use('/api/knowledge', knowledgeRoutes_1.default);
+app.use('/api/ai-assessment', aiRoutes_1.default);
 // Base route for server health verification
 app.get('/', (req, res) => {
     res.json({ message: 'Kaya Kalp Express REST API Server is running successfully.' });

@@ -766,13 +766,13 @@ export default function PatientDashboard() {
     }
   };
 
-  const upcomingAppointments = appointments.filter(app => 
-    (app.status === 'CONFIRMED' || app.status === 'PENDING') && !isAppointmentInPast(app)
-  );
+  const upcomingAppointments = appointments
+    .filter(app => (app.status === 'CONFIRMED' || app.status === 'PENDING') && !isAppointmentInPast(app))
+    .sort((a, b) => a.date.localeCompare(b.date) || a.timeSlot.localeCompare(b.timeSlot));
   
-  const pastAppointments = appointments.filter(app => 
-    app.status === 'COMPLETED' || app.status === 'CANCELLED' || isAppointmentInPast(app)
-  );
+  const pastAppointments = appointments
+    .filter(app => app.status === 'COMPLETED')
+    .sort((a, b) => b.date.localeCompare(a.date) || b.timeSlot.localeCompare(a.timeSlot));
   
   const getCountdownText = () => {
     const conf = upcomingAppointments.find(a => a.status === 'CONFIRMED');
