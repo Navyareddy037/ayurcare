@@ -15,6 +15,9 @@ const trackerRoutes_1 = __importDefault(require("./routes/trackerRoutes"));
 const reviewRoutes_1 = __importDefault(require("./routes/reviewRoutes"));
 const knowledgeRoutes_1 = __importDefault(require("./routes/knowledgeRoutes"));
 const aiRoutes_1 = __importDefault(require("./routes/aiRoutes"));
+const medicalRecordRoutes_1 = __importDefault(require("./routes/medicalRecordRoutes"));
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 // Middleware registration
@@ -32,6 +35,15 @@ app.use('/api/health-tracker', trackerRoutes_1.default);
 app.use('/api/reviews', reviewRoutes_1.default);
 app.use('/api/knowledge', knowledgeRoutes_1.default);
 app.use('/api/ai-assessment', aiRoutes_1.default);
+// Ensure local uploads directory exists
+const uploadDir = path_1.default.join(process.cwd(), 'uploads');
+if (!fs_1.default.existsSync(uploadDir)) {
+    fs_1.default.mkdirSync(uploadDir, { recursive: true });
+}
+// Serve uploads statically
+app.use('/uploads', express_1.default.static(uploadDir));
+app.use('/api/medical-records', medicalRecordRoutes_1.default);
+app.use('/api/appointments/medical-records', medicalRecordRoutes_1.default);
 // Base route for server health verification
 app.get('/', (req, res) => {
     res.json({ message: 'Kaya Kalp Express REST API Server is running successfully.' });

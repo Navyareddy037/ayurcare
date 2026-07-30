@@ -12,6 +12,9 @@ import trackerRoutes from './routes/trackerRoutes';
 import reviewRoutes from './routes/reviewRoutes';
 import knowledgeRoutes from './routes/knowledgeRoutes';
 import aiRoutes from './routes/aiRoutes';
+import medicalRecordRoutes from './routes/medicalRecordRoutes';
+import path from 'path';
+import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +35,17 @@ app.use('/api/health-tracker', trackerRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/knowledge', knowledgeRoutes);
 app.use('/api/ai-assessment', aiRoutes);
+
+// Ensure local uploads directory exists
+const uploadDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+// Serve uploads statically
+app.use('/uploads', express.static(uploadDir));
+
+app.use('/api/medical-records', medicalRecordRoutes);
+app.use('/api/appointments/medical-records', medicalRecordRoutes);
 
 // Base route for server health verification
 app.get('/', (req, res) => {

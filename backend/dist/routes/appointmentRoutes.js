@@ -291,6 +291,39 @@ router.put('/notifications/:id/read', authMiddleware_1.authMiddleware, async (re
         return res.status(500).json({ error: error.message });
     }
 });
+// DELETE /api/appointments/notifications: clear all notifications for user
+router.delete('/notifications', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId } = req.user;
+        await db_1.default.notification.deleteMany({
+            where: { userId }
+        });
+        return res.json({ success: true, message: 'All notifications cleared' });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+// DELETE /api/appointments/notifications/:id: delete individual notification
+router.delete('/notifications/:id', authMiddleware_1.authMiddleware, async (req, res) => {
+    try {
+        const { id: userId } = req.user;
+        const notifId = parseInt(req.params.id);
+        const notif = await db_1.default.notification.findUnique({
+            where: { id: notifId }
+        });
+        if (!notif || notif.userId !== userId) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+        await db_1.default.notification.delete({
+            where: { id: notifId }
+        });
+        return res.json({ success: true, message: 'Notification deleted' });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
 // GET /api/appointments/tasks: list doctor tasks
 router.get('/tasks', authMiddleware_1.authMiddleware, async (req, res) => {
     try {
@@ -410,70 +443,6 @@ router.put('/tickets/admin/:id', authMiddleware_1.authMiddleware, async (req, re
             data: { response, status }
         });
         return res.json({ success: true, ticket: updated });
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-});
-// GET /api/appointments/medical-records: List all medical records for current patient
-router.get('/medical-records', authMiddleware_1.authMiddleware, async (req, res) => {
-    try {
-        const { id: patientId } = req.user;
-        const records = await db_1.default.medicalRecord.findMany({
-            where: { patientId },
-            orderBy: { uploadedAt: 'desc' }
-        });
-        return res.json({ success: true, records });
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-});
-// POST /api/appointments/medical-records: Upload a new medical record
-router.post('/medical-records', authMiddleware_1.authMiddleware, async (req, res) => {
-    try {
-        const { id: patientId } = req.user;
-        const { fileName, fileType, fileUrl } = req.body;
-        if (!fileName || !fileType || !fileUrl) {
-            return res.status(400).json({ error: 'Missing file details (fileName, fileType, fileUrl)' });
-        }
-        const record = await db_1.default.medicalRecord.create({
-            data: {
-                patientId,
-                fileName,
-                fileType,
-                fileUrl
-            }
-        });
-        // Create in-app notification for the patient
-        await db_1.default.notification.create({
-            data: {
-                userId: patientId,
-                type: 'LAB_REPORT',
-                message: `New medical record "${fileName}" has been successfully uploaded to your vault.`
-            }
-        });
-        return res.status(201).json({ success: true, record });
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-});
-// DELETE /api/appointments/medical-records/:id: Delete medical record by ID
-router.delete('/medical-records/:id', authMiddleware_1.authMiddleware, async (req, res) => {
-    try {
-        const { id: patientId } = req.user;
-        const recordId = parseInt(req.params.id);
-        const record = await db_1.default.medicalRecord.findUnique({
-            where: { id: recordId }
-        });
-        if (!record || record.patientId !== patientId) {
-            return res.status(403).json({ error: 'Unauthorized to delete this record' });
-        }
-        await db_1.default.medicalRecord.delete({
-            where: { id: recordId }
-        });
-        return res.json({ success: true, message: 'Record deleted successfully' });
     }
     catch (error) {
         return res.status(500).json({ error: error.message });

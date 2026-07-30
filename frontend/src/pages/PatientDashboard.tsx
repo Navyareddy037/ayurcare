@@ -6,7 +6,7 @@ import {
   Heart, Calendar, Activity, CheckSquare, PlusCircle, FileText, 
   Trash2, Plus, Download, Clock, MapPin, AlertCircle, Sun, Moon, 
   Globe, Compass, Check, HelpCircle, MessageSquare, ShieldAlert, Send, Leaf,
-  CreditCard, DollarSign, Bell, User, PlusIcon
+  CreditCard, DollarSign, Bell, User, PlusIcon, X
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 import { jsPDF } from 'jspdf';
@@ -120,6 +120,8 @@ export default function PatientDashboard() {
   const [uploadError, setUploadError] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   // AI Symptom Checker
   const [aiSymptoms, setAiSymptoms] = useState('');
@@ -458,9 +460,44 @@ export default function PatientDashboard() {
     doc.save(`KayaKalp_Invoice_INV_${app.receiptId || 'INV'}.pdf`);
   };
 
-  const handleUploadSubmit = async (e: React.FormEvent) => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    if (!newRecordName || !selectedFile) return;
+    setDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      if (!allowedTypes.includes(file.type)) {
+        setUploadError('Invalid file format. Only PDF, JPG, JPEG, PNG are allowed.');
+        setSelectedFile(null);
+      } else if (file.size > 5 * 1024 * 1024) {
+        setUploadError('File size exceeds 5MB limit.');
+        setSelectedFile(null);
+      } else {
+        setSelectedFile(file);
+        setUploadError('');
+      }
+    }
+  };
+
+  const handleUploadSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!newRecordName.trim()) {
+      setUploadError('Report name is mandatory.');
+      return;
+    }
+    if (!selectedFile) {
+      setUploadError('Please select a file to upload.');
+      return;
+    }
 
     if (selectedFile.size > 5 * 1024 * 1024) {
       setUploadError('File size exceeds 5MB limit.');
@@ -478,14 +515,14 @@ export default function PatientDashboard() {
     setUploadSuccess(false);
 
     try {
-      const base64Url = await convertToBase64(selectedFile);
-      const sizeInMb = (selectedFile.size / (1024 * 1024)).toFixed(2);
-      const formattedName = `${newRecordName} (${sizeInMb} MB)`;
+      const formData = new FormData();
+      formData.append('reportName', newRecordName);
+      formData.append('file', selectedFile);
 
-      const res = await api.post('/appointments/medical-records', {
-        fileName: formattedName,
-        fileType: selectedFile.type,
-        fileUrl: base64Url
+      const res = await api.post('/appointments/medical-records', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       if (res.data && res.data.success) {
@@ -511,17 +548,18 @@ export default function PatientDashboard() {
   };
 
   const handleViewRecord = (record: any) => {
-    const w = window.open();
-    if (w) {
-      w.document.write(`<iframe src="${record.fileUrl}" width="100%" height="100%" style="border:0; position:fixed; top:0; left:0; right:0; bottom:0;"></iframe>`);
-      w.document.title = record.fileName;
+    const isImage = ['image/jpeg', 'image/jpg', 'image/png'].includes(record.fileType);
+    if (isImage) {
+      setPreviewImage(record.fileUrl);
+    } else {
+      window.open(record.fileUrl, '_blank');
     }
   };
 
   const handleDownloadRecord = (record: any) => {
     const link = document.createElement('a');
     link.href = record.fileUrl;
-    link.download = record.fileName.split(' (')[0] + (record.fileType === 'application/pdf' ? '.pdf' : '.jpg');
+    link.download = record.fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -534,8 +572,9 @@ export default function PatientDashboard() {
       if (res.data && res.data.success) {
         setUploadedRecords(uploadedRecords.filter(r => r.id !== recordId));
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err.response?.data?.error || 'Failed to delete record.');
     }
   };
 
@@ -1261,24 +1300,33 @@ export default function PatientDashboard() {
                       <input
                         type="text"
                         required
+                        disabled={isUploading}
                         placeholder="Enter report name (e.g. Blood Test June 2026)..."
                         value={newRecordName}
                         onChange={(e) => setNewRecordName(e.target.value)}
-                        className="w-full p-2.5 rounded-xl border border-stone-250 dark:border-stone-800 bg-white dark:bg-stone-850 text-stone-900 dark:text-white text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary font-semibold"
+                        className="w-full p-2.5 rounded-xl border border-stone-250 dark:border-stone-800 bg-white dark:bg-stone-850 text-stone-900 dark:text-white text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary font-semibold disabled:opacity-60"
                       />
                     </div>
 
                     <div className="space-y-2 text-xs">
                       <label className="font-bold text-stone-700 dark:text-stone-300">2. Select Document File</label>
                       <div
-                        className="border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-2xl p-6 text-center hover:border-ayur-primary dark:hover:border-ayur-primary transition-colors cursor-pointer bg-stone-50/50 dark:bg-stone-800/10"
-                        onClick={() => document.getElementById('report-file-input')?.click()}
+                        className={`border-2 border-dashed rounded-2xl p-6 text-center transition-colors cursor-pointer bg-stone-50/50 dark:bg-stone-800/10 ${
+                          dragOver
+                            ? 'border-ayur-primary bg-emerald-50/10 dark:bg-emerald-500/5'
+                            : 'border-stone-300 dark:border-stone-700 hover:border-ayur-primary dark:hover:border-ayur-primary'
+                        }`}
+                        onClick={() => !isUploading && document.getElementById('report-file-input')?.click()}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop}
                       >
                         <input
                           id="report-file-input"
                           type="file"
                           accept=".pdf,.jpg,.jpeg,.png"
                           className="hidden"
+                          disabled={isUploading}
                           onChange={(e) => {
                             if (e.target.files && e.target.files[0]) {
                               const file = e.target.files[0];
@@ -1315,10 +1363,10 @@ export default function PatientDashboard() {
                     <button
                       type="button"
                       disabled={!newRecordName || !selectedFile || isUploading}
-                      onClick={handleUploadSubmit}
+                      onClick={() => handleUploadSubmit()}
                       className={`w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm ${
                         (!newRecordName || !selectedFile || isUploading)
-                          ? 'bg-stone-200 text-stone-400 cursor-not-allowed dark:bg-stone-800/80 dark:text-stone-600'
+                          ? 'bg-stone-200 text-stone-400 cursor-not-allowed dark:bg-stone-800/85 dark:text-stone-650'
                           : 'bg-ayur-primary text-white hover:bg-ayur-secondary'
                       }`}
                     >
@@ -1343,17 +1391,19 @@ export default function PatientDashboard() {
                     ) : (
                       uploadedRecords.map(record => (
                         <div key={record.id} className="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl bg-stone-50 dark:bg-stone-850/50 border border-stone-100 dark:border-stone-800 gap-3">
-                          <div>
+                          <div className="space-y-1 min-w-0 flex-1">
                             <div className="font-bold text-stone-850 dark:text-white flex items-center gap-1.5 text-xs">
-                              <FileText className="w-4 h-4 text-ayur-primary" />
-                              <span>{record.name}</span>
+                              <FileText className="w-4 h-4 text-ayur-primary shrink-0" />
+                              <span className="truncate">{record.reportName || record.fileName || 'Unnamed Document'}</span>
                             </div>
-                            <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-[10px] text-stone-500 dark:text-stone-400 font-bold">
+                            <div className="flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-stone-500 dark:text-stone-400 font-bold">
+                              {record.fileName && <span className="truncate max-w-[200px]">File: {record.fileName}</span>}
                               <span>Uploaded: {record.uploadedAt ? new Date(record.uploadedAt).toLocaleDateString() : 'N/A'}</span>
                               <span>Type: {record.fileType?.split('/')[1]?.toUpperCase() || 'PDF'}</span>
+                              {record.fileSize > 0 && <span>Size: {(record.fileSize / (1024 * 1024)).toFixed(2)} MB</span>}
                             </div>
                           </div>
-                          <div className="flex gap-2 justify-end">
+                          <div className="flex gap-2 justify-end shrink-0">
                             <button
                               onClick={() => handleViewRecord(record)}
                               className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-750 transition-colors"
@@ -1773,6 +1823,35 @@ export default function PatientDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Premium Lightbox Image Preview Modal */}
+      {previewImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 animate-fadeIn">
+          <div className="relative max-w-4xl max-h-[90vh] bg-stone-900 rounded-2xl overflow-hidden p-2 flex flex-col items-center">
+            <button
+              onClick={() => setPreviewImage(null)}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/80 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <img
+              src={previewImage}
+              alt="Medical record preview"
+              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+            />
+            <div className="py-2 text-xs text-stone-300 font-semibold flex gap-4 mt-2">
+              <a
+                href={previewImage}
+                download
+                className="hover:text-white transition-colors underline flex items-center gap-1"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download Original Image
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
