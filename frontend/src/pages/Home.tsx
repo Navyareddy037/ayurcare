@@ -412,11 +412,11 @@ export default function Home() {
               Indore's Premier Ayurvedic Specialty Clinic
             </h2>
             
-            <p className="text-stone-605 text-sm leading-relaxed font-medium">
+            <p className="text-stone-600 text-sm leading-relaxed font-medium">
               Established with the vision of carrying forward the lineage of pure Ayurveda, Kaya Kalp Wellness combines time-tested therapies with modern diagnostic verification. We treat root imbalances rather than symptoms to restore physiological harmony.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs font-bold text-stone-850">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs font-bold text-stone-800">
               <div className="p-4 bg-white border border-stone-200/60 rounded-2xl space-y-1">
                 <span className="text-[10px] text-ayur-primary font-black uppercase tracking-wider block">Our Mission</span>
                 <p className="text-stone-500 font-medium leading-relaxed">To cleanse body systems, restore primary metabolic Agni, and coach patients on life dinacharya.</p>
@@ -564,7 +564,7 @@ export default function Home() {
         {activeSuccessTab === 'reviews' ? (
           <div className="space-y-6 animate-fadeIn">
             {/* Google Rating Banner */}
-            <div className="p-4 rounded-2xl bg-amber-50/20 border border-amber-100 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-3 text-xs font-semibold text-stone-750">
+            <div className="p-4 rounded-2xl bg-amber-50/20 border border-amber-100 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-3 text-xs font-semibold text-stone-700">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-black text-amber-600">Google 4.9 ★</span>
                 <span className="text-stone-400 font-bold">|</span>
@@ -683,7 +683,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="p-2.5 bg-stone-50 border border-stone-150 rounded-xl text-[10px] text-stone-500 font-medium">
+                  <div className="p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-[10px] text-stone-500 font-medium">
                     <strong>Therapy used:</strong> {c.treatment}
                   </div>
                 </div>
@@ -744,7 +744,7 @@ export default function Home() {
               <div key={index} className="border border-stone-200/60 rounded-[20px] bg-white overflow-hidden shadow-sm transition-all duration-300">
                 <button
                   onClick={() => setFaqOpen(isOpen ? null : index)}
-                  className="flex justify-between items-center w-full px-6 py-5 text-left font-bold text-stone-850 text-xs sm:text-sm"
+                  className="flex justify-between items-center w-full px-6 py-5 text-left font-bold text-stone-800 text-xs sm:text-sm"
                 >
                   <span>{faq.q}</span>
                   <HelpCircle className={`w-4.5 h-4.5 text-stone-400 transition-transform ${isOpen ? 'rotate-180 text-ayur-primary' : ''}`} />
@@ -766,7 +766,7 @@ export default function Home() {
         <div className="text-center space-y-3">
           <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest block">Get In Touch</span>
           <h2 className="text-3xl font-extrabold text-stone-900 font-serif">Contact Kaya Kalp</h2>
-          <p className="text-stone-550 text-xs sm:text-sm max-w-lg mx-auto font-medium">
+          <p className="text-stone-600 text-xs sm:text-sm max-w-lg mx-auto font-medium">
             Reach out for clinical queries, Panchakarma stays, or quick appointment assistance.
           </p>
         </div>
@@ -778,7 +778,7 @@ export default function Home() {
             <div className="space-y-6">
               
               {/* Address details */}
-              <div className="space-y-4 text-xs sm:text-sm text-stone-750 font-medium">
+              <div className="space-y-4 text-xs sm:text-sm text-stone-700 font-medium">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-ayur-primary mt-0.5 shrink-0" />
                   <div>
@@ -805,7 +805,7 @@ export default function Home() {
               {/* Working Hours */}
               <div className="pt-6 border-t border-stone-100 space-y-3">
                 <h4 className="font-extrabold text-xs text-stone-900 uppercase tracking-wider">Business Hours</h4>
-                <div className="grid grid-cols-2 text-xs font-semibold text-stone-605 gap-2">
+                <div className="grid grid-cols-2 text-xs font-semibold text-stone-600 gap-2">
                   <div>Monday - Saturday:</div>
                   <div className="text-right text-stone-900 font-extrabold">9:00 AM - 6:00 PM</div>
                   <div>Sunday:</div>
@@ -820,7 +820,7 @@ export default function Home() {
                 </div>
                 <div>
                   <strong className="text-amber-805 block">Emergency Patient Desk:</strong>
-                  <span className="text-stone-605 font-bold">+91 9827775075</span>
+                  <span className="text-stone-600 font-bold">+91 9827775075</span>
                 </div>
               </div>
 
@@ -883,7 +883,7 @@ export default function Home() {
                 />
                 <select 
                   required 
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-[#FBFBF9] focus:outline-none font-bold text-stone-605"
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-[#FBFBF9] focus:outline-none font-bold text-stone-600"
                 >
                   <option value="">Preferred Category</option>
                   <option value="Hair Care">Hair Care Solutions</option>

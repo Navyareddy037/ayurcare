@@ -162,7 +162,7 @@ export default function PanchakarmaDetail() {
               <p className="text-xs text-stone-600 leading-relaxed font-medium">
                 Panchakarma is not a luxury spa treatment. It is a highly scientific medical procedure designed to flush toxins out of cellular tissues, resetting your body's self-healing systems.
               </p>
-              <div className="p-3 bg-stone-50 rounded-xl border border-stone-150 text-[11px] text-stone-500 leading-relaxed font-medium">
+              <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 text-[11px] text-stone-500 leading-relaxed font-medium">
                 <strong>Three Phases:</strong> Purvakarma (oiling & sweating), Pradhanakarma (detox extraction), and Paschatkarma (restorative diet).
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function PanchakarmaDetail() {
             {/* Header info */}
             <div className="border-b border-stone-100 pb-4 space-y-1.5">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-black text-stone-905">{activeTherapy.name}</h2>
+                <h2 className="text-2xl font-black text-stone-900">{activeTherapy.name}</h2>
                 <span className="text-[10px] bg-emerald-50 text-ayur-primary font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
                   {activeTherapy.sanskrit}
                 </span>
@@ -209,21 +209,21 @@ export default function PanchakarmaDetail() {
             {/* Procedure Description */}
             <div className="space-y-2">
               <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">How it is done (Procedure)</span>
-              <p className="text-xs sm:text-sm text-stone-605 leading-relaxed font-medium">{activeTherapy.procedure}</p>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-medium">{activeTherapy.procedure}</p>
             </div>
 
             {/* Before & After Care panels */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-stone-100">
               <div className="space-y-2.5">
-                <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block">Before Care (Purvakarma)</span>
-                <p className="text-xs text-stone-550 leading-relaxed font-medium bg-stone-50 p-4 rounded-2xl border border-stone-200/50">
+                <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Before Care (Purvakarma)</span>
+                <p className="text-xs text-stone-600 leading-relaxed font-medium bg-stone-50 p-4 rounded-2xl border border-stone-200/50">
                   {activeTherapy.beforeCare}
                 </p>
               </div>
 
               <div className="space-y-2.5">
-                <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block">After Care (Paschatkarma)</span>
-                <p className="text-xs text-stone-550 leading-relaxed font-medium bg-stone-550/5 p-4 rounded-2xl border border-stone-200/50">
+                <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">After Care (Paschatkarma)</span>
+                <p className="text-xs text-stone-600 leading-relaxed font-medium bg-stone-600/5 p-4 rounded-2xl border border-stone-200/50">
                   {activeTherapy.afterCare}
                 </p>
               </div>
@@ -232,7 +232,7 @@ export default function PanchakarmaDetail() {
             {/* Diseases and Benefits checklists */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-stone-100">
               <div className="space-y-3">
-                <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block">Diseases Treated</span>
+                <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Diseases Treated</span>
                 <ul className="space-y-2 text-xs text-stone-600 font-medium">
                   {activeTherapy.diseases.map((d, i) => (
                     <li key={i} className="flex items-center gap-2">
@@ -244,7 +244,7 @@ export default function PanchakarmaDetail() {
               </div>
 
               <div className="space-y-3">
-                <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block">Treatment Benefits</span>
+                <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Treatment Benefits</span>
                 <ul className="space-y-2 text-xs text-stone-600 font-medium">
                   {activeTherapy.benefits.map((b, i) => (
                     <li key={i} className="flex items-center gap-2">
@@ -295,7 +295,7 @@ export default function PanchakarmaDetail() {
                 </div>
                 <div>
                   <h3 className="text-base font-black text-stone-900">Detox Session Booked!</h3>
-                  <p className="text-xs text-stone-550 mt-1">
+                  <p className="text-xs text-stone-600 mt-1">
                     Your {activeTherapy.name} appointment has been successfully scheduled.
                   </p>
                 </div>
@@ -323,7 +323,7 @@ export default function PanchakarmaDetail() {
                     <label className="font-bold text-stone-600 block">Select Consultant Vaidya</label>
                     <select
                       value={selectedDoctorId} onChange={(e) => setSelectedDoctorId(e.target.value)}
-                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-605"
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-600"
                     >
                       {doctors.map(d => (
                         <option key={d.id} value={d.id}>
@@ -347,7 +347,7 @@ export default function PanchakarmaDetail() {
                     <label className="font-bold text-stone-600 block">Preferred Time Slot</label>
                     <select
                       value={bookingTime} onChange={(e) => setBookingTime(e.target.value)}
-                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-605"
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-600"
                     >
                       <option value="09:00">09:00 AM</option>
                       <option value="10:30">10:30 AM</option>
@@ -361,7 +361,7 @@ export default function PanchakarmaDetail() {
                     <label className="font-bold text-stone-600 block">Consultation Mode</label>
                     <select
                       value={visitType} onChange={(e) => setVisitType(e.target.value)}
-                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-605"
+                      className="w-full p-2.5 border border-stone-200 bg-white rounded-xl text-stone-600"
                     >
                       <option value="clinic">In-Clinic Session</option>
                       <option value="online">Online Assessment / Video Call</option>

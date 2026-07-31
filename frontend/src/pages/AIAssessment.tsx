@@ -387,7 +387,7 @@ export default function AIAssessment() {
                 className={`flex items-center gap-1.5 px-3 sm:px-4.5 py-2 sm:py-2.5 rounded-xl transition-all ${
                   isActive 
                     ? 'bg-ayur-primary text-white shadow shadow-emerald-950/15' 
-                    : 'bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-605 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800'
+                    : 'bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800'
                 }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />
@@ -439,7 +439,7 @@ export default function AIAssessment() {
                     <select
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-605"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-600"
                     >
                       <option>Male</option>
                       <option>Female</option>
@@ -449,7 +449,7 @@ export default function AIAssessment() {
                 </div>
 
                 <div className="space-y-1">
-                  <div className="flex justify-between items-center text-[10px] text-stone-550 font-bold uppercase tracking-wider">
+                  <div className="flex justify-between items-center text-[10px] text-stone-600 font-bold uppercase tracking-wider">
                     <span>Pain Intensity Scale</span>
                     <span className="text-ayur-primary font-bold">{painLevel} / 10</span>
                   </div>
@@ -474,7 +474,7 @@ export default function AIAssessment() {
                     <select
                       value={lifestyle}
                       onChange={(e) => setLifestyle(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-605"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-600"
                     >
                       <option value="active">Active & Balanced</option>
                       <option value="sedentary">Sedentary (Mostly sitting)</option>
@@ -494,9 +494,9 @@ export default function AIAssessment() {
 
             <div className="lg:col-span-7 space-y-6">
               {!checkerReport && !checkerLoading && (
-                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-550 flex flex-col items-center justify-center min-h-[400px]">
+                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-600 flex flex-col items-center justify-center min-h-[400px]">
                   <Compass className="w-12 h-12 text-stone-300 mb-3 animate-pulse" />
-                  <h3 className="font-bold text-stone-750">Awaiting Ailment Data</h3>
+                  <h3 className="font-bold text-stone-700">Awaiting Ailment Data</h3>
                   <p className="mt-1">Fill out your symptoms, severity and pain levels to compile your report.</p>
                 </div>
               )}
@@ -521,24 +521,24 @@ export default function AIAssessment() {
                   <div className="space-y-4 text-xs leading-relaxed">
                     <div className="space-y-1">
                       <strong className="text-stone-900 font-bold block">Why this specialist:</strong>
-                      <p className="text-stone-605">{checkerReport.specialistReason}</p>
+                      <p className="text-stone-600">{checkerReport.specialistReason}</p>
                     </div>
                     <div className="space-y-1">
                       <strong className="text-stone-900 font-bold block">Dosha Analysis:</strong>
-                      <p className="text-stone-605">{checkerReport.doshaExplanation}</p>
+                      <p className="text-stone-600">{checkerReport.doshaExplanation}</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     <div className="p-4 rounded-2xl bg-emerald-50/30 border border-emerald-150/40 space-y-2">
                       <span className="font-bold text-emerald-800 block">Herbal Formulas</span>
-                      <ul className="list-disc pl-4 space-y-1 text-stone-605 text-[11px]">
+                      <ul className="list-disc pl-4 space-y-1 text-stone-600 text-[11px]">
                         {checkerReport.herbs.map((h: string) => <li key={h}>{h}</li>)}
                       </ul>
                     </div>
                     <div className="p-4 rounded-2xl bg-amber-50/20 border border-amber-100 space-y-2">
                       <span className="font-bold text-amber-800 block">Personal Diet Tips</span>
-                      <ul className="list-disc pl-4 space-y-1 text-stone-605 text-[11px]">
+                      <ul className="list-disc pl-4 space-y-1 text-stone-600 text-[11px]">
                         {checkerReport.dietRecs.map((d: string) => <li key={d}>{d}</li>)}
                       </ul>
                     </div>
@@ -581,14 +581,14 @@ export default function AIAssessment() {
                       <span className="font-extrabold text-stone-800 block">{q.id}. {q.question}</span>
                       <div className="space-y-1.5">
                         {q.options.map((opt, i) => (
-                          <label key={i} className="flex items-start gap-2.5 cursor-pointer p-2 rounded-lg hover:bg-stone-50 border border-transparent hover:border-stone-150">
+                          <label key={i} className="flex items-start gap-2.5 cursor-pointer p-2 rounded-lg hover:bg-stone-50 border border-transparent hover:border-stone-200">
                             <input
                               type="radio" name={`question-${q.id}`} required value={opt.type}
                               checked={quizAnswers[q.id] === opt.type}
                               onChange={() => setQuizAnswers({ ...quizAnswers, [q.id]: opt.type })}
                               className="mt-0.5 text-ayur-primary focus:ring-ayur-primary"
                             />
-                            <span className="text-[11px] text-stone-605 font-medium">{opt.text}</span>
+                            <span className="text-[11px] text-stone-600 font-medium">{opt.text}</span>
                           </label>
                         ))}
                       </div>
@@ -604,9 +604,9 @@ export default function AIAssessment() {
 
             <div className="lg:col-span-6 space-y-6">
               {!quizResult ? (
-                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-550 flex flex-col items-center justify-center min-h-[400px]">
+                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-600 flex flex-col items-center justify-center min-h-[400px]">
                   <Compass className="w-12 h-12 text-stone-300 mb-3 animate-pulse" />
-                  <h3 className="font-bold text-stone-750">Dosha Profile Awaiting Quiz</h3>
+                  <h3 className="font-bold text-stone-700">Dosha Profile Awaiting Quiz</h3>
                   <p className="mt-1">Answer the questions on the left to review your biological constitution profile.</p>
                 </div>
               ) : (
@@ -635,13 +635,13 @@ export default function AIAssessment() {
                   <div className="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl text-xs space-y-3.5">
                     <div>
                       <strong className="text-emerald-800 block text-[10px] uppercase tracking-wider mb-1">Primary Dosha Summary:</strong>
-                      <p className="text-stone-605 leading-relaxed">
+                      <p className="text-stone-600 leading-relaxed">
                         Your body frame and traits align mostly with <strong className="text-ayur-primary">{quizResult.dominant}</strong>. This dictates your cellular metabolism, speed of digestion, skin renewal, and response to weather.
                       </p>
                     </div>
                     <div>
                       <strong className="text-emerald-800 block text-[10px] uppercase tracking-wider mb-1">Recommended Action:</strong>
-                      <p className="text-stone-605 leading-relaxed">
+                      <p className="text-stone-600 leading-relaxed">
                         To maintain this equilibrium, establish warm cooked meals (Kitchari), dry self-massage, and regular meditation. Avoid extreme sun exposure or iced drinks.
                       </p>
                     </div>
@@ -666,7 +666,7 @@ export default function AIAssessment() {
                   <label className="font-bold text-stone-600">Select Primary Imbalanced Dosha</label>
                   <select
                     value={plannerDosha} onChange={(e) => setPlannerDosha(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-605"
+                    className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-600"
                   >
                     <option>Vata (Dry/Pain/Cold)</option>
                     <option>Pitta (Acidity/Acne/Heat)</option>
@@ -678,7 +678,7 @@ export default function AIAssessment() {
                   <label className="font-bold text-stone-600">Dietary Preference</label>
                   <select
                     value={plannerDietType} onChange={(e) => setPlannerDietType(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-605"
+                    className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-600"
                   >
                     <option>Vegetarian</option>
                     <option>Vegan</option>
@@ -690,7 +690,7 @@ export default function AIAssessment() {
                   <label className="font-bold text-stone-600">Primary Health Goal</label>
                   <select
                     value={plannerGoal} onChange={(e) => setPlannerGoal(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-605"
+                    className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white focus:outline-none text-stone-600"
                   >
                     <option>Stress Relief</option>
                     <option>Digestive Agni Boost</option>
@@ -707,9 +707,9 @@ export default function AIAssessment() {
 
             <div className="lg:col-span-7 space-y-6">
               {!generatedPlan && !plannerLoading && (
-                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-550 flex flex-col items-center justify-center min-h-[400px]">
+                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-600 flex flex-col items-center justify-center min-h-[400px]">
                   <FileText className="w-12 h-12 text-stone-300 mb-3 animate-pulse" />
-                  <h3 className="font-bold text-stone-750">Planner Awaiting Inputs</h3>
+                  <h3 className="font-bold text-stone-700">Planner Awaiting Inputs</h3>
                   <p className="mt-1">Select your biological dosha and diet preference to compile custom routines.</p>
                 </div>
               )}
@@ -747,7 +747,7 @@ export default function AIAssessment() {
                         <div key={idx} className="p-3 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl text-xs flex justify-between">
                           <div className="space-y-0.5">
                             <strong className="text-emerald-800 font-bold block">{y.pose}</strong>
-                            <span className="text-[10px] text-stone-550 leading-relaxed block">Focus: {y.benefit}</span>
+                            <span className="text-[10px] text-stone-600 leading-relaxed block">Focus: {y.benefit}</span>
                           </div>
                           <span className="text-[10px] text-ayur-primary font-bold shrink-0">{y.duration}</span>
                         </div>
@@ -786,7 +786,7 @@ export default function AIAssessment() {
                 ].map((prompt, idx) => (
                   <button
                     key={idx} onClick={() => setChatInput(prompt)}
-                    className="p-3 bg-white hover:bg-stone-50 border border-stone-150 rounded-xl text-left font-medium text-stone-700 hover:border-emerald-100 transition-all text-xs"
+                    className="p-3 bg-white hover:bg-stone-50 border border-stone-200 rounded-xl text-left font-medium text-stone-700 hover:border-emerald-100 transition-all text-xs"
                   >
                     {prompt}
                   </button>
@@ -882,9 +882,9 @@ export default function AIAssessment() {
 
             <div className="lg:col-span-7 space-y-6">
               {!analysisReport && !analysisLoading && (
-                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-550 flex flex-col items-center justify-center min-h-[400px]">
+                <div className="p-12 text-center bg-white rounded-[28px] border border-stone-200 border-dashed text-xs text-stone-600 flex flex-col items-center justify-center min-h-[400px]">
                   <Heart className="w-12 h-12 text-stone-300 mb-3 animate-pulse" />
-                  <h3 className="font-bold text-stone-750">Analyzer Awaiting Vitals</h3>
+                  <h3 className="font-bold text-stone-700">Analyzer Awaiting Vitals</h3>
                   <p className="mt-1">Input your current body parameters to compile the report card.</p>
                 </div>
               )}
@@ -908,22 +908,22 @@ export default function AIAssessment() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-bold">
                     <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 text-center">
-                      <span className="text-[9px] text-stone-450 block mb-0.5">BP Classification</span>
+                      <span className="text-[9px] text-stone-500 block mb-0.5">BP Classification</span>
                       <span className="text-stone-800 text-[11px] block">{analysisReport.bpStatus}</span>
                     </div>
                     <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 text-center">
-                      <span className="text-[9px] text-stone-450 block mb-0.5">Blood Sugar</span>
+                      <span className="text-[9px] text-stone-500 block mb-0.5">Blood Sugar</span>
                       <span className="text-stone-800 text-[11px] block">{analysisReport.sugarStatus}</span>
                     </div>
                     <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 text-center">
-                      <span className="text-[9px] text-stone-450 block mb-0.5">Sleep Quality</span>
+                      <span className="text-[9px] text-stone-500 block mb-0.5">Sleep Quality</span>
                       <span className="text-stone-800 text-[11px] block">{analysisReport.sleepStatus}</span>
                     </div>
                   </div>
 
                   <div className="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl text-xs space-y-2">
                     <strong className="text-emerald-800 block text-[10px] uppercase tracking-wider">AI Wellness Recommendation Summary:</strong>
-                    <p className="text-stone-605 leading-relaxed font-medium">
+                    <p className="text-stone-600 leading-relaxed font-medium">
                       {analysisReport.summary}
                     </p>
                   </div>

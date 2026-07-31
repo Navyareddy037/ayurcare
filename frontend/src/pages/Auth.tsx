@@ -275,7 +275,7 @@ export default function AuthPage() {
               className={`w-1/2 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === 'login'
                   ? 'bg-white text-ayur-primary shadow-sm'
-                  : 'text-stone-550 hover:text-stone-700'
+                  : 'text-stone-600 hover:text-stone-700'
               }`}
             >
               Sign In
@@ -288,7 +288,7 @@ export default function AuthPage() {
               className={`w-1/2 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === 'signup'
                   ? 'bg-white text-ayur-primary shadow-sm'
-                  : 'text-stone-550 hover:text-stone-700'
+                  : 'text-stone-600 hover:text-stone-700'
               }`}
             >
               Create Account
@@ -337,7 +337,7 @@ export default function AuthPage() {
                 {isSubmitting ? 'Authenticating...' : 'Sign In'}
               </button>
 
-              <div className="text-center text-[10px] text-stone-500 border-t border-stone-150 pt-3">
+              <div className="text-center text-[10px] text-stone-500 border-t border-stone-200 pt-3">
                 Evaluation Accounts — Patient: <code className="bg-stone-100 px-1 py-0.5 rounded">patient@kayakalp.com / patient123</code> | Doctor: <code className="bg-stone-100 px-1 py-0.5 rounded">panchakarma@kayakalp.com / doctor123</code> | Admin: <code className="bg-stone-100 px-1 py-0.5 rounded">admin@kayakalp.com / admin123</code>
               </div>
             </form>
@@ -374,7 +374,7 @@ export default function AuthPage() {
                       className={`py-2 rounded-xl text-xs font-black border transition-all ${
                         role === 'PATIENT'
                           ? 'bg-emerald-50 border-ayur-primary text-ayur-primary shadow-sm'
-                          : 'border-stone-200 text-stone-450'
+                          : 'border-stone-200 text-stone-500'
                       }`}
                     >
                       I am a Patient
@@ -385,7 +385,7 @@ export default function AuthPage() {
                       className={`py-2 rounded-xl text-xs font-black border transition-all ${
                         role === 'DOCTOR'
                           ? 'bg-emerald-50 border-ayur-primary text-ayur-primary shadow-sm'
-                          : 'border-stone-200 text-stone-450'
+                          : 'border-stone-200 text-stone-500'
                       }`}
                     >
                       I am a Doctor
@@ -597,7 +597,7 @@ export default function AuthPage() {
                     <button
                       type="button"
                       onClick={() => setSignupStep(1)}
-                      className="w-1/2 py-2 rounded-xl border border-stone-200 text-stone-605 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
+                      className="w-1/2 py-2 rounded-xl border border-stone-200 text-stone-600 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       <span>Back</span>
@@ -646,7 +646,7 @@ export default function AuthPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-stone-50 p-3 rounded-2xl border border-stone-150">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-stone-50 p-3 rounded-2xl border border-stone-200">
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-stone-700">Allergies</label>
                       <input
@@ -739,7 +739,7 @@ export default function AuthPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-1 bg-stone-50 p-3 rounded-2xl border border-stone-150">
+                  <div className="space-y-1 bg-stone-50 p-3 rounded-2xl border border-stone-200">
                     <label className="text-xs font-bold text-stone-700 block">Upload Initial Medical Reports</label>
                     <input
                       type="file"
@@ -758,7 +758,7 @@ export default function AuthPage() {
                     <button
                       type="button"
                       onClick={() => setSignupStep(2)}
-                      className="w-1/2 py-2 rounded-xl border border-stone-200 text-stone-605 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
+                      className="w-1/2 py-2 rounded-xl border border-stone-200 text-stone-600 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       <span>Back</span>
@@ -877,7 +877,7 @@ export default function AuthPage() {
                     <button
                       type="button"
                       onClick={() => setSignupStep(2)}
-                      className="w-1/2 py-2 rounded-xl border border-stone-200 text-stone-605 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
+                      className="w-1/2 py-2 rounded-xl border border-stone-200 text-stone-600 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       <span>Back</span>
@@ -905,11 +905,11 @@ export default function AuthPage() {
               {signupStep === 4 && (
                 <div className="space-y-5">
                   <div className="p-4 bg-emerald-50/20 border border-emerald-200/50 rounded-2xl space-y-3">
-                    <h4 className="text-xs font-bold text-stone-850 flex items-center gap-1">
+                    <h4 className="text-xs font-bold text-stone-800 flex items-center gap-1">
                       <Shield className="w-4 h-4 text-emerald-800" />
                       <span>Verification & Terms Consent</span>
                     </h4>
-                    <p className="text-[10px] text-stone-550 leading-relaxed">
+                    <p className="text-[10px] text-stone-600 leading-relaxed">
                       By submitting registration, you consent to secure data storage under the health privacy guidelines. A simulated verification OTP will be sent to your email to verify authenticity.
                     </p>
 
@@ -930,7 +930,7 @@ export default function AuthPage() {
                     <button
                       type="button"
                       onClick={() => setSignupStep(3)}
-                      className="w-1/2 py-2.5 rounded-xl border border-stone-200 text-stone-605 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
+                      className="w-1/2 py-2.5 rounded-xl border border-stone-200 text-stone-600 text-xs font-bold flex items-center justify-center gap-1 hover:bg-stone-50"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       <span>Back</span>

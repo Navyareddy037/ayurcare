@@ -191,7 +191,7 @@ export default function AdminDashboard() {
   }));
 
   return (
-    <div className={`min-h-screen transition-colors duration-200 ${darkMode ? 'bg-stone-950 text-stone-100' : 'bg-stone-50 text-stone-850'}`}>
+    <div className={`min-h-screen transition-colors duration-200 ${darkMode ? 'bg-stone-950 text-stone-100 dark' : 'bg-stone-50 text-stone-800'}`}>
       
       {/* Header controls toggle */}
       <div className="border-b border-stone-200/50 bg-white/70 dark:bg-stone-900/50 backdrop-blur sticky top-0 z-40">
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
               onClick={() => setDarkMode(!darkMode)}
               className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-100 dark:hover:bg-stone-800 flex items-center justify-center bg-white dark:bg-stone-900"
             >
-              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-605" />}
+              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
             </button>
 
             <button
@@ -311,11 +311,11 @@ export default function AdminDashboard() {
               <h3 className="font-bold text-sm text-stone-900 dark:text-white">Doctor Credentials Verification</h3>
               <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
                 {doctors.map(doc => (
-                  <div key={doc.id} className="p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/30 dark:bg-stone-850/30 text-xs flex justify-between items-center">
+                  <div key={doc.id} className="p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/30 dark:bg-stone-800/30 text-xs flex justify-between items-center">
                     <div>
                       <div className="font-bold text-stone-900 dark:text-white">{doc.user?.name}</div>
                       <span className="text-[10px] text-ayur-primary font-bold">{doc.specialization}</span>
-                      <div className="text-[9px] text-stone-450 mt-0.5">Certificates: {doc.certificates || 'Pending Review'}</div>
+                      <div className="text-[9px] text-stone-500 mt-0.5">Certificates: {doc.certificates || 'Pending Review'}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       <span className={`text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider ${doc.status === 'APPROVED' ? 'bg-emerald-50 text-ayur-primary' : 'bg-red-50 text-red-650'}`}>
@@ -340,11 +340,11 @@ export default function AdminDashboard() {
               <h3 className="font-bold text-sm text-stone-900 dark:text-white">Active System Bookings Auditing</h3>
               <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
                 {appointments.map(app => (
-                  <div key={app.id} className="p-3.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/30 dark:bg-stone-850/30 text-xs space-y-3">
+                  <div key={app.id} className="p-3.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/30 dark:bg-stone-800/30 text-xs space-y-3">
                     <div className="flex justify-between items-start gap-4">
                       <div>
-                        <div className="font-bold text-stone-905 dark:text-white">Patient: {app.patient?.name}</div>
-                        <div className="text-[10px] text-stone-450 mt-0.5">Doctor: {app.doctor?.user?.name}</div>
+                        <div className="font-bold text-stone-900 dark:text-white">Patient: {app.patient?.name}</div>
+                        <div className="text-[10px] text-stone-500 mt-0.5">Doctor: {app.doctor?.user?.name}</div>
                       </div>
                       <span className="text-[9px] px-2 py-0.5 rounded bg-emerald-50 text-ayur-primary font-bold uppercase">{app.status}</span>
                     </div>
@@ -378,19 +378,19 @@ export default function AdminDashboard() {
                     value={ticketResponse}
                     onChange={(e) => setTicketResponse(e.target.value)}
                     rows={3}
-                    className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-xs"
+                    className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 rounded-lg text-xs"
                   />
                   <div className="flex justify-between items-center gap-3">
                     <select
                       value={ticketStatus}
                       onChange={(e) => setTicketStatus(e.target.value)}
-                      className="p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-xs"
+                      className="p-2 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 rounded-lg text-xs"
                     >
                       <option value="RESOLVED">RESOLVED</option>
                       <option value="CLOSED">CLOSED</option>
                     </select>
                     <div className="flex gap-2">
-                      <button type="button" onClick={() => setAnsweringTicketId(null)} className="px-3 py-1.5 border rounded-lg hover:bg-stone-50 text-stone-605">
+                      <button type="button" onClick={() => setAnsweringTicketId(null)} className="px-3 py-1.5 border rounded-lg hover:bg-stone-50 text-stone-600">
                         Cancel
                       </button>
                       <button type="submit" className="px-4 py-1.5 bg-ayur-primary text-white font-bold rounded-lg hover:bg-ayur-secondary">
@@ -413,7 +413,7 @@ export default function AdminDashboard() {
               ) : (
                 <div className="space-y-3">
                   {tickets.map(t => (
-                    <div key={t.id} className="p-4 rounded-2xl bg-stone-50/50 dark:bg-stone-850/30 border border-stone-200/50 dark:border-stone-800 text-xs space-y-2">
+                    <div key={t.id} className="p-4 rounded-2xl bg-stone-50/50 dark:bg-stone-800/30 border border-stone-200/50 dark:border-stone-800 text-xs space-y-2">
                       <div className="flex justify-between items-center">
                         <span className="font-bold text-stone-900 dark:text-white">Ticket Subject: {t.subject}</span>
                         <span className={`text-[8px] font-bold px-2 py-0.5 rounded ${t.status === 'OPEN' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}`}>
@@ -423,7 +423,7 @@ export default function AdminDashboard() {
                       <p className="text-stone-600 dark:text-stone-300">{t.description}</p>
                       
                       {t.response ? (
-                        <div className="p-2.5 bg-white dark:bg-stone-800 border-l-2 border-emerald-600 rounded text-stone-605 mt-2">
+                        <div className="p-2.5 bg-white dark:bg-stone-800 border-l-2 border-emerald-600 rounded text-stone-600 mt-2">
                           <strong>Admin Reply:</strong> {t.response}
                         </div>
                       ) : (
@@ -460,7 +460,7 @@ export default function AdminDashboard() {
                     placeholder="e.g. Benefits of Tulsi during Winter..."
                     value={blogTitle}
                     onChange={(e) => setBlogTitle(e.target.value)}
-                    className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-xs"
+                    className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 rounded-lg text-xs"
                   />
                 </div>
                 <div className="space-y-1">
@@ -471,7 +471,7 @@ export default function AdminDashboard() {
                     value={blogContent}
                     onChange={(e) => setBlogContent(e.target.value)}
                     rows={4}
-                    className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 rounded-lg text-xs"
+                    className="w-full p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 rounded-lg text-xs"
                   />
                 </div>
                 <button type="submit" className="w-full py-2 bg-ayur-primary text-white font-bold rounded-xl hover:bg-ayur-secondary shadow-sm">
@@ -485,7 +485,7 @@ export default function AdminDashboard() {
               <h3 className="font-bold text-sm text-stone-900 dark:text-white">Active System Articles</h3>
               <div className="space-y-2">
                 {blogList.map(b => (
-                  <div key={b.id} className="p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-850/20 text-xs flex justify-between items-center">
+                  <div key={b.id} className="p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-800/20 text-xs flex justify-between items-center">
                     <div>
                       <div className="font-bold text-stone-900 dark:text-white">{b.title}</div>
                       <span className="text-[10px] text-stone-400">Category: {b.category}</span>

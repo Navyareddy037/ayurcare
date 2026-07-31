@@ -391,7 +391,7 @@ export default function TreatmentsDetail() {
               className={`px-4 py-2 rounded-xl transition-all border ${
                 (!id || (id !== 'clinical-therapies' && id !== 'special-care'))
                   ? 'bg-ayur-primary border-transparent text-white shadow'
-                  : 'bg-white border-stone-200 text-stone-605 hover:bg-stone-50'
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
               }`}
             >
               All Treatments
@@ -401,7 +401,7 @@ export default function TreatmentsDetail() {
               className={`px-4 py-2 rounded-xl transition-all border ${
                 id === 'clinical-therapies'
                   ? 'bg-ayur-primary border-transparent text-white shadow'
-                  : 'bg-white border-stone-200 text-stone-605 hover:bg-stone-50'
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
               }`}
             >
               Clinical Therapies
@@ -411,7 +411,7 @@ export default function TreatmentsDetail() {
               className={`px-4 py-2 rounded-xl transition-all border ${
                 id === 'special-care'
                   ? 'bg-ayur-primary border-transparent text-white shadow'
-                  : 'bg-white border-stone-200 text-stone-605 hover:bg-stone-50'
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
               }`}
             >
               Special Care
@@ -458,13 +458,13 @@ export default function TreatmentsDetail() {
                       <h3 className="font-extrabold text-base text-stone-900 leading-tight">
                         {item.title.split(' (')[0]}
                       </h3>
-                      <p className="text-xs text-stone-505 font-medium leading-relaxed line-clamp-2">
+                      <p className="text-xs text-stone-500 font-medium leading-relaxed line-clamp-2">
                         {item.overview}
                       </p>
                     </div>
 
                     {/* Suitable For */}
-                    <div className="text-[11px] text-stone-605 font-semibold space-y-0.5">
+                    <div className="text-[11px] text-stone-600 font-semibold space-y-0.5">
                       <span className="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Suitable For:</span>
                       <p className="italic text-emerald-800 font-medium">"{info.suitableFor}"</p>
                     </div>
@@ -583,7 +583,7 @@ export default function TreatmentsDetail() {
                   className={`px-4 py-2.5 border-b-2 transition-all ${
                     activeTab === tab.id 
                       ? 'border-ayur-primary text-ayur-primary' 
-                      : 'border-transparent text-stone-400 hover:text-stone-605'
+                      : 'border-transparent text-stone-400 hover:text-stone-600'
                   }`}
                 >
                   {tab.label}
@@ -596,28 +596,28 @@ export default function TreatmentsDetail() {
               <div className="space-y-6 text-xs sm:text-sm animate-fadeIn">
                 <div className="space-y-2">
                   <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Condition Description</span>
-                  <p className="text-stone-605 dark:text-stone-300 leading-relaxed font-medium">{treatment.overview}</p>
+                  <p className="text-stone-600 dark:text-stone-300 leading-relaxed font-medium">{treatment.overview}</p>
                 </div>
 
                 {/* Duration, Recovery, Suitable For Card Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                   <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 dark:bg-emerald-950/10 dark:border-emerald-900/50 space-y-1">
-                    <span className="text-[9px] text-stone-450 dark:text-stone-400 font-bold uppercase tracking-wider block">Treatment Duration</span>
+                    <span className="text-[9px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">Treatment Duration</span>
                     <span className="text-xs font-bold text-emerald-800 dark:text-emerald-350">{TREATMENT_INFOS[activeKey]?.duration || '7 - 14 Days'}</span>
                   </div>
                   <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 dark:bg-emerald-950/10 dark:border-emerald-900/50 space-y-1">
-                    <span className="text-[9px] text-stone-450 dark:text-stone-400 font-bold uppercase tracking-wider block">Who Should Take It</span>
+                    <span className="text-[9px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">Who Should Take It</span>
                     <span className="text-xs font-bold text-emerald-800 dark:text-emerald-350 truncate block" title={TREATMENT_INFOS[activeKey]?.suitableFor}>{TREATMENT_INFOS[activeKey]?.suitableFor || 'People seeking Dosha balance'}</span>
                   </div>
                   <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 dark:bg-emerald-950/10 dark:border-emerald-900/50 space-y-1">
-                    <span className="text-[9px] text-stone-450 dark:text-stone-400 font-bold uppercase tracking-wider block">Recovery Process</span>
+                    <span className="text-[9px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">Recovery Process</span>
                     <span className="text-xs font-bold text-emerald-800 dark:text-emerald-350">1 - 2 Weeks (Gradual Balancing)</span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-stone-100 dark:border-stone-850">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-stone-100 dark:border-stone-800">
                   <div className="space-y-2">
-                    <span className="text-[10px] text-stone-405 dark:text-stone-400 font-extrabold uppercase tracking-widest block flex items-center gap-1">
+                    <span className="text-[10px] text-stone-400 dark:text-stone-400 font-extrabold uppercase tracking-widest block flex items-center gap-1">
                       <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
                       Common Symptoms
                     </span>
@@ -632,7 +632,7 @@ export default function TreatmentsDetail() {
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-[10px] text-stone-405 dark:text-stone-400 font-extrabold uppercase tracking-widest block">Root Causes</span>
+                    <span className="text-[10px] text-stone-400 dark:text-stone-400 font-extrabold uppercase tracking-widest block">Root Causes</span>
                     <ul className="space-y-2 text-xs text-stone-600 dark:text-stone-300 font-medium">
                       {treatment.causes.map((c, i) => (
                         <li key={i} className="flex items-start gap-2">
@@ -646,7 +646,7 @@ export default function TreatmentsDetail() {
 
                 <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-900 border border-stone-200/50 dark:border-stone-800 space-y-1.5 mt-4">
                   <span className="text-[10px] text-stone-400 dark:text-stone-500 font-bold uppercase tracking-wider block">Ayur Diagnosis Guidelines</span>
-                  <p className="text-xs text-stone-605 dark:text-stone-300 font-medium leading-relaxed">{treatment.diagnosis}</p>
+                  <p className="text-xs text-stone-600 dark:text-stone-300 font-medium leading-relaxed">{treatment.diagnosis}</p>
                 </div>
               </div>
             )}
@@ -660,7 +660,7 @@ export default function TreatmentsDetail() {
                 </div>
 
                 <div className="space-y-3 pt-4 border-t border-stone-100">
-                  <span className="text-[10px] text-stone-405 font-extrabold uppercase tracking-widest block">Key Benefits of Treatment</span>
+                  <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest block">Key Benefits of Treatment</span>
                   <ul className="space-y-2.5 text-xs text-stone-600 font-medium">
                     {treatment.benefits.map((b, i) => (
                       <li key={i} className="flex items-center gap-2">
@@ -705,7 +705,7 @@ export default function TreatmentsDetail() {
                 {/* Post-Treatment Care Instructions */}
                 <div className="p-5 rounded-2xl bg-amber-50/30 border border-amber-250/50 dark:bg-amber-950/10 dark:border-amber-900/50 space-y-2 mt-6">
                   <span className="text-[10px] text-amber-800 dark:text-amber-300 font-extrabold uppercase tracking-wider block">⚠️ Post-Treatment Care Instructions</span>
-                  <ul className="list-disc pl-4 space-y-1.5 text-stone-605 dark:text-stone-305 font-medium text-xs">
+                  <ul className="list-disc pl-4 space-y-1.5 text-stone-600 dark:text-stone-300 font-medium text-xs">
                     <li>Avoid direct exposure to cold wind, air conditioning, and dust immediately after therapy.</li>
                     <li>Favour warm, easily digestible meals (peya, kitchari) for 24-48 hours.</li>
                     <li>Refrain from high-intensity workouts; stick to gentle walks or joint rotations.</li>
@@ -726,7 +726,7 @@ export default function TreatmentsDetail() {
                       <HelpCircle className="w-4 h-4 text-ayur-primary shrink-0" />
                       <span>{f.q}</span>
                     </div>
-                    <p className="text-stone-605 font-medium leading-relaxed pl-5">{f.a}</p>
+                    <p className="text-stone-600 font-medium leading-relaxed pl-5">{f.a}</p>
                   </div>
                 ))}
               </div>

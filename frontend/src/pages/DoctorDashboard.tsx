@@ -471,10 +471,10 @@ export default function DoctorDashboard() {
   if (authLoading) return null;
 
   return (
-    <div className={`min-h-screen transition-colors duration-250 ${darkMode ? 'bg-[#0A0F0C] text-stone-100' : 'bg-[#F6F7F5] text-stone-850'}`}>
+    <div className={`min-h-screen transition-colors duration-250 ${darkMode ? 'bg-[#0A0F0C] text-stone-100 dark' : 'bg-[#F6F7F5] text-stone-800'}`}>
       
       {/* Top navbar */}
-      <div className="border-b border-stone-200/50 dark:border-stone-850 bg-white/70 dark:bg-[#111613]/85 backdrop-blur sticky top-0 z-40">
+      <div className="border-b border-stone-200/50 dark:border-stone-800 bg-white/70 dark:bg-[#111613]/85 backdrop-blur sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-ayur-primary flex items-center justify-center text-white">
@@ -486,7 +486,7 @@ export default function DoctorDashboard() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-              className="p-2 px-3 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-105 text-xs font-bold flex items-center gap-1.5"
+              className="p-2 px-3 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-100 text-xs font-bold flex items-center gap-1.5"
             >
               <Globe className="w-3.5 h-3.5" />
               <span>{lang === 'en' ? 'हिन्दी' : 'English'}</span>
@@ -494,7 +494,7 @@ export default function DoctorDashboard() {
 
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-105 flex items-center justify-center"
+              className="p-2 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-100 flex items-center justify-center"
             >
               {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
             </button>
@@ -517,12 +517,12 @@ export default function DoctorDashboard() {
           
           {/* Left Sidebar Menu */}
           <div className="lg:col-span-3 space-y-3 bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 p-5 rounded-[28px] shadow-sm">
-            <div className="flex items-center gap-3 pb-5 border-b border-stone-150 dark:border-stone-800">
+            <div className="flex items-center gap-3 pb-5 border-b border-stone-200 dark:border-stone-800">
               <div className="w-11 h-11 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-ayur-primary flex items-center justify-center font-bold text-lg border border-emerald-150/50">
                 {user?.name?.charAt(0) || 'D'}
               </div>
               <div className="overflow-hidden">
-                <h4 className="font-extrabold text-xs text-stone-850 dark:text-white truncate">{user?.name}</h4>
+                <h4 className="font-extrabold text-xs text-stone-800 dark:text-white truncate">{user?.name}</h4>
                 <span className="text-[9px] bg-emerald-50 dark:bg-emerald-950 text-ayur-primary dark:text-emerald-400 px-2 py-0.5 rounded font-black tracking-wider uppercase inline-block mt-1">
                   {user?.role}
                 </span>
@@ -585,7 +585,7 @@ export default function DoctorDashboard() {
                   
                   {/* Left column: patient history & reports */}
                   <div className="space-y-4">
-                    <div className="p-4 bg-stone-50 dark:bg-stone-800/20 border border-stone-200/50 dark:border-stone-800 rounded-xl space-y-3.5 text-xs text-stone-750 dark:text-stone-305">
+                    <div className="p-4 bg-stone-50 dark:bg-stone-800/20 border border-stone-200/50 dark:border-stone-800 rounded-xl space-y-3.5 text-xs text-stone-700 dark:text-stone-300">
                       <h4 className="font-bold text-xs text-stone-400 uppercase tracking-wider">Patient Vitals & Medical Background</h4>
                       <div className="grid grid-cols-2 gap-2 text-[11px] border-b border-stone-200/40 pb-2">
                         <div><strong>Blood Group:</strong> {consultingPatient?.patientProfile?.bloodType || 'O+'}</div>
@@ -612,7 +612,7 @@ export default function DoctorDashboard() {
                       {consultingPatient?.medicalRecords && consultingPatient.medicalRecords.length > 0 ? (
                         <div className="space-y-2">
                           {consultingPatient.medicalRecords.map((rec: any, idx: number) => (
-                            <div key={idx} className="flex justify-between items-center p-2 rounded bg-white dark:bg-stone-900 border border-stone-150 dark:border-stone-800">
+                            <div key={idx} className="flex justify-between items-center p-2 rounded bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
                               <span className="font-medium text-[11px] text-stone-800 dark:text-stone-200">{rec.fileName}</span>
                               <a href={rec.fileUrl} download className="text-[9px] font-bold text-ayur-primary flex items-center gap-0.5 hover:underline">
                                 <Download className="w-3 h-3" />
@@ -674,7 +674,7 @@ export default function DoctorDashboard() {
                         </div>
 
                         {medsList.length > 0 && (
-                          <div className="space-y-1 bg-stone-50 dark:bg-stone-850 p-2 rounded border border-stone-150 dark:border-stone-800 max-h-24 overflow-y-auto mt-1">
+                          <div className="space-y-1 bg-stone-50 dark:bg-stone-800 p-2 rounded border border-stone-200 dark:border-stone-800 max-h-24 overflow-y-auto mt-1">
                             {medsList.map((m, i) => (
                               <div key={i} className="flex justify-between items-center text-[10px] py-1 border-b border-stone-100 last:border-0">
                                 <span><strong>{m.name}</strong> - {m.dosage}</span>
@@ -716,14 +716,14 @@ export default function DoctorDashboard() {
                     />
                   </div>
 
-                  <div className="flex rounded-xl bg-stone-105 dark:bg-stone-800 p-1 border border-stone-200/50 dark:border-stone-800">
+                  <div className="flex rounded-xl bg-stone-100 dark:bg-stone-800 p-1 border border-stone-200/50 dark:border-stone-800">
                     {['ALL', 'PENDING', 'CONFIRMED', 'COMPLETED'].map((filter) => (
                       <button
                         key={filter} onClick={() => setStatusFilter(filter as any)}
                         className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all ${
                           statusFilter === filter 
                             ? 'bg-white dark:bg-stone-900 text-ayur-primary dark:text-emerald-450 shadow-sm' 
-                            : 'text-stone-500 hover:text-stone-750'
+                            : 'text-stone-500 hover:text-stone-700'
                         }`}
                       >
                         {filter}
@@ -753,7 +753,7 @@ export default function DoctorDashboard() {
                               {app.status}
                             </span>
                           </div>
-                          <div className="text-[10px] text-stone-450 dark:text-stone-500 mt-1">
+                          <div className="text-[10px] text-stone-500 dark:text-stone-500 mt-1">
                             Age/Gender: {app.patient?.patientProfile?.age || 'N/A'} Y &bull; {app.patient?.patientProfile?.gender || 'N/A'}
                           </div>
                           <div className="text-stone-500 dark:text-stone-400 mt-2 font-medium flex items-center gap-1.5">
@@ -802,7 +802,7 @@ export default function DoctorDashboard() {
                                 // simulated receipt download
                                 alert(`Simulated receipt file compiled successfully. Patient prescriptions are logged.`);
                               }}
-                              className="w-full sm:w-auto px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-850 hover:bg-stone-50 font-bold text-[10px] flex items-center gap-1 bg-white text-stone-750"
+                              className="w-full sm:w-auto px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-800 hover:bg-stone-50 font-bold text-[10px] flex items-center gap-1 bg-white text-stone-700"
                             >
                               <Download className="w-3 h-3 text-stone-400" />
                               <span>Prescription receipt</span>
@@ -817,7 +817,7 @@ export default function DoctorDashboard() {
                 {/* Inline reschedule modal */}
                 {reschedulingAppId && (
                   <div className="p-4 rounded-xl border border-stone-200 bg-white space-y-3 text-xs">
-                    <span className="font-bold block text-stone-850">Quick Reschedule Booking</span>
+                    <span className="font-bold block text-stone-800">Quick Reschedule Booking</span>
                     <form onSubmit={handleRescheduleSubmit} className="flex flex-wrap gap-3 items-end">
                       <div className="space-y-1">
                         <label className="text-[10px] text-stone-400 block font-bold">New Date</label>
@@ -834,7 +834,7 @@ export default function DoctorDashboard() {
                       </div>
                       <div className="flex gap-2">
                         <button type="submit" className="px-3 py-1.5 bg-ayur-primary text-white rounded font-bold">Update</button>
-                        <button type="button" onClick={() => setReschedulingAppId(null)} className="px-3 py-1.5 border border-stone-250 rounded bg-stone-50">Close</button>
+                        <button type="button" onClick={() => setReschedulingAppId(null)} className="px-3 py-1.5 border border-stone-300 rounded bg-stone-50">Close</button>
                       </div>
                     </form>
                   </div>
@@ -904,7 +904,7 @@ export default function DoctorDashboard() {
                           className={`p-2.5 rounded-xl text-xs font-bold relative flex flex-col items-center justify-center transition-all ${
                             isSelected 
                               ? 'bg-ayur-primary text-white shadow-sm' 
-                              : 'hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-750 dark:text-stone-300 bg-stone-50/20 dark:bg-stone-850/50'
+                              : 'hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 bg-stone-50/20 dark:bg-stone-800/50'
                           }`}
                         >
                           <span>{day}</span>
@@ -926,15 +926,15 @@ export default function DoctorDashboard() {
 
                   <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
                     {selectedDayAppointments.length === 0 ? (
-                      <p className="text-xs text-stone-450 dark:text-stone-500 italic py-4">No appointments scheduled for selected day.</p>
+                      <p className="text-xs text-stone-500 dark:text-stone-500 italic py-4">No appointments scheduled for selected day.</p>
                     ) : (
                       selectedDayAppointments.map(app => (
-                        <div key={app.id} className="p-3.5 rounded-xl border border-stone-150 dark:border-stone-800 bg-[#F6F7F5]/50 dark:bg-[#1A211D]/30 text-xs space-y-2">
+                        <div key={app.id} className="p-3.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-[#F6F7F5]/50 dark:bg-[#1A211D]/30 text-xs space-y-2">
                           <div className="flex justify-between items-center font-bold">
-                            <span className="text-stone-850 dark:text-stone-200">{app.patient?.name}</span>
+                            <span className="text-stone-800 dark:text-stone-200">{app.patient?.name}</span>
                             <span className="text-[10px] text-ayur-primary">{app.timeSlot}</span>
                           </div>
-                          <div className="text-[10px] text-stone-500 dark:text-stone-450 flex justify-between">
+                          <div className="text-[10px] text-stone-500 dark:text-stone-500 flex justify-between">
                             <span>Mode: {app.visitType || 'Clinic'}</span>
                             <span className="uppercase text-[9px] font-black">{app.status}</span>
                           </div>
@@ -970,7 +970,7 @@ export default function DoctorDashboard() {
                           key={p.id} onClick={() => setSelectedPatientId(p.id)}
                           className={`w-full p-4.5 rounded-xl border text-left text-xs transition-all ${
                             selectedPatientId === p.id 
-                              ? 'bg-emerald-500/5 border-ayur-primary text-stone-850 dark:text-white shadow-sm' 
+                              ? 'bg-emerald-500/5 border-ayur-primary text-stone-800 dark:text-white shadow-sm' 
                               : 'border-stone-100 dark:border-stone-800 hover:bg-stone-50/50'
                           }`}
                         >
@@ -989,10 +989,10 @@ export default function DoctorDashboard() {
                     <div className="space-y-6">
                       <div className="border-b border-stone-100 dark:border-stone-800 pb-4">
                         <h3 className="font-extrabold text-sm text-stone-900 dark:text-white">Patient Clinical Case History</h3>
-                        <p className="text-xs text-stone-450 mt-1">Name: <strong>{selectedPatient.name}</strong> | Email: {selectedPatient.email}</p>
+                        <p className="text-xs text-stone-500 mt-1">Name: <strong>{selectedPatient.name}</strong> | Email: {selectedPatient.email}</p>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4 text-xs bg-stone-50/50 dark:bg-stone-850/50 p-4 rounded-2xl border border-stone-150 dark:border-stone-800">
+                      <div className="grid grid-cols-2 gap-4 text-xs bg-stone-50/50 dark:bg-stone-800/50 p-4 rounded-2xl border border-stone-200 dark:border-stone-800">
                         <div><strong>Age/Gender:</strong> {selectedPatient.profile?.age || '30'} Y / {selectedPatient.profile?.gender || 'Male'}</div>
                         <div><strong>Blood Group:</strong> {selectedPatient.profile?.bloodType || 'O+'}</div>
                         <div><strong>Emergency Contact:</strong> {selectedPatient.profile?.emergencyName || 'N/A'} ({selectedPatient.profile?.emergencyPhone || 'N/A'})</div>
@@ -1001,20 +1001,20 @@ export default function DoctorDashboard() {
 
                       <div className="text-xs space-y-3.5">
                         <div className="space-y-1">
-                          <span className="font-bold text-stone-450 block uppercase text-[9px] tracking-wider">Allergies Profile</span>
+                          <span className="font-bold text-stone-500 block uppercase text-[9px] tracking-wider">Allergies Profile</span>
                           <p className="p-2.5 bg-red-500/5 rounded-xl border border-red-500/10 italic text-[11px] text-stone-600 dark:text-stone-300">
                             {selectedPatient.profile?.allergies || 'No allergies recorded.'}
                           </p>
                         </div>
                         <div className="space-y-1">
-                          <span className="font-bold text-stone-450 block uppercase text-[9px] tracking-wider">Current Prescribed Medications</span>
-                          <p className="p-2.5 bg-stone-50 dark:bg-stone-850 rounded-xl border border-stone-150 dark:border-stone-800 text-[11px] text-stone-600 dark:text-stone-300">
+                          <span className="font-bold text-stone-500 block uppercase text-[9px] tracking-wider">Current Prescribed Medications</span>
+                          <p className="p-2.5 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-800 text-[11px] text-stone-600 dark:text-stone-300">
                             {selectedPatient.profile?.medications || 'None recorded.'}
                           </p>
                         </div>
                         <div className="space-y-1">
-                          <span className="font-bold text-stone-450 block uppercase text-[9px] tracking-wider">Systemic Medical History & Previous Treatments</span>
-                          <p className="p-2.5 bg-stone-50 dark:bg-stone-850 rounded-xl border border-stone-150 dark:border-stone-800 text-[11px] text-stone-605 dark:text-stone-305">
+                          <span className="font-bold text-stone-500 block uppercase text-[9px] tracking-wider">Systemic Medical History & Previous Treatments</span>
+                          <p className="p-2.5 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-800 text-[11px] text-stone-600 dark:text-stone-300">
                             {selectedPatient.profile?.medicalHistory || 'No previous cases logged.'}
                           </p>
                         </div>
@@ -1027,7 +1027,7 @@ export default function DoctorDashboard() {
                             <div key={app.id} className="p-3.5 bg-stone-50 dark:bg-stone-855 rounded-xl border border-stone-200/50 dark:border-stone-800 text-xs">
                               <div className="flex justify-between items-baseline font-bold">
                                 <span className="text-stone-800 dark:text-stone-200">Consultation Date: {app.date}</span>
-                                <span className="text-[10px] text-stone-450">Vaidya consult fee paid: ₹{app.doctor?.fee}</span>
+                                <span className="text-[10px] text-stone-500">Vaidya consult fee paid: ₹{app.doctor?.fee}</span>
                               </div>
                               {app.notes && (
                                 <p className="mt-2 text-stone-500 italic text-[11px]">Notes: "{app.notes}"</p>
@@ -1038,7 +1038,7 @@ export default function DoctorDashboard() {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-xs text-stone-450 dark:text-stone-500 italic text-center py-10">Select a patient from the registry to view case history details.</p>
+                    <p className="text-xs text-stone-500 dark:text-stone-500 italic text-center py-10">Select a patient from the registry to view case history details.</p>
                   )}
                 </div>
 
@@ -1048,7 +1048,7 @@ export default function DoctorDashboard() {
             {/* TAB 4: Video consult simulator room */}
             {activeTab === 'video' && (
               <div className="p-6 rounded-[28px] bg-white dark:bg-[#121814] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-6 animate-fadeIn">
-                <div className="flex justify-between items-center border-b border-stone-100 dark:border-stone-850 pb-3">
+                <div className="flex justify-between items-center border-b border-stone-100 dark:border-stone-800 pb-3">
                   <h3 className="font-extrabold text-sm text-stone-900 dark:text-white">Online Video Consultation room</h3>
                   {callActive && (
                     <span className="px-3 py-1 rounded bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider animate-pulse">
@@ -1109,7 +1109,7 @@ export default function DoctorDashboard() {
                     </div>
 
                     {/* Quick Consultation widget - span 4 */}
-                    <div className="md:col-span-4 p-5 rounded-[24px] bg-stone-50 dark:bg-stone-850/50 border border-stone-200 dark:border-stone-800 flex flex-col justify-between text-xs space-y-4">
+                    <div className="md:col-span-4 p-5 rounded-[24px] bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-800 flex flex-col justify-between text-xs space-y-4">
                       <div className="space-y-3">
                         <h4 className="font-extrabold text-stone-900 dark:text-white border-b border-stone-200 pb-2">Active Consultation details</h4>
                         <div className="space-y-1 text-[11px] text-stone-500">
@@ -1135,7 +1135,7 @@ export default function DoctorDashboard() {
 
                   </div>
                 ) : (
-                  <div className="p-8 text-center bg-stone-50 dark:bg-stone-850/50 border border-dashed border-stone-250 dark:border-stone-800 rounded-3xl space-y-3.5">
+                  <div className="p-8 text-center bg-stone-50 dark:bg-stone-800/50 border border-dashed border-stone-300 dark:border-stone-800 rounded-3xl space-y-3.5">
                     <Video className="w-10 h-10 text-stone-400 mx-auto" />
                     <p className="text-xs text-stone-500">No active video consult running. Launch consultations via "Start Video consult" in the booking queue.</p>
                   </div>
@@ -1151,7 +1151,7 @@ export default function DoctorDashboard() {
                   <span>Vaidya Chat Console</span>
                 </h3>
 
-                <div className="p-4 bg-stone-50 dark:bg-stone-850/50 border border-stone-200/30 rounded-2xl h-60 overflow-y-auto space-y-3.5">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800/50 border border-stone-200/30 rounded-2xl h-60 overflow-y-auto space-y-3.5">
                   {doctorMessages.map((msg, idx) => (
                     <div key={idx} className={`flex ${msg.sender === 'doctor' ? 'justify-end' : 'justify-start'}`}>
                       <div className={`p-3 rounded-2xl max-w-[75%] text-xs ${msg.sender === 'doctor' ? 'bg-ayur-primary text-white shadow-sm' : 'bg-white dark:bg-stone-800 border border-stone-200/40 dark:border-stone-800/80 text-stone-800 dark:text-stone-200'}`}>
@@ -1164,7 +1164,7 @@ export default function DoctorDashboard() {
                 <form onSubmit={handleSendChat} className="flex gap-2">
                   <input
                     type="text" placeholder="Type message to patient..." value={doctorChatInput} onChange={(e) => setDoctorChatInput(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 text-xs focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 text-xs focus:outline-none"
                   />
                   <button type="submit" className="px-4.5 bg-ayur-primary text-white text-xs font-bold rounded-xl hover:bg-ayur-secondary flex items-center gap-1 shadow-sm">
                     <Send className="w-3.5 h-3.5" />
@@ -1196,7 +1196,7 @@ export default function DoctorDashboard() {
                     {['Sunday (Holidays)', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
                       <button
                         key={idx} onClick={() => handleUpdateAvailability(idx)}
-                        className="flex items-center gap-3 w-full p-2.5 rounded-xl border border-stone-100 dark:border-stone-800 bg-stone-50/20 dark:bg-stone-850/50 text-left text-xs font-semibold"
+                        className="flex items-center gap-3 w-full p-2.5 rounded-xl border border-stone-100 dark:border-stone-800 bg-stone-50/20 dark:bg-stone-800/50 text-left text-xs font-semibold"
                       >
                         <span className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${availDays.includes(idx) ? 'bg-ayur-primary border-transparent text-white' : 'border-stone-300 bg-white'}`}>
                           {availDays.includes(idx) && <Check className="w-3 h-3" />}
@@ -1275,7 +1275,7 @@ export default function DoctorDashboard() {
                 <form onSubmit={handleAddTask} className="flex gap-2 text-xs">
                   <input
                     type="text" required placeholder="Add doctor task (e.g. Review blood report of patient Kiran)..." value={newTaskTitle} onChange={(e) => setNewTaskTitle(e.target.value)}
-                    className="w-2/3 p-2.5 border border-stone-200 dark:border-stone-850 bg-white dark:bg-stone-850 rounded-xl focus:outline-none"
+                    className="w-2/3 p-2.5 border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 rounded-xl focus:outline-none"
                   />
                   <button type="submit" className="w-1/3 py-2.5 bg-ayur-primary text-white rounded-xl font-bold hover:bg-ayur-secondary shadow-sm flex items-center justify-center gap-0.5">
                     <Plus className="w-4 h-4" />
@@ -1295,7 +1295,7 @@ export default function DoctorDashboard() {
                         <span className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${t.isDone ? 'bg-ayur-primary border-transparent text-white' : 'border-stone-300 bg-white'}`}>
                           {t.isDone && <Check className="w-3 h-3" />}
                         </span>
-                        <span className={t.isDone ? 'line-through text-stone-400' : 'text-stone-750 dark:text-stone-200 font-semibold'}>
+                        <span className={t.isDone ? 'line-through text-stone-400' : 'text-stone-700 dark:text-stone-200 font-semibold'}>
                           {t.title}
                         </span>
                       </button>

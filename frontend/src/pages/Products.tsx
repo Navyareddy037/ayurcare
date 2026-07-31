@@ -158,7 +158,7 @@ export default function Products() {
               className={`px-4.5 py-2 rounded-xl transition-all ${
                 activeCategory === cat 
                   ? 'bg-ayur-primary text-white shadow shadow-emerald-950/15' 
-                  : 'bg-white border border-stone-200 text-stone-605 hover:bg-stone-50'
+                  : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50'
               }`}
             >
               {cat}
@@ -185,11 +185,11 @@ export default function Products() {
                   </div>
                   <div className="space-y-1.5">
                     <h3 className="text-lg font-black text-stone-900">Order Placed Successfully!</h3>
-                    <p className="text-xs text-stone-550 max-w-xs mx-auto">
+                    <p className="text-xs text-stone-600 max-w-xs mx-auto">
                       Your order for **{quantity}x {checkoutProduct.name}** has been recorded under Order ID: **KK-{(Math.random()*100000).toFixed(0)}**.
                     </p>
                   </div>
-                  <div className="p-3 bg-stone-50 rounded-xl border border-stone-150 text-[10.5px] text-stone-500 font-medium">
+                  <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 text-[10.5px] text-stone-500 font-medium">
                     We will send shipping coordinates to **{customerPhone}** via WhatsApp.
                   </div>
                   <button 
@@ -211,8 +211,8 @@ export default function Products() {
                         <span className="text-[9px] bg-emerald-950 text-white font-bold px-2 py-0.5 rounded uppercase tracking-wider">
                           {checkoutProduct.category}
                         </span>
-                        <h4 className="font-extrabold text-sm text-stone-905 mt-1.5 leading-snug">{checkoutProduct.name}</h4>
-                        <span className="text-xs font-black text-stone-850 block mt-1">₹{checkoutProduct.price} / unit</span>
+                        <h4 className="font-extrabold text-sm text-stone-900 mt-1.5 leading-snug">{checkoutProduct.name}</h4>
+                        <span className="text-xs font-black text-stone-800 block mt-1">₹{checkoutProduct.price} / unit</span>
                       </div>
                     </div>
 
@@ -220,7 +220,7 @@ export default function Products() {
                       {/* Quantity adjustment */}
                       <div className="flex justify-between items-center">
                         <span className="font-bold text-stone-600">Select Quantity</span>
-                        <div className="flex items-center gap-2 border border-stone-250 rounded-lg p-0.5">
+                        <div className="flex items-center gap-2 border border-stone-300 rounded-lg p-0.5">
                           <button 
                             type="button" onClick={() => setQuantity(q => Math.max(1, q - 1))}
                             className="p-1 hover:bg-stone-50 text-stone-500"
@@ -238,12 +238,12 @@ export default function Products() {
                       </div>
 
                       {/* Pricing breakdowns */}
-                      <div className="space-y-1 bg-stone-50 p-3 rounded-xl border border-stone-150">
-                        <div className="flex justify-between text-stone-550">
+                      <div className="space-y-1 bg-stone-50 p-3 rounded-xl border border-stone-200">
+                        <div className="flex justify-between text-stone-600">
                           <span>Subtotal</span>
                           <span>₹{getSubtotal()}</span>
                         </div>
-                        <div className="flex justify-between text-stone-550">
+                        <div className="flex justify-between text-stone-600">
                           <span>Shipping Cost</span>
                           <span>{getShippingCost() === 0 ? 'FREE' : `₹${getShippingCost()}`}</span>
                         </div>
@@ -264,7 +264,7 @@ export default function Products() {
 
                     <div className="space-y-3">
                       <div className="space-y-1">
-                        <label className="font-bold text-stone-550 block">Receiver's Name</label>
+                        <label className="font-bold text-stone-600 block">Receiver's Name</label>
                         <input 
                           type="text" required placeholder="Full Name" value={customerName}
                           onChange={(e) => setCustomerName(e.target.value)}
@@ -273,7 +273,7 @@ export default function Products() {
                       </div>
 
                       <div className="space-y-1">
-                        <label className="font-bold text-stone-550 block">Mobile Number (WhatsApp Support)</label>
+                        <label className="font-bold text-stone-600 block">Mobile Number (WhatsApp Support)</label>
                         <input 
                           type="tel" required placeholder="e.g. +91 9827000000" value={customerPhone}
                           onChange={(e) => setCustomerPhone(e.target.value)}
@@ -282,7 +282,7 @@ export default function Products() {
                       </div>
 
                       <div className="space-y-1">
-                        <label className="font-bold text-stone-550 block">Shipping Address</label>
+                        <label className="font-bold text-stone-600 block">Shipping Address</label>
                         <textarea 
                           required rows={2} placeholder="Complete Street Address, City" value={shippingAddress}
                           onChange={(e) => setShippingAddress(e.target.value)}
@@ -291,7 +291,7 @@ export default function Products() {
                       </div>
 
                       <div className="space-y-1">
-                        <label className="font-bold text-stone-550 block">Pincode</label>
+                        <label className="font-bold text-stone-600 block">Pincode</label>
                         <input 
                           type="text" required maxLength={6} placeholder="452001" value={pincode}
                           onChange={(e) => setPincode(e.target.value)}
@@ -300,10 +300,10 @@ export default function Products() {
                       </div>
 
                       <div className="space-y-1">
-                        <label className="font-bold text-stone-550 block">Payment Mode</label>
+                        <label className="font-bold text-stone-600 block">Payment Mode</label>
                         <select 
                           value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)}
-                          className="w-full p-2 border border-stone-200 bg-white rounded-lg text-stone-605"
+                          className="w-full p-2 border border-stone-200 bg-white rounded-lg text-stone-600"
                         >
                           <option>UPI / NetBanking</option>
                           <option>Cash on Delivery (COD)</option>
@@ -349,7 +349,7 @@ export default function Products() {
                     </div>
                   </div>
 
-                  <div className="space-y-2 border-t border-stone-105 pt-3 text-[11px] text-stone-605">
+                  <div className="space-y-2 border-t border-stone-100 pt-3 text-[11px] text-stone-600">
                     <div>
                       <strong>Ingredients:</strong> <span className="text-stone-500 font-medium">{p.ingredients.join(', ')}</span>
                     </div>

@@ -205,7 +205,7 @@ export default function DoctorDirectory() {
         <select
           value={specialization}
           onChange={(e) => setSpecialization(e.target.value)}
-          className="px-3 py-2 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none focus:ring-2 focus:ring-ayur-primary text-stone-605"
+          className="px-3 py-2 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none focus:ring-2 focus:ring-ayur-primary text-stone-600"
         >
           <option value="">All Specializations</option>
           <option value="Panchakarma Specialist">Panchakarma Specialist</option>
@@ -284,7 +284,7 @@ export default function DoctorDirectory() {
                     <p className="text-xs text-stone-500 font-medium">
                       {doc.qualification} &bull; <span className="text-ayur-primary font-bold">{doc.specialization}</span>
                     </p>
-                    <div className="flex items-center gap-1.5 text-xs text-stone-605 pt-1">
+                    <div className="flex items-center gap-1.5 text-xs text-stone-600 pt-1">
                       <Globe className="w-3.5 h-3.5 text-stone-400" />
                       <span>Speaks: {doc.languages}</span>
                     </div>
@@ -312,7 +312,7 @@ export default function DoctorDirectory() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-stone-105 flex gap-3">
+              <div className="pt-4 border-t border-stone-100 flex gap-3">
                 <button
                   onClick={() => {
                     setReviewDocId(reviewDocId === doc.id ? null : doc.id);
@@ -414,7 +414,7 @@ export default function DoctorDirectory() {
                                 disabled={isBooked}
                                 onClick={() => setBookingTime(time)}
                                 className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-850 cursor-not-allowed' :
+                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-800 cursor-not-allowed' :
                                   isSelected ? 'bg-amber-500 text-white border-transparent shadow-md font-bold ring-2 ring-amber-400/50' :
                                   'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-emerald-250 dark:border-emerald-900/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/40'
                                 }`}
@@ -439,7 +439,7 @@ export default function DoctorDirectory() {
                                 disabled={isBooked}
                                 onClick={() => setBookingTime(time)}
                                 className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-850 cursor-not-allowed' :
+                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-800 cursor-not-allowed' :
                                   isSelected ? 'bg-amber-500 text-white border-transparent shadow-md font-bold ring-2 ring-amber-400/50' :
                                   'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-emerald-250 dark:border-emerald-900/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/40'
                                 }`}
@@ -464,7 +464,7 @@ export default function DoctorDirectory() {
                                 disabled={isBooked}
                                 onClick={() => setBookingTime(time)}
                                 className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-850 cursor-not-allowed' :
+                                  isBooked ? 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border-stone-200 dark:border-stone-800 cursor-not-allowed' :
                                   isSelected ? 'bg-amber-500 text-white border-transparent shadow-md font-bold ring-2 ring-amber-400/50' :
                                   'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-emerald-250 dark:border-emerald-900/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/40'
                                 }`}
@@ -482,7 +482,7 @@ export default function DoctorDirectory() {
                     <button
                       type="button"
                       onClick={() => setBookingDocId(null)}
-                      className="w-1/3 py-2 rounded-xl border border-stone-200 hover:bg-stone-105 text-stone-600 text-[10px] font-bold"
+                      className="w-1/3 py-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-600 text-[10px] font-bold"
                     >
                       Cancel
                     </button>
@@ -549,7 +549,7 @@ export default function DoctorDirectory() {
                     <button
                       type="button"
                       onClick={() => setReviewDocId(null)}
-                      className="w-1/3 py-2 rounded-xl border border-stone-200 hover:bg-stone-105 text-stone-605 text-[10px] font-bold"
+                      className="w-1/3 py-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-600 text-[10px] font-bold"
                     >
                       Cancel
                     </button>

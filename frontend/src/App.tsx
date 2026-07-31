@@ -26,7 +26,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode; allowedRoles?: string[
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 rounded-full border-4 border-t-ayur-primary border-stone-200 animate-spin mx-auto"></div>
-          <p className="text-sm text-stone-550">Authenticating Route...</p>
+          <p className="text-sm text-stone-600">Authenticating Route...</p>
         </div>
       </div>
     );

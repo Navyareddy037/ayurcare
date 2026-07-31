@@ -788,7 +788,7 @@ export default function PatientDashboard() {
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 rounded-full border-4 border-t-ayur-primary border-stone-200 animate-spin mx-auto"></div>
-          <p className="text-sm text-stone-550">Loading Kaya Kalp Portal...</p>
+          <p className="text-sm text-stone-600">Loading Kaya Kalp Portal...</p>
         </div>
       </div>
     );
@@ -828,7 +828,7 @@ export default function PatientDashboard() {
   const unreadNotifCount = notifications.filter(n => !n.isRead).length;
 
   return (
-    <div className={`min-h-screen transition-colors duration-250 ${darkMode ? 'bg-[#0E1310] text-stone-100' : 'bg-[#F6F7F5] text-stone-850'}`}>
+    <div className={`min-h-screen transition-colors duration-250 ${darkMode ? 'bg-[#0E1310] text-stone-100 dark' : 'bg-[#F6F7F5] text-stone-800'}`}>
       
       {/* Top Banner Bar */}
       <div className="border-b border-stone-200/50 dark:border-stone-800 bg-white/70 dark:bg-stone-900/60 backdrop-blur sticky top-0 z-40">
@@ -884,12 +884,12 @@ export default function PatientDashboard() {
           
           {/* Left Sidebar navigation */}
           <div className="lg:col-span-3 space-y-3 bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 p-5 rounded-[28px] shadow-sm">
-            <div className="flex items-center gap-3 pb-5 border-b border-stone-150 dark:border-stone-800">
+            <div className="flex items-center gap-3 pb-5 border-b border-stone-200 dark:border-stone-800">
               <div className="w-11 h-11 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-ayur-primary flex items-center justify-center font-bold text-lg border border-emerald-150/50">
                 {user?.name?.charAt(0) || 'N'}
               </div>
               <div className="overflow-hidden">
-                <h4 className="font-extrabold text-xs text-stone-850 dark:text-white truncate">{user?.name}</h4>
+                <h4 className="font-extrabold text-xs text-stone-800 dark:text-white truncate">{user?.name}</h4>
                 <span className="text-[10px] text-stone-600 dark:text-stone-300 font-bold block mt-1 truncate">{user?.email}</span>
               </div>
             </div>
@@ -969,13 +969,13 @@ export default function PatientDashboard() {
                   
                   {/* Gauge 1: Ayurvedic health score */}
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm flex flex-col justify-between items-center text-center">
-                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block w-full text-left">
+                    <h3 className="font-bold text-xs text-stone-500 dark:text-stone-300 uppercase tracking-wider block w-full text-left">
                       {text.healthScore}
                     </h3>
                     <div className="relative w-28 h-28 my-4 flex items-center justify-center rounded-full border-4 border-emerald-50 dark:border-emerald-950/20">
                       <div className="absolute inset-2 rounded-full border-4 border-dashed border-ayur-primary animate-spin" style={{ animationDuration: '24s' }}></div>
                       <div className="text-center">
-                        <div className="text-2xl font-black text-stone-850 dark:text-white">84%</div>
+                        <div className="text-2xl font-black text-stone-800 dark:text-white">84%</div>
                         <div className="text-[8px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Balanced</div>
                       </div>
                     </div>
@@ -986,11 +986,11 @@ export default function PatientDashboard() {
 
                   {/* Gauge 2: BMI Calculator */}
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm flex flex-col justify-between space-y-4">
-                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-500 dark:text-stone-300 uppercase tracking-wider block">
                       BMI Classification
                     </h3>
                     <div className="space-y-2 text-center pt-2">
-                      <div className="text-3xl font-black text-stone-850 dark:text-white">{bmiInfo.score}</div>
+                      <div className="text-3xl font-black text-stone-800 dark:text-white">{bmiInfo.score}</div>
                       <div className={`text-xs font-bold uppercase tracking-wider ${bmiInfo.color}`}>
                         {bmiInfo.category}
                       </div>
@@ -1008,7 +1008,7 @@ export default function PatientDashboard() {
 
                   {/* Vitals Summary logs */}
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4">
-                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-500 dark:text-stone-300 uppercase tracking-wider block">
                       Logged Vitals Summary
                     </h3>
                     <div className="grid grid-cols-2 gap-2 text-xs">
@@ -1018,8 +1018,8 @@ export default function PatientDashboard() {
                         { label: 'Blood Sugar', value: `${vitals?.bloodSugar || 95} mg/dL` },
                         { label: 'Sleep hours', value: `${vitals?.sleepHours || 7.5} hrs` }
                       ].map((v, i) => (
-                        <div key={i} className="p-2.5 bg-[#F6F7F5] dark:bg-[#1C241F] rounded-xl border border-stone-150 dark:border-stone-800">
-                          <span className="text-[9px] text-stone-450 dark:text-stone-300 block font-bold">{v.label}</span>
+                        <div key={i} className="p-2.5 bg-[#F6F7F5] dark:bg-[#1C241F] rounded-xl border border-stone-200 dark:border-stone-800">
+                          <span className="text-[9px] text-stone-500 dark:text-stone-300 block font-bold">{v.label}</span>
                           <span className="font-bold text-stone-800 dark:text-white text-xs">{v.value}</span>
                         </div>
                       ))}
@@ -1031,7 +1031,7 @@ export default function PatientDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   {/* Dosha pie chart representation */}
                   <div className="md:col-span-4 p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4 flex flex-col justify-between">
-                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-500 dark:text-stone-300 uppercase tracking-wider block">
                       Dosha Assessment Profile
                     </h3>
                     <div className="flex flex-col gap-3 py-2">
@@ -1057,7 +1057,7 @@ export default function PatientDashboard() {
 
                   {/* Vitals charts */}
                   <div className="md:col-span-8 p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4">
-                    <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
+                    <h3 className="font-bold text-xs text-stone-500 dark:text-stone-300 uppercase tracking-wider block">
                       {text.vitalsTrend}
                     </h3>
                     {history.length > 0 ? (
@@ -1081,7 +1081,7 @@ export default function PatientDashboard() {
 
                 {/* Vitals Logger Form */}
                 <div className="p-6 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-4">
-                  <h3 className="font-bold text-xs text-stone-450 dark:text-stone-300 uppercase tracking-wider block">
+                  <h3 className="font-bold text-xs text-stone-500 dark:text-stone-300 uppercase tracking-wider block">
                     {text.vitalsLogger}
                   </h3>
                   {vitalsSuccess && (
@@ -1249,7 +1249,7 @@ export default function PatientDashboard() {
                     <span>{text.previous}</span>
                   </h3>
                   {pastAppointments.length === 0 ? (
-                    <p className="text-xs text-stone-550 dark:text-stone-400 italic">No past appointments logged.</p>
+                    <p className="text-xs text-stone-600 dark:text-stone-400 italic">No past appointments logged.</p>
                   ) : (
                     <div className="space-y-4">
                       {pastAppointments.map(app => (
@@ -1262,14 +1262,14 @@ export default function PatientDashboard() {
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleDownloadPrescription(app)}
-                                className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1 text-stone-700 dark:text-stone-250"
+                                className="px-2.5 py-1.5 rounded-lg border border-stone-300 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1 text-stone-700 dark:text-stone-300"
                               >
                                 <Download className="w-3.5 h-3.5" />
                                 <span>Receipt</span>
                               </button>
                               <button
                                 onClick={() => handleDownloadInvoice(app)}
-                                className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1 text-stone-700 dark:text-stone-250"
+                                className="px-2.5 py-1.5 rounded-lg border border-stone-300 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800 text-[10px] font-bold flex items-center gap-1 text-stone-700 dark:text-stone-300"
                               >
                                 <DollarSign className="w-3.5 h-3.5" />
                                 <span>Invoice</span>
@@ -1278,7 +1278,7 @@ export default function PatientDashboard() {
                           </div>
                           
                           {app.notes && (
-                            <div className="p-3 bg-stone-50 dark:bg-stone-800/30 border border-stone-105 dark:border-stone-800/80 rounded-xl text-stone-700 dark:text-stone-250">
+                            <div className="p-3 bg-stone-50 dark:bg-stone-800/30 border border-stone-100 dark:border-stone-800/80 rounded-xl text-stone-700 dark:text-stone-300">
                               <div className="font-bold text-[9px] uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-1">Doctor Assessment Notes</div>
                               <p className="italic text-xs">"{app.notes}"</p>
                             </div>
@@ -1347,7 +1347,7 @@ export default function PatientDashboard() {
                         placeholder="Enter report name (e.g. Blood Test June 2026)..."
                         value={newRecordName}
                         onChange={(e) => setNewRecordName(e.target.value)}
-                        className="w-full p-2.5 rounded-xl border border-stone-250 dark:border-stone-800 bg-white dark:bg-stone-850 text-stone-900 dark:text-white text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary font-semibold disabled:opacity-60"
+                        className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-800 bg-white dark:bg-stone-800 text-stone-900 dark:text-white text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary font-semibold disabled:opacity-60"
                       />
                     </div>
 
@@ -1387,7 +1387,7 @@ export default function PatientDashboard() {
                         <p className="font-bold text-stone-700 dark:text-stone-300 text-xs">
                           {selectedFile ? `Selected: ${selectedFile.name}` : 'Click to browse or drag your file here'}
                         </p>
-                        <p className="text-[10px] text-stone-450 mt-1">Supports PDF, JPG, JPEG, PNG (Max 5MB)</p>
+                        <p className="text-[10px] text-stone-500 mt-1">Supports PDF, JPG, JPEG, PNG (Max 5MB)</p>
                       </div>
                     </div>
 
@@ -1433,9 +1433,9 @@ export default function PatientDashboard() {
                       <p className="text-xs text-stone-500 italic text-center py-6">No custom health documents in your vault.</p>
                     ) : (
                       uploadedRecords.map(record => (
-                        <div key={record.id} className="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl bg-stone-50 dark:bg-stone-850/50 border border-stone-100 dark:border-stone-800 gap-3">
+                        <div key={record.id} className="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl bg-stone-50 dark:bg-stone-800/50 border border-stone-100 dark:border-stone-800 gap-3">
                           <div className="space-y-1 min-w-0 flex-1">
-                            <div className="font-bold text-stone-850 dark:text-white flex items-center gap-1.5 text-xs">
+                            <div className="font-bold text-stone-800 dark:text-white flex items-center gap-1.5 text-xs">
                               <FileText className="w-4 h-4 text-ayur-primary shrink-0" />
                               <span className="truncate">{record.reportName || record.fileName || 'Unnamed Document'}</span>
                             </div>
@@ -1449,13 +1449,13 @@ export default function PatientDashboard() {
                           <div className="flex gap-2 justify-end shrink-0">
                             <button
                               onClick={() => handleViewRecord(record)}
-                              className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-750 transition-colors"
+                              className="px-2.5 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                             >
                               View / Preview
                             </button>
                             <button
                               onClick={() => handleDownloadRecord(record)}
-                              className="px-2.5 py-1.5 rounded-lg border border-stone-250 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-750 transition-colors"
+                              className="px-2.5 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-[10px] font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                             >
                               Download
                             </button>
@@ -1495,7 +1495,7 @@ export default function PatientDashboard() {
                         <span className={`w-4.5 h-4.5 rounded border flex items-center justify-center flex-shrink-0 mt-0.5 ${t.done ? 'bg-ayur-primary border-transparent text-white' : 'border-stone-300 bg-white dark:bg-stone-800'}`}>
                           {t.done && <Check className="w-3.5 h-3.5" />}
                         </span>
-                        <span className={t.done ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-750 dark:text-stone-200 font-medium'}>
+                        <span className={t.done ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-700 dark:text-stone-200 font-medium'}>
                           {t.task}
                         </span>
                       </button>
@@ -1517,7 +1517,7 @@ export default function PatientDashboard() {
                       <button onClick={() => setLoggedWater(prev => parseFloat((prev + 0.25).toFixed(2)))} className="w-1/2 py-2 bg-emerald-50 dark:bg-emerald-950/30 text-ayur-primary dark:text-emerald-400 text-xs font-bold rounded-lg hover:bg-emerald-100">
                         + 250ml
                       </button>
-                      <button onClick={() => setLoggedWater(2.0)} className="w-1/2 py-2 border border-stone-200 text-stone-605 text-xs font-bold rounded-lg hover:bg-stone-50 dark:hover:bg-stone-850">
+                      <button onClick={() => setLoggedWater(2.0)} className="w-1/2 py-2 border border-stone-200 text-stone-600 text-xs font-bold rounded-lg hover:bg-stone-50 dark:hover:bg-stone-800">
                         Reset
                       </button>
                     </div>
@@ -1527,14 +1527,14 @@ export default function PatientDashboard() {
                   <div className="p-5 rounded-[24px] bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 shadow-sm space-y-3">
                     <h4 className="font-bold text-xs text-stone-400 uppercase tracking-wider">Sleep Hours Logged</h4>
                     <div className="flex justify-between items-baseline py-2">
-                      <span className="text-3xl font-black text-stone-850 dark:text-white">{loggedSleep} hrs</span>
+                      <span className="text-3xl font-black text-stone-800 dark:text-white">{loggedSleep} hrs</span>
                       <span className="text-xs text-stone-400 font-bold">Goal: 7-8 Hours</span>
                     </div>
                     <div className="flex gap-2">
                       <button onClick={() => setLoggedSleep(prev => parseFloat((prev + 0.5).toFixed(1)))} className="w-1/2 py-2 bg-emerald-50 dark:bg-emerald-950/30 text-ayur-primary dark:text-emerald-400 text-xs font-bold rounded-lg hover:bg-emerald-100">
                         + 30 Mins
                       </button>
-                      <button onClick={() => setLoggedSleep(7.0)} className="w-1/2 py-2 border border-stone-200 text-stone-605 text-xs font-bold rounded-lg hover:bg-stone-50 dark:hover:bg-stone-850">
+                      <button onClick={() => setLoggedSleep(7.0)} className="w-1/2 py-2 border border-stone-200 text-stone-600 text-xs font-bold rounded-lg hover:bg-stone-50 dark:hover:bg-stone-800">
                         Reset
                       </button>
                     </div>
@@ -1610,11 +1610,11 @@ export default function PatientDashboard() {
                           <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
                             step.status === 'completed' ? 'bg-ayur-primary text-white' :
                             step.status === 'active' ? 'bg-amber-500 text-white animate-pulse' :
-                            'bg-stone-105 dark:bg-stone-850 text-stone-450 border border-stone-200 dark:border-stone-800'
+                            'bg-stone-100 dark:bg-stone-800 text-stone-500 border border-stone-200 dark:border-stone-800'
                           }`}>
                             {step.day}
                           </span>
-                          {idx < 6 && <span className="w-0.5 h-10 bg-stone-250 dark:bg-stone-800"></span>}
+                          {idx < 6 && <span className="w-0.5 h-10 bg-stone-300 dark:bg-stone-800"></span>}
                         </div>
 
                         {/* Details contents */}
@@ -1624,7 +1624,7 @@ export default function PatientDashboard() {
                             <span className={`text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
                               step.status === 'completed' ? 'bg-emerald-100/70 text-emerald-805' :
                               step.status === 'active' ? 'bg-amber-100 text-amber-800' :
-                              'bg-stone-100 text-stone-450 dark:bg-stone-800 dark:text-stone-500'
+                              'bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-500'
                             }`}>
                               {step.status}
                             </span>
@@ -1658,8 +1658,8 @@ export default function PatientDashboard() {
                     <div className="space-y-3.5">
                       {activePlan.diet.map((item: any, i: number) => (
                         <div key={i} className="text-xs space-y-1">
-                          <span className="font-bold text-stone-450 dark:text-stone-500 uppercase text-[9px] tracking-wider block">{item.category}</span>
-                          <p className="text-stone-750 dark:text-stone-250 leading-relaxed font-medium">{item.items}</p>
+                          <span className="font-bold text-stone-500 dark:text-stone-500 uppercase text-[9px] tracking-wider block">{item.category}</span>
+                          <p className="text-stone-700 dark:text-stone-300 leading-relaxed font-medium">{item.items}</p>
                         </div>
                       ))}
                     </div>
@@ -1701,7 +1701,7 @@ export default function PatientDashboard() {
                     <textarea
                       placeholder="Write your symptoms in detail (e.g. feeling abdominal gas/acidity after eating warm food, or joint ache in cold morning)..."
                       required rows={3} value={aiSymptoms} onChange={(e) => setAiSymptoms(e.target.value)}
-                      className="w-full p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary"
+                      className="w-full p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary"
                     />
                     <button type="submit" className="px-4.5 py-2.5 bg-ayur-primary text-white text-xs font-bold rounded-xl hover:bg-ayur-secondary shadow-sm transition-all">
                       {aiLoading ? 'Running Imbalance Matrix Check...' : 'Analyze Symptoms'}
@@ -1741,7 +1741,7 @@ export default function PatientDashboard() {
                     <span>{text.chat}</span>
                   </h3>
                   
-                  <div className="p-4 bg-stone-50 dark:bg-stone-850/50 border border-stone-200/30 rounded-2xl h-52 overflow-y-auto space-y-3.5">
+                  <div className="p-4 bg-stone-50 dark:bg-stone-800/50 border border-stone-200/30 rounded-2xl h-52 overflow-y-auto space-y-3.5">
                     {chatMessages.map((msg, idx) => (
                       <div key={idx} className={`flex ${msg.sender === 'patient' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`p-3 rounded-2xl max-w-[75%] text-xs ${msg.sender === 'patient' ? 'bg-ayur-primary text-white shadow-sm' : 'bg-white dark:bg-stone-800 border border-stone-200/40 dark:border-stone-800/80 text-stone-800 dark:text-stone-200'}`}>
@@ -1754,7 +1754,7 @@ export default function PatientDashboard() {
                   <form onSubmit={handleSendChatMessage} className="flex gap-2">
                     <input
                       type="text" placeholder="Type message or update to Vaidya..." value={chatInput} onChange={(e) => setChatInput(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary"
+                      className="w-full px-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-800 text-xs focus:outline-none focus:ring-1 focus:ring-ayur-primary"
                     />
                     <button type="submit" className="px-4.5 bg-ayur-primary text-white text-xs font-bold rounded-xl hover:bg-ayur-secondary flex items-center gap-1 shadow-sm transition-all">
                       <Send className="w-3.5 h-3.5" />
@@ -1778,7 +1778,7 @@ export default function PatientDashboard() {
                 ) : (
                   <div className="space-y-2">
                     {notifications.map(notif => (
-                      <div key={notif.id} className={`p-4 rounded-xl border flex justify-between items-start text-xs transition-all ${notif.isRead ? 'bg-stone-50/50 dark:bg-stone-850/10 border-stone-100 dark:border-stone-900 text-stone-500' : 'bg-emerald-500/5 border-emerald-500/10 text-stone-800 dark:text-stone-200 font-semibold shadow-inner'}`}>
+                      <div key={notif.id} className={`p-4 rounded-xl border flex justify-between items-start text-xs transition-all ${notif.isRead ? 'bg-stone-50/50 dark:bg-stone-800/10 border-stone-100 dark:border-stone-900 text-stone-500' : 'bg-emerald-500/5 border-emerald-500/10 text-stone-800 dark:text-stone-200 font-semibold shadow-inner'}`}>
                         <div className="space-y-1">
                           <p className="text-xs">{notif.message}</p>
                           <span className="text-[9px] text-stone-400 block">{new Date(notif.createdAt).toLocaleDateString()}</span>
@@ -1843,15 +1843,15 @@ export default function PatientDashboard() {
                     <div className="space-y-3">
                       {tickets.map(t => (
                         <div key={t.id} className="p-4 rounded-xl bg-white dark:bg-[#151B17] border border-stone-200/50 dark:border-stone-800/80 text-xs space-y-2.5">
-                          <div className="flex justify-between items-center border-b border-stone-100 dark:border-stone-850 pb-2">
+                          <div className="flex justify-between items-center border-b border-stone-100 dark:border-stone-800 pb-2">
                             <span className="font-bold text-stone-900 dark:text-white">{t.subject}</span>
                             <span className={`text-[8px] font-bold px-2 py-0.5 rounded uppercase tracking-wider ${t.status === 'OPEN' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}`}>
                               {t.status}
                             </span>
                           </div>
-                          <p className="text-stone-550 dark:text-stone-400">{t.description}</p>
+                          <p className="text-stone-600 dark:text-stone-400">{t.description}</p>
                           {t.response && (
-                            <div className="p-3 bg-stone-50 dark:bg-stone-800/20 border-l-2 border-ayur-primary rounded text-stone-605 dark:text-stone-300">
+                            <div className="p-3 bg-stone-50 dark:bg-stone-800/20 border-l-2 border-ayur-primary rounded text-stone-600 dark:text-stone-300">
                               <strong>Reply from Admin:</strong> {t.response}
                             </div>
                           )}

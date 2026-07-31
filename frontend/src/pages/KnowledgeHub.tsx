@@ -34,14 +34,14 @@ export default function KnowledgeHub() {
           <span>Vedic Scriptures & Botanical Encyclopedia</span>
         </div>
         <h1 className="text-3xl font-extrabold text-stone-900">Ayurvedic Knowledge Hub</h1>
-        <p className="text-stone-550 text-sm max-w-xl mx-auto font-sans">
+        <p className="text-stone-600 text-sm max-w-xl mx-auto font-sans">
           Explore botanical descriptions of organic herbs, analyze bodily constitutions, and read seasonal wellness guidelines (Dinacharya).
         </p>
       </div>
 
       {/* Tabs / Search Controller */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white border border-stone-200 p-4 rounded-3xl shadow-sm">
-        <div className="flex rounded-xl bg-stone-105 p-1 border border-stone-200/40 w-full sm:w-auto">
+        <div className="flex rounded-xl bg-stone-100 p-1 border border-stone-200/40 w-full sm:w-auto">
           {[
             { id: 'HERB', label: 'Medicinal Herbs', icon: Leaf },
             { id: 'DOSHA', label: 'Body Doshas', icon: Layers },
@@ -116,9 +116,9 @@ export default function KnowledgeHub() {
               </div>
 
               {item.tags && (
-                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-stone-105">
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-stone-100">
                   {item.tags.split(',').map((tag: string) => (
-                    <span key={tag} className="text-[9px] px-2 py-0.5 rounded-md bg-stone-100 text-stone-550 border border-stone-200/40">
+                    <span key={tag} className="text-[9px] px-2 py-0.5 rounded-md bg-stone-100 text-stone-600 border border-stone-200/40">
                       {tag.trim()}
                     </span>
                   ))}

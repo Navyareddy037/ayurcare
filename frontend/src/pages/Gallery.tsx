@@ -175,7 +175,7 @@ export default function Gallery() {
               {/* Text descriptions */}
               <div className="p-5 space-y-1">
                 <h4 className="font-extrabold text-sm text-stone-900 leading-snug">{item.title}</h4>
-                <p className="text-xs text-stone-505 font-medium leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-stone-500 font-medium leading-relaxed">{item.desc}</p>
               </div>
 
             </div>
