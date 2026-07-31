@@ -314,7 +314,7 @@ export default function AdminDashboard() {
                   <div key={doc.id} className="p-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/30 dark:bg-stone-800/30 text-xs flex justify-between items-center">
                     <div>
                       <div className="font-bold text-stone-900 dark:text-white">{doc.user?.name}</div>
-                      <span className="text-[10px] text-ayur-primary font-bold">{doc.specialization}</span>
+                      <span className="text-[10px] text-ayur-primary dark:text-emerald-400 font-bold">{doc.specialization}</span>
                       <div className="text-[9px] text-stone-500 mt-0.5">Certificates: {doc.certificates || 'Pending Review'}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1">

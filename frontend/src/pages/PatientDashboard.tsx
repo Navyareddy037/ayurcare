@@ -1214,7 +1214,7 @@ export default function PatientDashboard() {
                         <div key={app.id} className="p-5 rounded-2xl border border-stone-200/50 dark:border-stone-800/80 bg-white dark:bg-[#151B17] flex justify-between items-center text-xs">
                           <div>
                             <div className="font-bold text-stone-900 dark:text-white text-sm">{app.doctor?.user?.name}</div>
-                            <div className="text-[10px] text-ayur-primary dark:text-emerald-450 font-bold mt-0.5">{app.doctor?.specialization}</div>
+                            <div className="text-[10px] text-ayur-primary dark:text-emerald-400 font-bold mt-0.5">{app.doctor?.specialization}</div>
                             <div className="text-stone-500 dark:text-stone-300 mt-2 font-medium flex items-center gap-1">
                               <Clock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-300" />
                               <span>{app.date} &bull; {app.timeSlot} ({app.visitType || 'Clinic'})</span>
