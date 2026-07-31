@@ -1161,38 +1161,40 @@ export default function PatientDashboard() {
                 
                 {/* Reschedule module inline */}
                 {rescheduleAppId && (
-                  <div className="p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 space-y-4">
-                    <span className="text-xs font-bold text-amber-800 dark:text-amber-300 block">Reschedule Consultation Appointment</span>
+                  <div className="p-6 rounded-2xl bg-[#F9F6EE] dark:bg-[#1F2937] border border-[#E6DFD3] dark:border-[#4B5563] space-y-4 shadow-sm">
+                    <span className="text-sm font-extrabold text-[#1F3A2B] dark:text-[#F3F4F6] block">
+                      Reschedule Consultation Appointment
+                    </span>
                     <form onSubmit={handleRescheduleSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-stone-700 dark:text-stone-300 block">Date</label>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-stone-600 dark:text-[#F3F4F6] block">Date</label>
                         <input
                           type="date" required value={rescheduleDate} onChange={(e) => setRescheduleDate(e.target.value)}
-                          className="w-full p-2 border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-850 text-stone-900 dark:text-white rounded-lg text-xs font-semibold focus:outline-none"
+                          className="w-full p-2.5 border border-[#D9D0C1] dark:border-[#4B5563] bg-white dark:bg-[#374151] text-stone-900 dark:text-white rounded-lg text-xs font-semibold focus:outline-none dark:[&::-webkit-calendar-picker-indicator]:invert"
                         />
                       </div>
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-stone-700 dark:text-stone-300 block">Time Slot</label>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-stone-600 dark:text-[#F3F4F6] block">Time Slot</label>
                         <select required value={rescheduleTime} onChange={(e) => setRescheduleTime(e.target.value)}
-                          className="w-full p-2 border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-850 text-stone-900 dark:text-white rounded-lg text-xs font-semibold focus:outline-none"
+                          className="w-full p-2.5 border border-[#D9D0C1] dark:border-[#4B5563] bg-white dark:bg-[#374151] text-stone-900 dark:text-white rounded-lg text-xs font-semibold focus:outline-none"
                         >
-                          <option value="" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">Select Time Slot</option>
-                          <option value="10:00" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">10:00 AM</option>
-                          <option value="11:30" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">11:30 AM</option>
-                          <option value="14:00" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">02:00 PM</option>
-                          <option value="15:30" className="text-stone-900 bg-white dark:text-white dark:bg-stone-800">03:30 PM</option>
+                          <option value="" className="text-stone-500 dark:text-[#D1D5DB] bg-white dark:bg-[#374151]">Select Time Slot</option>
+                          <option value="10:00" className="text-stone-900 dark:text-white bg-white dark:bg-[#374151]">10:00 AM</option>
+                          <option value="11:30" className="text-stone-900 dark:text-white bg-white dark:bg-[#374151]">11:30 AM</option>
+                          <option value="14:00" className="text-stone-900 dark:text-white bg-white dark:bg-[#374151]">02:00 PM</option>
+                          <option value="15:30" className="text-stone-900 dark:text-white bg-white dark:bg-[#374151]">03:30 PM</option>
                         </select>
                       </div>
                       <div className="flex gap-2">
-                        <button type="submit" className="w-1/2 py-2 bg-ayur-primary text-white rounded-lg text-xs font-bold hover:bg-ayur-secondary">
+                        <button type="submit" className="w-1/2 py-2.5 bg-ayur-primary text-white rounded-lg text-xs font-bold hover:bg-ayur-secondary transition-colors">
                           Reschedule
                         </button>
-                        <button type="button" onClick={() => setRescheduleAppId(null)} className="w-1/2 py-2 border border-stone-300 text-stone-700 rounded-lg text-xs font-bold bg-white">
+                        <button type="button" onClick={() => setRescheduleAppId(null)} className="w-1/2 py-2.5 border border-[#D9D0C1] dark:border-[#4B5563] text-stone-700 dark:text-gray-200 rounded-lg text-xs font-bold bg-white dark:bg-[#374151] hover:bg-stone-50 dark:hover:bg-gray-600 transition-colors">
                           Cancel
                         </button>
                       </div>
                     </form>
-                    {rescheduleError && <span className="text-xs text-red-500">{rescheduleError}</span>}
+                    {rescheduleError && <span className="text-xs text-red-500 block">{rescheduleError}</span>}
                   </div>
                 )}
 
