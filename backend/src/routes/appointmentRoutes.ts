@@ -135,11 +135,20 @@ router.post('/', authMiddleware, async (req: AuthenticatedRequest, res: Response
     const doctorName = appointment.doctor?.user?.name || 'Ayurvedic Specialist';
     await sendBookingEmail(patientEmail, patientName, doctorName, date, timeSlot, receiptId);
 
-    // Create in-app notification for patient
+    // Create APPOINTMENT_BOOKED notification for patient
     await prisma.notification.create({
       data: {
         userId: patientId,
-        type: 'BOOKING_REQUEST',
+        type: 'APPOINTMENT_BOOKED',
+        message: `Your appointment with Dr. ${doctorName} has been successfully booked for ${date} at ${timeSlot}.`
+      }
+    });
+
+    // Create APPOINTMENT_CONFIRMED notification for patient
+    await prisma.notification.create({
+      data: {
+        userId: patientId,
+        type: 'APPOINTMENT_CONFIRMED',
         message: `Your appointment with Dr. ${doctorName} has been confirmed for ${date} at ${timeSlot}.`
       }
     });
@@ -254,6 +263,26 @@ router.put('/', authMiddleware, async (req: AuthenticatedRequest, res: Response)
           userId: appointment.patientId,
           type: 'RESCHEDULED',
           message: `Your appointment with Dr. ${doctorName} has been rescheduled to ${date} at ${timeSlot}.`
+        }
+      });
+    }
+
+    if (status === 'CONFIRMED' && appointment.status !== 'CONFIRMED') {
+      await prisma.notification.create({
+        data: {
+          userId: appointment.patientId,
+          type: 'APPOINTMENT_CONFIRMED',
+          message: `Your appointment with Dr. ${doctorName} on ${appointment.date} has been confirmed.`
+        }
+      });
+    }
+
+    if (status === 'COMPLETED' && appointment.status !== 'COMPLETED') {
+      await prisma.notification.create({
+        data: {
+          userId: appointment.patientId,
+          type: 'INVOICE_GENERATED',
+          message: `Your invoice/receipt ${appointment.receiptId} is available for download for your consultation with Dr. ${doctorName} on ${appointment.date}.`
         }
       });
     }
